@@ -33,10 +33,10 @@ export class UsersController {
     });
   }
 
-  // @Get('/me')
-  // me(@ActiveUserId() userId: string) {
-  //   return this.usersService.getUserById(userId);
-  // }
+  @Get('/me')
+  me(@ActiveUserId() userId: string) {
+    return this.usersService.getUserById(userId);
+  }
 
   @Get(':id')
   findOne(@Param('id', ParseUUIDPipe) id: string) {
