@@ -1,14 +1,15 @@
 'use client';
 
 import { localStoragekeys } from '@/config/localStorageKeys';
-import { signOut } from '@/lib/auth';
 import { removeAuthToken } from '@/services/httpClient';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export function useAuth() {
   const { data: session, status } = useSession();
   const [token, setToken] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const storedToken = localStorage.getItem(localStoragekeys.TOKEN);
@@ -22,7 +23,7 @@ export function useAuth() {
       await signOut();
     }
 
-    window.location.href = '/login';
+    router.push('/login');
   };
 
   return {
