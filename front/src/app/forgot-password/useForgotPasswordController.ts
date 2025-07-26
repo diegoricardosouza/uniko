@@ -1,37 +1,30 @@
-import { authService } from "@/services/authService";
+import { forgotPasswordSchema } from "@/schemas/forgotPasswordSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
+import { forgotPasswordAction } from "../actions/forgot-password";
 
-const schema = z.object({
-  email: z.string()
-    .min(1, 'E-mail é obrigatório')
-    .email('Informe um e-mail válido')
-})
-
-type FormData = z.infer<typeof schema>
+type FormData = z.infer<typeof forgotPasswordSchema>
 
 export function useForgotPasswordController() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [errorApi, setErrorApi] = useState(false);
 
-  const {
-    register,
-    reset,
-    handleSubmit: hookFormSubmit,
-    formState: { errors }
-  } = useForm<FormData>({
-    resolver: zodResolver(schema)
-  });
+  const form = useForm<FormData>({
+    resolver: zodResolver(forgotPasswordSchema),
+    defaultValues: {
+      email: ""
+    },
+  })
 
-  const handleSubmit = hookFormSubmit(async (data) => {
+  const handleSubmit = form.handleSubmit(async (data) => {
     try {
       setLoading(true);
-      await authService.forgotPassword(data);
+      await forgotPasswordAction(data.email)
       setSuccess(true);
-      reset();
+      form.reset();
       setTimeout(() => setSuccess(false), 4000);
     } catch (error) {
       console.error("Erro ao enviar o formulário:", error);
@@ -43,8 +36,7 @@ export function useForgotPasswordController() {
   })
 
   return {
-    errors,
-    register,
+    form,
     handleSubmit,
     loading,
     success,

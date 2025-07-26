@@ -1,16 +1,13 @@
-import { authService } from "@/services/authService";
+import { resetPasswordSchema } from "@/schemas/resetPasswordSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { redirect, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
+import { resetPasswordAction } from "../actions/reset-password";
 
-const schema = z.object({
-  password: z.string()
-    .min(6, 'Senha precisa ter pelo menos 6 caracteres')
-})
 
-type FormData = z.infer<typeof schema>
+type FormData = z.infer<typeof resetPasswordSchema>
 
 export function useResetPasswordController() {
   const searchParams = useSearchParams();
@@ -24,25 +21,19 @@ export function useResetPasswordController() {
     redirect("/login");
   }
 
-  const {
-    register,
-    reset,
-    handleSubmit: hookFormSubmit,
-    formState: { errors }
-  } = useForm<FormData>({
-    resolver: zodResolver(schema)
-  });
+  const form = useForm<FormData>({
+    resolver: zodResolver(resetPasswordSchema),
+    defaultValues: {
+      password: ""
+    },
+  })
 
-  const handleSubmit = hookFormSubmit(async (data) => {
+  const handleSubmit = form.handleSubmit(async (data) => {
     try {
       setLoading(true);
-      const newData = {
-        token,
-        newPassword: data.password
-      }
-      await authService.resetPassword(newData);
+      await resetPasswordAction(token, data.password);
       setSuccess(true);
-      reset();
+      form.reset();
       setTimeout(() => setSuccess(false), 4000);
     } catch (error) {
       console.error("Erro ao enviar o formulário:", error);
@@ -54,8 +45,7 @@ export function useResetPasswordController() {
   })
 
   return {
-    errors,
-    register,
+    form,
     handleSubmit,
     loading,
     success,

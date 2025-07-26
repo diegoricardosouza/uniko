@@ -25,23 +25,23 @@ export function useNewUserController() {
   })
 
   const handleSubmit = form.handleSubmit(async (data) => {
-      try {
-        setIsLoading(true)
-        console.log(data);
-        
-        await createUser({ ...data, active: data.active ?? true });
+    try {
+      setIsLoading(true)
+      console.log(data);
+      
+      await createUser({ ...data, active: data.active ?? true });
 
-        toast.success("Usuário cadastrado com sucesso!")
-        router.push('/dashboard/users');
-        // Resetar o formulário após sucesso
-        form.reset()
-      } catch (error) {
-        console.log('error', error);
-        toast.error("Erro ao cadastrar usuário");
-      } finally {
-        setIsLoading(false)
-      }
-    })
+      toast.success("Usuário cadastrado com sucesso!")
+      router.push('/dashboard/users');
+      // Resetar o formulário após sucesso
+      form.reset()
+    } catch (error) {
+      console.log('error', error);
+      toast.error("Erro ao cadastrar usuário");
+    } finally {
+      setIsLoading(false)
+    }
+  })
 
   return {
     form,

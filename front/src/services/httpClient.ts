@@ -39,11 +39,9 @@ httpClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     if (error.response?.status === 401) {
-      // Remove token inválido do localStorage
-      localStorage.removeItem(localStoragekeys.TOKEN);
-
-      // Redireciona para login se necessário
       if (typeof window !== 'undefined') {
+        // ✅ Só executa no browser
+        localStorage.removeItem(localStoragekeys.TOKEN);
         window.location.href = '/login';
       }
     }

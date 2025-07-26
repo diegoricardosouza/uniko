@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { CheckCircle, Loader2, Lock, Mail, ShieldUserIcon, User } from "lucide-react";
-import { BreadcrumbUsers } from "../../_components/BreadcrumbUsers";
+import { BreadcrumbNewUser } from "../../_components/BreadcrumbNewUser";
 import { useNewUserController } from "./useNewUserController";
 
 export default function UsersNew() {
@@ -15,7 +15,7 @@ export default function UsersNew() {
   
   return (
       <div>
-      <BreadcrumbUsers />
+      <BreadcrumbNewUser />
   
         <div className="flex flex-1 flex-col p-4 pt-0">
           {/* Main Content */}
@@ -151,7 +151,7 @@ export default function UsersNew() {
                             Cadastrando...
                           </>
                         ) : (
-                          "Cadastrar Usuário"
+                          "Cadastrar"
                         )}
                       </Button>
                     </form>

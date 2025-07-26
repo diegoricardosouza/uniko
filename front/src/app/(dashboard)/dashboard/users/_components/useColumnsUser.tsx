@@ -80,13 +80,39 @@ export function useColumnsUser(onDelete: (id: string) => void): ColumnDef<User>[
       },
     },
     {
+      accessorKey: "active",
+      enableHiding: false,
+      size: 100,
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Status
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      ),
+      cell: ({ row }) => {
+        return (
+          <div className="pl-4">
+            {row.original.active ? (
+              <Badge className="pb-1 bg-green-600">Ativado</Badge>
+            ) : (
+              <Badge className="pb-1" variant="destructive">Desativado</Badge>
+            )}
+            
+          </div>
+        );
+      }
+    },
+    {
       id: "actions",
       enableHiding: false,
       size: 100,
       cell: ({ row }) => (
         <div className="flex items-center gap-0">
           <Button variant="ghost" size="icon" className="h-8 w-8" asChild>
-            <Link href={`/usuarios/edit/${row.original.id}`}>
+            <Link href={`/dashboard/users/edit/${row.original.id}`}>
               <Edit className="w-4 h-4 text-blue-700" />
               <span className="sr-only">Editar</span>
             </Link>

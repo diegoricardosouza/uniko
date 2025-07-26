@@ -19,9 +19,9 @@ export function useAuth() {
   const logout = async () => {
     removeAuthToken();
 
-    if (session) {
-      await signOut();
-    }
+    await signOut({ callbackUrl: '/login' });
+    // if (session) {
+    // }
 
     router.push('/login');
   };
