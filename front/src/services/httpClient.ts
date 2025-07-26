@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { localStoragekeys } from '@/config/localStorageKeys';
+import { auth } from '@/lib/auth';
 import axios from 'axios';
-import { getSession } from 'next-auth/react';
 
 export const httpClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -10,11 +10,19 @@ export const httpClient = axios.create({
 // Interceptor de request atualizado para trabalhar com Auth.js
 httpClient.interceptors.request.use(async (config) => {
   // Primeiro, tenta pegar o token do localStorage (compatibilidade)
-  let token = localStorage.getItem(localStoragekeys.TOKEN);
+  // let token = localStorage.getItem(localStoragekeys.TOKEN);
+
+  let token: string | null = null
+
+  const session = await auth()
+
+  if (typeof window !== 'undefined') {
+    token = localStorage.getItem(localStoragekeys.TOKEN)
+  }
 
   // Se não encontrou no localStorage, pega da sessão do Auth.js
   if (!token) {
-    const session = await getSession();
+    // const session = await getSession();
     const typedSession = session as any;
     token = typedSession?.accessToken;
   }

@@ -115,7 +115,7 @@ export class UsersService {
 
   async remove(userId: string, id: string) {
     if (userId === id) {
-      throw new ConflictException("You can't delete your own user");
+      throw new ConflictException("Você não pode deletar seu próprio usuário");
     }
 
     const currentUser = await this.usersRepo.findUnique({

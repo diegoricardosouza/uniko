@@ -100,11 +100,11 @@ const data = {
       items: [
         {
           title: "Listar Todos",
-          url: "dashboard/users",
+          url: "/dashboard/users",
         },
         {
           title: "Adicionar Novo",
-          url: "dashboard/users/new",
+          url: "/dashboard/users/new",
         }
       ],
     },

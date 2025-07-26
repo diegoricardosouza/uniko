@@ -17,9 +17,6 @@ import logo from "../../public/icon-uniko.png"
 export function TeamSwitcher() {
   const { open } = useSidebar();
 
-  console.log(open);
-  
-
   return (
     <SidebarMenu>
       <SidebarMenuItem>
