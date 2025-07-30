@@ -4,9 +4,10 @@ import { AuthGuard } from './modules/auth/auth.guard';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { DatabaseModule } from './shared/database/database.module';
+import { CategoryPostsModule } from './modules/category-posts/category-posts.module';
 
 @Module({
-  imports: [UsersModule, DatabaseModule, AuthModule],
+  imports: [UsersModule, DatabaseModule, AuthModule, CategoryPostsModule],
   controllers: [],
   providers: [
     {
