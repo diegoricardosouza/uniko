@@ -26,7 +26,7 @@ export default function ForgotPassword() {
         </div>
 
         <div className={cn("flex flex-col gap-6")}>
-          <Card>
+          <Card className="shadow-sm">
             <CardContent>
               <Form {...form}>
                 <form onSubmit={handleSubmit}>

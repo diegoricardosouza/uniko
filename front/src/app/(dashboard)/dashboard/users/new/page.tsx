@@ -24,9 +24,9 @@ export default function UsersNew() {
             <div className="md:col-span-2">
               <Card>
                 <CardHeader className="space-y-1">
-                  <div className="flex items-center gap-2">
-                    <div className="p-2 bg-blue-100 rounded-lg">
-                      <User className="h-5 w-5 text-blue-600" />
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 bg-blue-100 rounded-lg">
+                      <User className="h-6 w-6 text-blue-600" />
                     </div>
                     <div>
                       <CardTitle className="text-xl">Novo Usuário</CardTitle>
@@ -83,7 +83,6 @@ export default function UsersNew() {
                                 <Input type="password" placeholder="Digite a senha" className="pl-10" {...field} />
                               </div>
                             </FormControl>
-                            <FormDescription>A senha deve ter pelo menos 6 caracteres</FormDescription>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -97,7 +96,7 @@ export default function UsersNew() {
                             <FormLabel>Nível de Acesso</FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                               <FormControl>
-                                <SelectTrigger className="w-full">
+                                <SelectTrigger className="w-full cursor-pointer">
                                   <div className="flex items-center gap-2">
                                     <ShieldUserIcon className="h-4 w-4 text-gray-400" />
                                     <SelectValue placeholder="Selecione o nível de acesso" />
@@ -105,13 +104,13 @@ export default function UsersNew() {
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
-                                <SelectItem value="ADMIN">
+                                <SelectItem value="ADMIN" className="cursor-pointer">
                                   <div className="flex items-center gap-2">
                                     <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                                     <span>Administrador</span>
                                   </div>
                                 </SelectItem>
-                                <SelectItem value="EDITOR">
+                                <SelectItem value="EDITOR" className="cursor-pointer">
                                   <div className="flex items-center gap-2">
                                     <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                                     <span>Editor</span>
@@ -119,7 +118,6 @@ export default function UsersNew() {
                                 </SelectItem>
                               </SelectContent>
                             </Select>
-                            <FormDescription>ADMIN tem acesso total, EDITOR tem acesso limitado</FormDescription>
                             <FormMessage />
                           </FormItem>
                         )}

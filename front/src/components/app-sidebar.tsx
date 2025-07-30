@@ -1,10 +1,11 @@
 "use client"
 
 import {
-  BookOpen,
   Bot,
   Frame,
+  Gauge,
   Map,
+  Newspaper,
   PieChart,
   SquareTerminal,
   Users
@@ -31,6 +32,11 @@ const data = {
     avatar: "/avatars/shadcn.jpg",
   },
   navMain: [
+    {
+      title: "Dashboard",
+      url: "/dashboard",
+      icon: Gauge,
+    },
     {
       title: "Playground",
       url: "#",
@@ -71,26 +77,22 @@ const data = {
       ],
     },
     {
-      title: "Documentation",
+      title: "Blog",
       url: "#",
-      icon: BookOpen,
+      icon: Newspaper,
       items: [
         {
-          title: "Introduction",
+          title: "Listar Todos",
           url: "#",
         },
         {
-          title: "Get Started",
-          url: "#",
+          title: "Adicionar Novo",
+          url: "/dashboard/blog/new",
         },
         {
-          title: "Tutorials",
+          title: "Categorias",
           url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
+        }
       ],
     },
     {

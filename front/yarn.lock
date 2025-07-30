@@ -1638,6 +1638,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tinymce/tinymce-react@npm:^6.2.1":
+  version: 6.2.1
+  resolution: "@tinymce/tinymce-react@npm:6.2.1"
+  dependencies:
+    prop-types: "npm:^15.6.2"
+  peerDependencies:
+    react: ^19.0.0 || ^18.0.0 || ^17.0.1 || ^16.7.0
+    react-dom: ^19.0.0 || ^18.0.0 || ^17.0.1 || ^16.7.0
+    tinymce: ^7.0.0 || ^6.0.0 || ^5.5.1
+  peerDependenciesMeta:
+    tinymce:
+      optional: true
+  checksum: 10c0/b3889e5866452ced818d2dd2f945e147168da9bfee73ea63f5c8e69dd4cf57e9fa5a4dd9c5dbd4c33288ed80635a8d7c36f4aad24732884806ab45451c44ea1c
+  languageName: node
+  linkType: hard
+
 "@tybys/wasm-util@npm:^0.10.0":
   version: 0.10.0
   resolution: "@tybys/wasm-util@npm:0.10.0"
@@ -3132,6 +3148,7 @@ __metadata:
     "@radix-ui/react-tooltip": "npm:^1.2.7"
     "@tailwindcss/postcss": "npm:^4"
     "@tanstack/react-table": "npm:^8.21.3"
+    "@tinymce/tinymce-react": "npm:^6.2.1"
     "@types/node": "npm:^20"
     "@types/react": "npm:^19"
     "@types/react-dom": "npm:^19"
@@ -4386,7 +4403,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.8.1":
+"prop-types@npm:^15.6.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:

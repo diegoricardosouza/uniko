@@ -20,7 +20,7 @@ export function useNewUserController() {
       email: "",
       password: "",
       active: true,
-      role: "EDITOR",
+      role: "ADMIN",
     },
   })
 
