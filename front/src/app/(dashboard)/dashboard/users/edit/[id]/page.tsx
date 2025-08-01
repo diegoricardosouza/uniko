@@ -8,13 +8,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/components/ui/switch";
 import { CheckCircle, Loader2, Lock, Mail, ShieldUserIcon, User } from "lucide-react";
 import { BreadcrumbEditUser } from "../../../_components/BreadcrumbEditUser";
+import { ProtectedRoute } from "../../../_components/ProtectedRoute";
 import { useEditUserController } from "./useEditUserController";
 
 export default function UserEdit() {
   const { form, handleSubmit, isLoading } = useEditUserController()
   
   return (
-    <div>
+    <ProtectedRoute requiredRoles={["ADMIN"]}>
       <BreadcrumbEditUser />
       
       <div className="flex flex-1 flex-col p-4 pt-0">
@@ -184,6 +185,6 @@ export default function UserEdit() {
           </div>
         </div>
       </div>
-    </div>
+    </ProtectedRoute>
   );
 }
