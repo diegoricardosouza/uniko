@@ -91,7 +91,7 @@ const data = {
         },
         {
           title: "Categorias",
-          url: "#",
+          url: "/dashboard/blog/category",
         }
       ],
     },

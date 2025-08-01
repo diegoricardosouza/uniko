@@ -27,7 +27,6 @@ export function useNewUserController() {
   const handleSubmit = form.handleSubmit(async (data) => {
     try {
       setIsLoading(true)
-      console.log(data);
       
       await createUser({ ...data, active: data.active ?? true });
 

@@ -13,7 +13,6 @@ type FormData = z.infer<typeof userUpdateSchema>
 
 export function useEditUserController() {
   const [isLoading, setIsLoading] = useState(false);
-    // const router = useRouter();
   const params = useParams();
   const id = typeof params?.id === "string" ? params.id : "";
   
@@ -27,16 +26,17 @@ export function useEditUserController() {
       role: "EDITOR",
     },
   });
-
+  
   useEffect(() => {
     if (!id) return;
 
     const fetchUser = async () => {
       try {
         const user = await getUserAction(id);
-        form.reset(user); // Preenche os campos do form
+        form.reset(user);
       } catch (error: any) {
-        toast.error("Erro ao buscar dados do usuário", error);
+        console.log(error);
+        toast.error("Erro ao buscar dados do usuário");
       }
     };
 
