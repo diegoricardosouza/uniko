@@ -1012,6 +1012,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nestjs/serve-static@npm:^5.0.3":
+  version: 5.0.3
+  resolution: "@nestjs/serve-static@npm:5.0.3"
+  dependencies:
+    path-to-regexp: "npm:8.2.0"
+  peerDependencies:
+    "@fastify/static": ^8.0.4
+    "@nestjs/common": ^11.0.2
+    "@nestjs/core": ^11.0.2
+    express: ^5.0.1
+    fastify: ^5.2.1
+  peerDependenciesMeta:
+    "@fastify/static":
+      optional: true
+    express:
+      optional: true
+    fastify:
+      optional: true
+  checksum: 10c0/a908784a54f13d1d439af0aa7e742d0745b897ba3092753bbfc6ff09b0fd09d9aee6a524de869098b30a4bbcf73b568fcbe852fbf3d5b2f4c64890c3b2e0ab02
+  languageName: node
+  linkType: hard
+
 "@nestjs/testing@npm:^10.0.0":
   version: 10.4.19
   resolution: "@nestjs/testing@npm:10.4.19"
@@ -1370,7 +1392,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/express@npm:^5.0.0":
+"@types/express@npm:*, @types/express@npm:^5.0.0":
   version: 5.0.3
   resolution: "@types/express@npm:5.0.3"
   dependencies:
@@ -1459,6 +1481,15 @@ __metadata:
   version: 1.3.5
   resolution: "@types/mime@npm:1.3.5"
   checksum: 10c0/c2ee31cd9b993804df33a694d5aa3fa536511a49f2e06eeab0b484fef59b4483777dbb9e42a4198a0809ffbf698081fdbca1e5c2218b82b91603dfab10a10fbc
+  languageName: node
+  linkType: hard
+
+"@types/multer@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@types/multer@npm:2.0.0"
+  dependencies:
+    "@types/express": "npm:*"
+  checksum: 10c0/375b0e77c4675c2ff27d1170e469df48dced928cc9fcd077ead111a20d0f2c01921fd25e20e25426604d6d3e311b37da2bc03ce47523d06adafba5c4b8077b67
   languageName: node
   linkType: hard
 
@@ -2071,10 +2102,12 @@ __metadata:
     "@nestjs/mapped-types": "npm:*"
     "@nestjs/platform-express": "npm:^10.0.0"
     "@nestjs/schematics": "npm:^10.0.0"
+    "@nestjs/serve-static": "npm:^5.0.3"
     "@nestjs/testing": "npm:^10.0.0"
     "@prisma/client": "npm:^6.1.0"
     "@types/express": "npm:^5.0.0"
     "@types/jest": "npm:^29.5.2"
+    "@types/multer": "npm:^2.0.0"
     "@types/node": "npm:^20.3.1"
     "@types/supertest": "npm:^6.0.0"
     "@typescript-eslint/eslint-plugin": "npm:^8.0.0"
@@ -5846,6 +5879,13 @@ __metadata:
   version: 3.3.0
   resolution: "path-to-regexp@npm:3.3.0"
   checksum: 10c0/ffa0ebe7088d38d435a8d08b0fe6e8c93ceb2a81a65d4dd1d9a538f52e09d5e3474ed5f553cb3b180d894b0caa10698a68737ab599fd1e56b4663d1a64c9f77b
+  languageName: node
+  linkType: hard
+
+"path-to-regexp@npm:8.2.0":
+  version: 8.2.0
+  resolution: "path-to-regexp@npm:8.2.0"
+  checksum: 10c0/ef7d0a887b603c0a142fad16ccebdcdc42910f0b14830517c724466ad676107476bba2fe9fffd28fd4c141391ccd42ea426f32bb44c2c82ecaefe10c37b90f5a
   languageName: node
   linkType: hard
 

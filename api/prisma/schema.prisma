@@ -22,6 +22,24 @@ model User {
   @@map("users")
 }
 
+model Post {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String
+  subtitle  String?
+  slug      String   @unique
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relação many-to-many com CategoryPost
+  categories PostCategory[]
+
+  // Relação com mídias (polimórfica)
+  medias Media[]
+
+  @@map("posts")
+}
+
 model CategoryPost {
   id          String   @id @default(uuid()) @db.Uuid
   name        String
@@ -30,5 +48,62 @@ model CategoryPost {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
+  // Relação many-to-many com Post
+  posts PostCategory[]
+
   @@map("category_posts")
+}
+
+// Tabela de junção para a relação many-to-many
+model PostCategory {
+  id         String   @id @default(uuid()) @db.Uuid
+  postId     String   @map("post_id") @db.Uuid
+  categoryId String   @map("category_id") @db.Uuid
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // Relacionamentos
+  post     Post         @relation(fields: [postId], references: [id], onDelete: Cascade)
+  category CategoryPost @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  // Índice único para evitar duplicatas
+  @@unique([postId, categoryId])
+  @@map("post_categories")
+}
+
+// Tabela centralizada de mídias
+model Media {
+  id           String  @id @default(uuid()) @db.Uuid
+  filename     String // Nome do arquivo
+  originalName String  @map("original_name") // Nome original do arquivo
+  mimeType     String  @map("mime_type") // image/jpeg, video/mp4, etc
+  size         Int // Tamanho em bytes
+  url          String // URL ou caminho do arquivo
+  thumbnailUrl String? @map("thumbnail_url") // URL da thumbnail (para vídeos/imagens)
+  alt          String? // Texto alternativo
+  title        String? // Título da mídia
+  description  String? // Descrição da mídia
+
+  // Campos para relacionamento polimórfico
+  entityType String @map("entity_type") // 'Post', 'Property', 'User', etc
+  entityId   String @map("entity_id") @db.Uuid // ID da entidade relacionada
+  mediaType  String @map("media_type") // 'featured_image', 'gallery', 'attachment', etc
+
+  // Campos para ordenação e controle
+  order    Int     @default(0) // Ordem das mídias na galeria
+  isActive Boolean @default(true) @map("is_active")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relacionamentos condicionais baseados no entityType
+  post Post? @relation(fields: [entityId], references: [id], onDelete: Cascade)
+  // property Property? @relation(fields: [entityId], references: [id], onDelete: Cascade)
+  // user User? @relation(fields: [entityId], references: [id], onDelete: Cascade)
+
+  // Índices para performance
+  @@index([entityType, entityId])
+  @@index([entityType, entityId, mediaType])
+  @@index([entityType, entityId, order])
+  @@map("medias")
 }
