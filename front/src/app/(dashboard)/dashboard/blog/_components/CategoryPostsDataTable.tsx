@@ -22,7 +22,7 @@ import {
   getSortedRowModel,
   useReactTable
 } from "@tanstack/react-table";
-import { BookOpen, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Plus, Type } from "lucide-react";
+import { BookOpen, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Loader2, Plus, Type } from "lucide-react";
 import { User as UserMe } from "next-auth";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -42,7 +42,17 @@ export function CategoryPostsDataTable({ categories, isLoading }: UsersDataTable
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [globalFilter, setGlobalFilter] = useState("")
 
-  const { form, isDialogOpen, editingCategory, setIsDialogOpen, handleSubmit, handleCloseDialog, handleEdit, handleNew } = useCategoryPostsController()
+  const { 
+    form, 
+    isDialogOpen, 
+    editingCategory, 
+    isLoading: isLoadingForm,
+    setIsDialogOpen, 
+    handleSubmit, 
+    handleCloseDialog, 
+    handleEdit, 
+    handleNew 
+  } = useCategoryPostsController()
 
   const handleDelete = async (id: string) => {
     try {
@@ -124,7 +134,7 @@ export function CategoryPostsDataTable({ categories, isLoading }: UsersDataTable
                       <FormControl>
                         <div className="relative">
                           <BookOpen className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                          <Textarea placeholder="Descreva sobre o que trata esta categoria..." className="pl-10" {...field} rows={4} />
+                          <Textarea placeholder="Descreva sobre o que trata esta categoria..." className="pl-10 h-[100px]" {...field} />
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -136,7 +146,8 @@ export function CategoryPostsDataTable({ categories, isLoading }: UsersDataTable
                   <Button variant="outline" onClick={handleCloseDialog} type="button" className="cursor-pointer">
                     Cancelar
                   </Button>
-                  <Button onClick={handleSubmit} type="submit" className="cursor-pointer">
+                  <Button onClick={handleSubmit} type="submit" className="cursor-pointer" disabled={isLoadingForm}>
+                    {isLoadingForm && (<Loader2 className="mr-0 h-4 w-4 animate-spin" />)}
                     {editingCategory ? "Atualizar" : "Criar"}
                   </Button>
                 </DialogFooter>
@@ -153,13 +164,15 @@ export function CategoryPostsDataTable({ categories, isLoading }: UsersDataTable
           </div>
         )}
         <div>
-          <div className="flex items-center gap-2 py-4">
+          <div className="flex items-center justify-between gap-2 py-4">
             <Input
               placeholder="Filtrar categorias..."
               value={globalFilter}
               onChange={(event) => setGlobalFilter(event.target.value)}
               className="max-w-sm"
             />
+
+            <span className="text-sm">{categories.length} itens</span>
           </div>
           <div className="rounded-md border">
             <Table className="table-fixed w-full">

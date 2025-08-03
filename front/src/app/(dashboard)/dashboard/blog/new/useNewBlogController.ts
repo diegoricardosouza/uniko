@@ -5,29 +5,6 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
 
-const categorias = [
-  { id: "tecnologia", label: "Tecnologia" },
-  { id: "design", label: "Design" },
-  { id: "programacao", label: "Programação" },
-  { id: "marketing", label: "Marketing" },
-  { id: "negocios", label: "Negócios" },
-  { id: "lifestyle", label: "Lifestyle" },
-  { id: "educacao", label: "Educação" },
-  { id: "saude", label: "Saúde" },
-  { id: "viagem", label: "Viagem" },
-  { id: "culinaria", label: "Culinária" },
-  { id: "esportes", label: "Esportes" },
-  { id: "musica", label: "Música" },
-  { id: "arte", label: "Arte" },
-  { id: "ciencia", label: "Ciência" },
-  { id: "historia", label: "História" },
-  { id: "politica", label: "Política" },
-  { id: "financas", label: "Finanças" },
-  { id: "moda", label: "Moda" },
-  { id: "automotivo", label: "Automotivo" },
-  { id: "games", label: "Games" },
-]
-
 type FormData = z.infer<typeof blogCreateSchema>
 
 export function useNewBlogController() {
@@ -58,6 +35,11 @@ export function useNewBlogController() {
     }
   }
 
+  function handleRemoveImage() {
+    setImagePreview('');
+    form.setValue("featuredImage", "");
+  }
+
   const handleSubmit = form.handleSubmit(async (data) => {
     try {
       setIsLoading(true)
@@ -74,8 +56,8 @@ export function useNewBlogController() {
     form,
     isLoading,
     imagePreview,
-    categorias,
     handleImageChange,
-    handleSubmit
+    handleSubmit,
+    handleRemoveImage
   }
 }

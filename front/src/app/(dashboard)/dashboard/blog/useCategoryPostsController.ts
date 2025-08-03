@@ -38,7 +38,10 @@ export function useCategoryPostsController() {
     const categories = await getCategoryPostsAction(idCategory);
     setIdCategory(idCategory);
     setEditingCategory(true);
-    form.reset(categories);
+    form.reset({
+      name: categories.name ?? '',
+      description: categories.description ?? '',
+    });
     setIsDialogOpen(true);
   };
 
@@ -60,6 +63,7 @@ export function useCategoryPostsController() {
       if (editingCategory) {
         await updateCategoryPostsAction({
           ...data,
+          description: data.description || null,
           id: idCategory
         });
       }

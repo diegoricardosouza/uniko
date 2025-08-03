@@ -3,7 +3,7 @@ import { httpClient } from "../httpClient";
 export interface UpdateCategoryPostsParams {
   id: string;
   name: string;
-  description?: string;
+  description?: string | null;
 }
 
 export async function update({ id, ...params }: UpdateCategoryPostsParams) {
