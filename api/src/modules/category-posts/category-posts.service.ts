@@ -112,7 +112,7 @@ export class CategoryPostsService {
       };
     }
 
-    if (description) {
+    if (description !== undefined) {
       updatedData.description = description;
     }
 
