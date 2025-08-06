@@ -22,7 +22,7 @@ import {
   getSortedRowModel,
   useReactTable
 } from "@tanstack/react-table";
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, CirclePlus, PlusCircle, Search, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, CirclePlus, Plus, Search, X } from "lucide-react";
 import { User as UserMe } from "next-auth";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
@@ -162,15 +162,15 @@ export function UsersDataTable({ users, user, isLoading }: UsersDataTableProps) 
     <>
       {user?.role === 'ADMIN' && (
         <div className="flex">
-          <Button size="sm" className="h-8 gap-1" asChild>
-            <Link href="/dashboard/users/new">
-              <PlusCircle className="h-4 w-4" />
-              <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                Novo Usuário
-              </span>
-            </Link>
-          </Button>
-        </div>
+        <Button asChild>
+          <Link href="/dashboard/users/new">
+            <Plus className="mr-1 h-4 w-4" />
+            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+              Novo Usuário
+            </span>
+          </Link>
+        </Button>
+      </div>
       )}
       <div className="w-full min-h-[300px] relative overflow-hidden">
         {isLoading && (

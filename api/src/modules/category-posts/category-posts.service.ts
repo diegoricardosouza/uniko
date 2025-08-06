@@ -5,6 +5,25 @@ import { slugify } from 'src/utils/slugify';
 import { CreateCategoryPostDto } from './dto/create-category-post.dto';
 import { UpdateCategoryPostDto } from './dto/update-category-post.dto';
 
+type CategoryWithPosts = Prisma.CategoryPostGetPayload<{
+  include: {
+    posts: {
+      include: {
+        post: {
+          select: {
+            id: true;
+            name: true;
+            slug: true;
+            subtitle: true;
+            content: true;
+            createdAt: true;
+          };
+        };
+      };
+    };
+  };
+}>;
+
 @Injectable()
 export class CategoryPostsService {
   constructor(private readonly catPostsRepo: CategoryPostsRepository) {}
@@ -49,19 +68,40 @@ export class CategoryPostsService {
         : undefined,
     ].filter(Boolean);
 
-    return this.catPostsRepo.findAll({
+    const rawCategories = (await this.catPostsRepo.findAll({
       where: conditions.length > 0 ? { AND: conditions } : undefined,
       orderBy: {
         createdAt: 'desc',
       },
-      select: {
-        id: true,
-        name: true,
-        slug: true,
-        description: true,
-        createdAt: true,
+      include: {
+        posts: {
+          include: {
+            post: {
+              select: {
+                id: true,
+                name: true,
+                slug: true,
+                subtitle: true,
+                content: true,
+                createdAt: true,
+              },
+            },
+          },
+        },
       },
-    });
+    })) as CategoryWithPosts[]; // Cast seguro aqui
+
+    // transformar a estrutura
+    const categories = rawCategories.map((category) => ({
+      id: category.id,
+      name: category.name,
+      slug: category.slug,
+      description: category.description,
+      createdAt: category.createdAt,
+      posts: category.posts.map((item: any) => item.post),
+    }));
+
+    return categories;
   }
 
   async findOne(id: string) {

@@ -48,7 +48,7 @@ export function useColumnsCategoryPosts(onDelete: (id: string) => void, onEdit: 
       cell: ({ row }) => {
         return (
           <div className="flex items-center gap-4 pl-4">
-            <Badge variant="secondary" className="font-mono">
+            <Badge variant="secondary" className="font-bold">
               {row.original.slug}
             </Badge>
           </div>
@@ -76,6 +76,28 @@ export function useColumnsCategoryPosts(onDelete: (id: string) => void, onEdit: 
       }
     },
     {
+      accessorKey: "posts",
+      size: 150,
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Posts
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      ),
+      cell: ({ row }) => {
+        return (
+          <div className="flex items-center gap-4 pl-4">
+            <Badge variant="outline">
+              {row.original.posts?.length} posts
+            </Badge>
+          </div>
+        );
+      }
+    },
+    {
       accessorKey: "createdAt",
       enableHiding: false,
       size: 200,
@@ -91,7 +113,9 @@ export function useColumnsCategoryPosts(onDelete: (id: string) => void, onEdit: 
       cell: ({ row }) => {
         return (
           <div className="pl-4">
-            {format(row.original.createdAt!, "dd/MM/yyyy")}
+            <p className="text-sm font-medium leading-none">
+              {format(row.original.createdAt!, "dd/MM/yyyy")}
+            </p>
           </div>
         );
       }
