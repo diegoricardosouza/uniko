@@ -83,7 +83,7 @@ const data = {
       items: [
         {
           title: "Listar Todos",
-          url: "#",
+          url: "/dashboard/blog",
         },
         {
           title: "Adicionar Novo",

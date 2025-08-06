@@ -12,8 +12,8 @@ export class CreateMediaDto {
   entityType: string;
 
   @IsString()
-  @IsNotEmpty()
-  entityId: string;
+  @IsOptional()
+  entityId?: string;
 
   @IsString()
   @IsNotEmpty()

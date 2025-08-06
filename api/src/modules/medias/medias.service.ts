@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   BadRequestException,
+  ConflictException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -43,15 +44,15 @@ export class MediasService {
         throw new BadRequestException('Arquivo é obrigatório');
       }
 
-      if (!createMediaDto.entityType || !createMediaDto.entityId) {
-        throw new BadRequestException('EntityType e EntityId são obrigatórios');
+      if (!createMediaDto.entityType) {
+        throw new BadRequestException('EntityType são obrigatórios');
       }
 
       // Verifica se a entidade existe (exemplo para Post)
-      await this.validateEntityExists(
-        createMediaDto.entityType,
-        createMediaDto.entityId,
-      );
+      // await this.validateEntityExists(
+      //   createMediaDto.entityType,
+      //   createMediaDto.entityId,
+      // );
 
       // Criar registro da mídia no banco
       const media = await this.mediasRepo.create({
@@ -131,6 +132,21 @@ export class MediasService {
 
     if (!media) {
       throw new NotFoundException(`Mídia com ID ${id} não encontrada`);
+    }
+
+    return media;
+  }
+
+  /**
+   * Busca uma mídia específica pelo name
+   */
+  async findOneByName(name: string) {
+    const media = await this.mediasRepo.findFirst({
+      where: { filename: name },
+    });
+
+    if (!media) {
+      throw new NotFoundException(`Mídia com o name ${name} não encontrada`);
     }
 
     return media;
@@ -290,30 +306,52 @@ export class MediasService {
    * Remove uma mídia (soft delete por padrão)
    */
   async remove(id: string, hardDelete: boolean = false): Promise<void> {
-    const media = await this.findOne(id);
+    const media = await this.mediasRepo.findUnique({
+      where: { id },
+    });
 
-    try {
-      if (hardDelete) {
-        // Remove o arquivo físico
-        const filePath = join(process.cwd(), media.url);
-        if (existsSync(filePath)) {
-          await this.deleteFile(filePath);
-        }
-
-        // Remove do banco
-        await this.mediasRepo.delete({
-          where: { id },
-        });
-      } else {
-        // Soft delete
-        await this.mediasRepo.update({
-          where: { id },
-          data: { isActive: false },
-        });
-      }
-    } catch (error) {
-      throw new InternalServerErrorException('Erro interno ao remover mídia');
+    if (!media) {
+      throw new ConflictException('Media not found');
     }
+
+    // Remove do banco
+    await this.mediasRepo.delete({
+      where: { id },
+    });
+
+    const filePath = join(process.cwd(), media.url);
+    if (existsSync(filePath)) {
+      await this.deleteFile(filePath);
+    }
+
+    
+
+    // if (hardDelete) {
+    //   // Remove o arquivo físico
+    //   const filePath = join(process.cwd(), media.url);
+    //   if (existsSync(filePath)) {
+    //     await this.deleteFile(filePath);
+    //   }
+
+    //   // Remove do banco
+    //   await this.mediasRepo.delete({
+    //     where: { id },
+    //   });
+    // } else {
+    //   // Soft delete
+    //   await this.mediasRepo.update({
+    //     where: { id },
+    //     data: { isActive: false },
+    //   });
+    // }
+
+    return null;
+
+    // try {
+      
+    // } catch (error) {
+    //   throw new InternalServerErrorException('Erro interno ao remover mídia');
+    // }
   }
 
   /**

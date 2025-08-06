@@ -1,4 +1,17 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Patch, Post, Query, UploadedFile } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
+  Query,
+  UploadedFile,
+} from '@nestjs/common';
 import { FileUpload } from 'src/shared/decorators/FileUpload';
 import { CreateMediaDto } from './dto/create-media.dto';
 import { UpdateMediaDto } from './dto/update-media.dto';
@@ -13,12 +26,13 @@ export class MediasController {
     fieldName: 'file',
     destination: 'uploads/media',
     fileSize: 5 * 1024 * 1024, // 5MB
-    fileTypes: /\.(jpg|jpeg|png|gif|pdf|mp4)$/,
-    filePrefix: 'media'
+    mimeTypes: /^(image\/(jpeg|jpg|png|webp|gif)|application\/pdf|video\/mp4)$/,
+    fileTypes: /\.(jpg|jpeg|png|webp|gif|pdf|mp4)$/,
+    filePrefix: 'media',
   })
   create(
     @UploadedFile() file: Express.Multer.File,
-    @Body() createMediaDto: CreateMediaDto
+    @Body() createMediaDto: CreateMediaDto,
   ) {
     return this.mediasService.create(file, createMediaDto);
   }
@@ -33,18 +47,23 @@ export class MediasController {
     return this.mediasService.findOne(id);
   }
 
+  @Get('name/:name')
+  findOneByName(@Param('name') name: string) {
+    return this.mediasService.findOneByName(name);
+  }
+
   @Patch(':id')
   @FileUpload({
     fieldName: 'file',
     destination: 'uploads/media',
     fileSize: 5 * 1024 * 1024, // 5MB
     fileTypes: /\.(jpg|jpeg|png|gif|pdf|mp4)$/,
-    filePrefix: 'media'
+    filePrefix: 'media',
   })
   update(
-    @Param('id', ParseUUIDPipe) id: string, 
+    @Param('id', ParseUUIDPipe) id: string,
     @Body() updateMediaDto: UpdateMediaDto,
-    @UploadedFile() file: Express.Multer.File
+    @UploadedFile() file: Express.Multer.File,
   ) {
     return this.mediasService.update(id, file, updateMediaDto);
   }
@@ -53,7 +72,7 @@ export class MediasController {
   @HttpCode(HttpStatus.NO_CONTENT)
   remove(
     @Param('id', ParseUUIDPipe) id: string,
-    @Query('hard') hardDelete?: boolean
+    @Query('hard') hardDelete?: boolean,
   ) {
     return this.mediasService.remove(id, hardDelete === true);
   }

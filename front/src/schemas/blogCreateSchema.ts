@@ -9,8 +9,14 @@ export const blogCreateSchema = z.object({
   subtitle: z
     .string()
     .optional(),
-  featuredImage: z.string().min(1, {
-    message: "Por favor, selecione uma imagem de destaque.",
+  // featuredImage: z.string().min(1, {
+  //   message: "Por favor, selecione uma imagem de destaque.",
+  // }),
+  featuredImage: z.custom<File | undefined>((file) => {
+    if (file === undefined) return true; // permitir limpar
+    return file instanceof File && file.size > 0;
+  }, {
+    message: "Por favor, selecione uma imagem de destaque válida.",
   }),
   content: z.string().optional(),
   categories: z.array(z.string()).refine((value) => value.some((item) => item), {
