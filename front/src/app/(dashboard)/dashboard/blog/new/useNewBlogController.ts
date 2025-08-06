@@ -1,3 +1,4 @@
+import { createPostAction } from "@/app/actions/posts/create-post";
 import { blogCreateSchema } from "@/schemas/blogCreateSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
@@ -16,34 +17,40 @@ export function useNewBlogController() {
     defaultValues: {
       name: "",
       subtitle: "",
-      featuredImage: "",
+      featuredImage: undefined,
       content: "",
       categories: [],
     },
   })
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-    if (file) {
-      const reader = new FileReader()
-      reader.onloadend = () => {
-        const result = reader.result as string
-        setImagePreview(result)
-        form.setValue("featuredImage", file.name)
-      }
-      reader.readAsDataURL(file)
-    }
-  }
+  // const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = event.target.files?.[0]
+  //   if (file) {
+  //     const reader = new FileReader()
+  //     reader.onloadend = () => {
+  //       const result = reader.result as string
+  //       setImagePreview(result)
+  //       form.setValue("featuredImage", file.name)
+  //     }
+  //     reader.readAsDataURL(file)
+  //   }
+  // }
 
   function handleRemoveImage() {
     setImagePreview('');
-    form.setValue("featuredImage", "");
+    form.setValue("featuredImage", undefined);
   }
 
   const handleSubmit = form.handleSubmit(async (data) => {
     try {
       setIsLoading(true)
       console.log(data);
+      await createPostAction({
+        ...data,
+        categoryIds: data.categories
+      });
+      
+      toast.success("Post cadastrado com sucesso!");
     } catch (error) {
       console.log('error', error);
       toast.error("Erro ao cadastrar usuário");
@@ -56,8 +63,8 @@ export function useNewBlogController() {
     form,
     isLoading,
     imagePreview,
-    handleImageChange,
     handleSubmit,
-    handleRemoveImage
+    handleRemoveImage,
+    setImagePreview
   }
 }

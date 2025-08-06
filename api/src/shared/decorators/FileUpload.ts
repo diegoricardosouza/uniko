@@ -7,6 +7,7 @@ export interface FileUploadOptions {
   destination: string;
   fileSize?: number;
   fileTypes?: RegExp;
+  mimeTypes?: RegExp;
   filePrefix?: string;
 }
 
@@ -15,6 +16,7 @@ export function FileUpload(options: FileUploadOptions) {
     destination: options.destination,
     fileSize: options.fileSize,
     fileTypes: options.fileTypes,
+    mimeTypes: options.mimeTypes,
     filePrefix: options.filePrefix,
   });
 

@@ -14,7 +14,10 @@ import { useNewBlogController } from "../useNewBlogController";
 // Importação dinâmica sem SSR
 const TinyEditor = dynamic(() => import('../../../_components/TinyEditor'), {
   ssr: false,
-  loading: () => <div className="h-96 bg-gray-100 animate-pulse rounded">Carregando editor...</div>
+  loading: () => <div className="h-96 bg-gray-100 animate-pulse rounded-md flex items-center justify-center gap-2">
+    <Loader2 className="h-6 w-6 text-gray-500 animate-spin" />
+    Carregando editor...
+  </div>
 })
 
 interface FormNewPost {
@@ -22,7 +25,14 @@ interface FormNewPost {
 }
 
 export function FormNewPost({ categorias }: FormNewPost) {
-  const { form, handleSubmit, handleImageChange, handleRemoveImage, imagePreview, isLoading } = useNewBlogController();
+  const {
+    form, 
+    handleSubmit, 
+    handleRemoveImage, 
+    setImagePreview, 
+    imagePreview, 
+    isLoading 
+  } = useNewBlogController();
 
   return (
     <div className="grid gap-4 md:grid-cols-1">
@@ -40,7 +50,7 @@ export function FormNewPost({ categorias }: FormNewPost) {
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6" encType="multipart/form-data">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Coluna 1 */}
                 <div className="space-y-4 col-span-2">
@@ -89,8 +99,10 @@ export function FormNewPost({ categorias }: FormNewPost) {
                         </FormLabel>
                         <FormControl>
                           <div className="relative">
-                            <BookOpen className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                            <TinyEditor />
+                            <TinyEditor 
+                              initialValue={field.value}
+                              onEditorChange={field.onChange}
+                            />
                           </div>
                         </FormControl>
                         <FormMessage />
@@ -128,8 +140,14 @@ export function FormNewPost({ categorias }: FormNewPost) {
                                 id="image-upload"
                                 type="file"
                                 accept="image/*"
-                                onChange={handleImageChange}
                                 className="hidden"
+                                onChange={(event) => {
+                                  const file = event.target.files?.[0];
+                                  if (file) {
+                                    setImagePreview(URL.createObjectURL(file)); // mantém a prévia
+                                    field.onChange(file); // ⚠️ importante: conecta com RHF
+                                  }
+                                }}
                               />
                               {imagePreview ? (
                                 <div className="relative">

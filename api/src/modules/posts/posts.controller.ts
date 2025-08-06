@@ -25,6 +25,7 @@ export class PostsController {
   @FileUpload({
     fieldName: 'featuredImage',
     destination: 'uploads/posts/featured',
+    mimeTypes: /^(image\/(jpeg|jpg|png|webp|gif)|application\/pdf|video\/mp4)$/,
     fileTypes: /\/(jpg|jpeg|png|webp)$/,
     filePrefix: 'featured',
   })
@@ -49,6 +50,7 @@ export class PostsController {
   @FileUpload({
     fieldName: 'featuredImage',
     destination: 'uploads/posts/featured',
+    mimeTypes: /^(image\/(jpeg|jpg|png|webp|gif)|application\/pdf|video\/mp4)$/,
     fileTypes: /\/(jpg|jpeg|png|webp)$/,
     filePrefix: 'featured',
   })

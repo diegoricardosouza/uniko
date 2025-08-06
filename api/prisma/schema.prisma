@@ -85,9 +85,9 @@ model Media {
   description  String? // Descrição da mídia
 
   // Campos para relacionamento polimórfico
-  entityType String @map("entity_type") // 'Post', 'Property', 'User', etc
-  entityId   String @map("entity_id") @db.Uuid // ID da entidade relacionada
-  mediaType  String @map("media_type") // 'featured_image', 'gallery', 'attachment', etc
+  entityType String  @map("entity_type") // 'Post', 'Property', 'User', etc
+  entityId   String? @map("entity_id") @db.Uuid // ID da entidade relacionada
+  mediaType  String  @map("media_type") // 'featured_image', 'gallery', 'attachment', etc
 
   // Campos para ordenação e controle
   order    Int     @default(0) // Ordem das mídias na galeria

@@ -28,6 +28,82 @@ export interface FindPostsOptions {
   orderDirection?: 'asc' | 'desc';
 }
 
+type PostCategoryWithRelation = Prisma.PostCategoryGetPayload<{
+  include: {
+    category: {
+      select: {
+        id: true;
+        name: true;
+        slug: true;
+        description: true;
+        createdAt: true;
+      };
+    };
+  };
+}>;
+
+type PostWithCategoriesAndMedia = Prisma.PostGetPayload<{
+  include: {
+    categories: {
+      include: {
+        category: {
+          select: {
+            id: true;
+            name: true;
+            slug: true;
+            description: true;
+            createdAt: true;
+          };
+        };
+      };
+    };
+    medias: {
+      select: {
+        id: true;
+        filename: true;
+        originalName: true;
+        url: true;
+        order: true;
+        mediaType: true;
+      };
+    };
+  };
+}>;
+
+const postSelectFields = {
+  id: true,
+  name: true,
+  slug: true,
+  subtitle: true,
+  content: true,
+  createdAt: true,
+  categories: {
+    include: {
+      category: {
+        select: {
+          id: true,
+          name: true,
+          slug: true,
+          description: true,
+          createdAt: true,
+        },
+      },
+    },
+  },
+  medias: {
+    where: { isActive: true },
+    orderBy: { order: 'asc' } as const,
+    select: {
+      id: true,
+      filename: true,
+      originalName: true,
+      url: true,
+      order: true,
+      mediaType: true,
+    },
+  },
+};
+
 @Injectable()
 export class PostsService {
   constructor(
@@ -125,7 +201,9 @@ export class PostsService {
   /**
    * Busca todos os posts com filtros e paginação
    */
-  async findAll(options: FindPostsOptions = {}) {
+  async findAll(
+    options: FindPostsOptions = {},
+  ): Promise<PostWithCategoriesAndMedia[]> {
     const { search, categoryIds } = options;
 
     // Construir filtros
@@ -149,47 +227,27 @@ export class PostsService {
       };
     }
 
-    return this.postsRepo.findAll({
+    const rawPosts = (await this.postsRepo.findAll({
       where,
       orderBy: {
         createdAt: 'desc',
       },
-      select: {
-        id: true,
-        name: true,
-        slug: true,
-        subtitle: true,
-        content: true,
-        categories: {
-          include: {
-            category: {
-              omit: {
-                updatedAt: true,
-              },
-            },
-          },
-          omit: {
-            updatedAt: true,
-            categoryId: true,
-            createdAt: true,
-            postId: true,
-            id: true,
-          },
-        },
-        medias: {
-          where: { isActive: true },
-          orderBy: { order: 'asc' } as const,
-          select: {
-            id: true,
-            filename: true,
-            originalName: true,
-            url: true,
-            order: true,
-          },
-        },
-        createdAt: true,
-      },
-    });
+      select: postSelectFields,
+    })) as PostWithCategoriesAndMedia[];
+
+    // transformar a estrutura
+    const posts = rawPosts.map((post) => ({
+      ...post,
+      id: post.id,
+      name: post.name,
+      slug: post.slug,
+      subtitle: post.subtitle,
+      content: post.content,
+      createdAt: post.createdAt,
+      categories: post.categories.map((item: any) => item.category),
+    }));
+
+    return posts;
   }
 
   /**

@@ -14,6 +14,7 @@ export class FileUploadConfig implements MulterOptionsFactory {
       destination: string;
       fileSize?: number;
       fileTypes?: RegExp;
+      mimeTypes?: RegExp; // Nova opção para mimetypes
       filePrefix?: string;
     },
   ) {
@@ -52,10 +53,25 @@ export class FileUploadConfig implements MulterOptionsFactory {
         },
       }),
       fileFilter: (req, file, callback) => {
-        if (
-          this.config.fileTypes &&
-          !file.mimetype.match(this.config.fileTypes)
-        ) {
+        let isValidType = false;
+
+        // Verifica mimetype se especificado
+        if (this.config.mimeTypes) {
+          isValidType = file.mimetype.match(this.config.mimeTypes) !== null;
+        }
+        
+        // Verifica extensão se especificado (fallback ou verificação adicional)
+        if (this.config.fileTypes && !isValidType) {
+          const fileExtension = extname(file.originalname).toLowerCase();
+          isValidType = fileExtension.match(this.config.fileTypes) !== null;
+        }
+
+        // Se nem mimeTypes nem fileTypes foram especificados, aceita qualquer arquivo
+        if (!this.config.mimeTypes && !this.config.fileTypes) {
+          isValidType = true;
+        }
+
+        if (!isValidType) {
           callback(
             new BadRequestException('Tipo de arquivo não permitido!'),
             false,

@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer';
 import {
   IsArray,
   IsNotEmpty,
@@ -23,6 +24,14 @@ export class CreatePostDto {
   @IsNotEmpty()
   content: string;
 
+  @Transform(({ value }) => {
+    try {
+      const parsed = typeof value === 'string' ? JSON.parse(value) : value;
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  })
   @IsArray()
   @IsOptional()
   @IsUUID('all', { each: true })

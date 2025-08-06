@@ -201,7 +201,7 @@ export function CategoryPostsDataTable({ categories, isLoading }: UsersDataTable
                 ) : (
                   <TableRow>
                     <TableCell colSpan={columnsUser.length} className="h-24 text-center">
-                      No results.
+                      Nenhum resultado.
                     </TableCell>
                   </TableRow>
                 )}
