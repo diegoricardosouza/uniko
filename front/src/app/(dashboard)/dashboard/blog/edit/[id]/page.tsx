@@ -1,16 +1,17 @@
 import { categoryPostsService } from "@/services/categoryPostsService";
-import { BreadcrumbNewBlog } from "../../_components/BreadcrumbNewBlog";
-import { FormNewPost } from "../_components/FormNewPost";
+import { BreadcrumbEditBlog } from "../../../_components/BreadcrumbEditBlog";
+import { FormEditPost } from "../../_components/FormEditPost";
+
 
 export default async function NewBlog() {
   const categories = await categoryPostsService.getAll();
 
   return (
     <div>
-      <BreadcrumbNewBlog />
+      <BreadcrumbEditBlog />
 
       <div className="flex flex-1 flex-col p-4 pt-0">
-        <FormNewPost categorias={categories} />
+        <FormEditPost categorias={categories} />
       </div>
     </div>
   )

@@ -256,45 +256,21 @@ export class PostsService {
   async findOne(id: string): Promise<PostWithRelations> {
     await this.existsPost(id);
 
-    const post = await this.postsRepo.findUnique({
+    const rawPost = (await this.postsRepo.findUnique({
       where: { id },
-      select: {
-        id: true,
-        name: true,
-        slug: true,
-        subtitle: true,
-        content: true,
-        categories: {
-          include: {
-            category: {
-              omit: {
-                updatedAt: true,
-              },
-            },
-          },
-          omit: {
-            updatedAt: true,
-            categoryId: true,
-            createdAt: true,
-            postId: true,
-            id: true,
-          },
-        },
-        medias: {
-          where: { isActive: true },
-          orderBy: { order: 'asc' } as const,
-          select: {
-            id: true,
-            filename: true,
-            originalName: true,
-            url: true,
-            order: true,
-            mediaType: true,
-          },
-        },
-        createdAt: true,
-      },
-    });
+      select: postSelectFields,
+    })) as PostWithCategoriesAndMedia;
+
+    const post = {
+      ...rawPost,
+      id: rawPost.id,
+      name: rawPost.name,
+      slug: rawPost.slug,
+      subtitle: rawPost.subtitle,
+      content: rawPost.content,
+      createdAt: rawPost.createdAt,
+      categories: rawPost.categories.map((item: any) => item.category),
+    };
 
     return post;
   }

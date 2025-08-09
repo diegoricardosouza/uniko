@@ -9,10 +9,11 @@ import { Input } from "@/components/ui/input";
 import { CategoryPosts } from "@/entities/CategoryPosts";
 import { BookOpen, FileText, ImageIcon, Loader2, Tag, Trash, Type } from "lucide-react";
 import dynamic from "next/dynamic";
-import { useNewBlogController } from "../useNewBlogController";
+import { useNewBlogController } from "../new/useNewBlogController";
+
 
 // Importação dinâmica sem SSR
-const TinyEditor = dynamic(() => import('../../../_components/TinyEditor'), {
+const TinyEditor = dynamic(() => import('../../_components/TinyEditor'), {
   ssr: false,
   loading: () => <div className="h-96 bg-gray-100 animate-pulse rounded-md flex items-center justify-center gap-2">
     <Loader2 className="h-6 w-6 text-gray-500 animate-spin" />

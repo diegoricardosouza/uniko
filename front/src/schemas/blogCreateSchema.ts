@@ -12,7 +12,7 @@ export const blogCreateSchema = z.object({
   // featuredImage: z.string().min(1, {
   //   message: "Por favor, selecione uma imagem de destaque.",
   // }),
-  featuredImage: z.custom<File | undefined>((file) => {
+  featuredImage: z.custom<File | undefined | string>((file) => {
     if (file === undefined) return true; // permitir limpar
     return file instanceof File && file.size > 0;
   }, {

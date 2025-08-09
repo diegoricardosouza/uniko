@@ -2,7 +2,8 @@
 
 import {
   ChevronsUpDown,
-  LogOut
+  LogOut,
+  UserRoundCog
 } from "lucide-react"
 
 import {
@@ -13,6 +14,7 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -26,6 +28,7 @@ import {
 } from "@/components/ui/sidebar"
 import { useAuth } from "@/hooks/useAuth"
 import { useSession } from "next-auth/react"
+import Link from "next/link"
 
 export function NavUser({
   user,
@@ -85,21 +88,23 @@ export function NavUser({
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            {/* <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Account
+            <DropdownMenuGroup>
+              <DropdownMenuItem className="cursor-pointer" asChild>
+                <Link href="/dashboard/profile">
+                  <UserRoundCog />
+                  Meu Perfil
+                </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              {/* <DropdownMenuItem>
                 <CreditCard />
                 Billing
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Bell />
                 Notifications
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
             </DropdownMenuGroup>
-            <DropdownMenuSeparator /> */}
+            <DropdownMenuSeparator />
             <DropdownMenuItem className="cursor-pointer" onClick={logout}>
               <LogOut />
               Sair

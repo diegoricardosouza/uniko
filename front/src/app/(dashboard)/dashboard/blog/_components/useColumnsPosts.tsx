@@ -122,7 +122,7 @@ export function useColumnsPosts(onDelete: (id: string) => void): ColumnDef<Post>
       cell: ({ row }) => (
         <div className="flex items-center gap-0">
           <Button variant="ghost" size="icon" className="h-8 w-8" asChild>
-            <Link href={`/dashboard/users/edit/${row.original.id}`}>
+            <Link href={`/dashboard/blog/edit/${row.original.id}`}>
               <Edit className="w-4 h-4 text-blue-700" />
               <span className="sr-only">Editar</span>
             </Link>

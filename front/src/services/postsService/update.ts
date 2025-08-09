@@ -1,16 +1,19 @@
 import { httpClient } from "../httpClient";
 
-export interface PostsParams {
+export interface UpdatePostsParams {
   id: string;
   name: string;
   subtitle?: string;
-  featuredImage: string | File;
+  featuredImage?: string | File;
   content?: string;
   categoryIds?: string[];
 }
 
-export async function update({ id, ...params }: PostsParams) {
-  const { data } = await httpClient.patch(`/posts/${id}`, params, { headers: { "Content-Type": "multipart/form-data" } });
-
+export async function update(id: string, formData: FormData) {
+  const { data } = await httpClient.patch(`/posts/${id}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
   return data;
 }
