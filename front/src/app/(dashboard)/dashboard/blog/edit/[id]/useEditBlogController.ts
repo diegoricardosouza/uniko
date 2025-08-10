@@ -1,4 +1,3 @@
- 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getPostAction } from "@/app/actions/posts/get-post";
 import { getUpdatepostAction } from "@/app/actions/posts/get-update-post";
@@ -32,33 +31,33 @@ export function useEditBlogController() {
   })
 
   useEffect(() => {
-      if (!id) return;
-  
-      const fetchPost = async () => {
-        try {
-          setIsDataLoaded(false);
-          
-          const post = await getPostAction(id);
-          const featuredImagePost = post.medias?.filter((media) => media.mediaType === "featured_image")[0];
-          const categoriesFromPost = post.categories
-            ? post.categories.map((cat: any) => String(cat.id))
-            : [];
-      
-          form.setValue("name", post.name ?? "");
-          form.setValue("subtitle", post.subtitle ?? "");
-          form.setValue("featuredImage", featuredImagePost?.url);
-          form.setValue("content", post.content ?? "");
-          form.setValue("categories", categoriesFromPost);
-          setImagePreview(`${featuredImagePost?.url ? process.env.NEXT_PUBLIC_API_URL : ''}${featuredImagePost?.url ?? ""}`);
-          setIsDataLoaded(true);
-        } catch (error: any) {
-          console.log(error);
-          toast.error("Erro ao buscar dados do usuário");
-        }
-      };
-  
-      fetchPost();
-    }, [id, form]);
+    if (!id) return;
+
+    const fetchPost = async () => {
+      try {
+        setIsDataLoaded(false);
+        
+        const post = await getPostAction(id);
+        const featuredImagePost = post.medias?.filter((media) => media.mediaType === "featured_image")[0];
+        const categoriesFromPost = post.categories
+          ? post.categories.map((cat: any) => String(cat.id))
+          : [];
+    
+        form.setValue("name", post.name ?? "");
+        form.setValue("subtitle", post.subtitle ?? "");
+        form.setValue("featuredImage", featuredImagePost?.url);
+        form.setValue("content", post.content ?? "");
+        form.setValue("categories", categoriesFromPost);
+        setImagePreview(`${featuredImagePost?.url ? process.env.NEXT_PUBLIC_API_URL : ''}${featuredImagePost?.url ?? ""}`);
+        setIsDataLoaded(true);
+      } catch (error: any) {
+        console.log(error);
+        toast.error("Erro ao buscar dados do post");
+      }
+    };
+
+    fetchPost();
+  }, [id, form]);
 
   // Função para lidar com seleção de nova imagem
   function handleImageChange(file: File) {

@@ -96,9 +96,9 @@ export function useColumnsUser(onDelete: (id: string) => void): ColumnDef<User>[
         return (
           <div className="pl-4">
             {row.original.active ? (
-              <Badge className="pb-1 bg-green-600">Ativado</Badge>
+              <Badge className="pb-1 bg-green-600">Ativo</Badge>
             ) : (
-              <Badge className="pb-1" variant="destructive">Desativado</Badge>
+              <Badge className="pb-1" variant="destructive">Inativo</Badge>
             )}
             
           </div>

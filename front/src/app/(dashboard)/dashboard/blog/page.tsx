@@ -1,5 +1,6 @@
 import { getPostsAction } from "@/app/actions/posts/get-posts";
-import { BreadcrumbUsers } from "../_components/BreadcrumbUsers";
+
+import { BreadcrumbPosts } from "../_components/BreadcrumbPosts";
 import { PostsDataTable } from "./_components/PostsDataTable";
 
 export default async function Posts() {
@@ -7,7 +8,7 @@ export default async function Posts() {
 
   return (
     <div>
-      <BreadcrumbUsers />
+      <BreadcrumbPosts />
 
       <div className="flex flex-1 flex-col p-4 pt-0">
         <PostsDataTable

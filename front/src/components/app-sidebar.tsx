@@ -1,19 +1,16 @@
 "use client"
 
 import {
-  Bot,
-  Frame,
-  Gauge,
-  Map,
+  Building,
+  Home,
   Newspaper,
-  PieChart,
-  SquareTerminal,
+  NotebookText,
+  Settings2,
   Users
 } from "lucide-react"
 import * as React from "react"
 
 import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
 import { NavUser } from "@/components/nav-user"
 import { TeamSwitcher } from "@/components/team-switcher"
 import {
@@ -35,43 +32,39 @@ const data = {
     {
       title: "Dashboard",
       url: "/dashboard",
-      icon: Gauge,
+      icon: Home,
     },
     {
-      title: "Playground",
+      title: "Páginas",
       url: "#",
-      icon: SquareTerminal,
+      icon: NotebookText,
       isActive: true,
       items: [
         {
-          title: "History",
+          title: "Listar Todas",
           url: "#",
         },
         {
-          title: "Starred",
+          title: "Adicionar Nova",
           url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
+        }
       ],
     },
     {
-      title: "Models",
+      title: "Imóveis",
       url: "#",
-      icon: Bot,
+      icon: Building,
       items: [
         {
-          title: "Genesis",
+          title: "Listar Todos",
           url: "#",
         },
         {
-          title: "Explorer",
+          title: "Adicionar Novo",
           url: "#",
         },
         {
-          title: "Quantum",
+          title: "Categorias",
           url: "#",
         },
       ],
@@ -110,24 +103,12 @@ const data = {
         }
       ],
     },
-  ],
-  projects: [
     {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
+      title: "Configurações",
+      url: "/dashboard/settings",
+      icon: Settings2,
     },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
-    },
-  ],
+  ]
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -138,7 +119,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter className="border-t">
         <NavUser user={data.user} />
