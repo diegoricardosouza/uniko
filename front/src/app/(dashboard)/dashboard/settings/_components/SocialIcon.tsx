@@ -4,7 +4,7 @@ import React, { Suspense, useMemo } from "react";
 
 export type IconSpec =
   | { library: "lucide"; name: keyof typeof dynamicIconImports | string }
-  | { library: "react-icons"; pack: "fa" | "ai"; name: string };
+  | { library: "react-icons"; pack: "fa" | "ai" | "bs" | "ci"; name: string };
 
 interface SocialIconProps {
   spec: IconSpec | undefined;
@@ -33,9 +33,28 @@ const SocialIcon: React.FC<SocialIconProps> = ({ spec, className, size = 20 }) =
     if (spec.library === "react-icons") {
       const pack = spec.pack;
       const name = spec.name;
+
       return React.lazy(async () => {
-        const mod = await (pack === "fa" ? import("react-icons/fa") : import("react-icons/ai"));
-        const Comp = (mod as Record<string, any>)[name];
+        let mod: Record<string, any>;
+
+        switch (pack) {
+          case "fa":
+            mod = await import("react-icons/fa");
+            break;
+          case "ai":
+            mod = await import("react-icons/ai");
+            break;
+          case "bs":
+            mod = await import("react-icons/bs");
+            break;
+          case "ci":
+            mod = await import("react-icons/ci");
+            break;
+          default:
+            return { default: () => null } as any;
+        }
+
+        const Comp = mod[name];
         return { default: Comp ?? (() => null) } as any;
       }) as any;
     }

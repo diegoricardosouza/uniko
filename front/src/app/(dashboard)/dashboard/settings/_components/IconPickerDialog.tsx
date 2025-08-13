@@ -49,7 +49,7 @@ export default function IconPickerDialog({ open, onOpenChange, onSelect }: IconP
   const [tab, setTab] = useState("sugestoes");
   const [query, setQuery] = useState("");
   const [lucideResults, setLucideResults] = useState<string[]>([]);
-  const [reactResults, setReactResults] = useState<{ pack: "fa" | "ai"; name: string }[]>([]);
+  const [reactResults, setReactResults] = useState<{ pack: "fa" | "ai" | "bs" | "ci"; name: string }[]>([]);
 
   useEffect(() => {
     if (!open) {
@@ -73,16 +73,36 @@ export default function IconPickerDialog({ open, onOpenChange, onSelect }: IconP
 
     // React Icons: search FA and AI packs lazily
     (async () => {
-      const results: { pack: "fa" | "ai"; name: string }[] = [];
-      const [fa, ai] = await Promise.all([import("react-icons/fa"), import("react-icons/ai")]);
+      const results: { pack: "fa" | "ai" | "bs" | "ci"; name: string }[] = [];
+      const [fa, ai, bs, ci] = await Promise.all([
+        import("react-icons/fa"),
+        import("react-icons/ai"),
+        import("react-icons/bs"),
+        import("react-icons/ci"),
+      ]);
       for (const [name] of Object.entries(fa)) {
         if (name.toLowerCase().includes(q)) results.push({ pack: "fa", name });
         if (results.length >= 60) break;
       }
+
       if (results.length < 60) {
         for (const [name] of Object.entries(ai)) {
           if (name.toLowerCase().includes(q)) results.push({ pack: "ai", name });
           if (results.length >= 120) break;
+        }
+      }
+
+      if (results.length < 120) {
+        for (const [name] of Object.entries(bs)) {
+          if (name.toLowerCase().includes(q)) results.push({ pack: "bs", name });
+          if (results.length >= 180) break;
+        }
+      }
+
+      if (results.length < 180) {
+        for (const [name] of Object.entries(ci)) {
+          if (name.toLowerCase().includes(q)) results.push({ pack: "ci", name });
+          if (results.length >= 240) break;
         }
       }
       setReactResults(results.slice(0, 120));
