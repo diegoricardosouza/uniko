@@ -11,6 +11,11 @@ export default async function Posts() {
       <BreadcrumbPosts />
 
       <div className="flex flex-1 flex-col p-4 pt-0">
+        <div className="mb-6">
+          <h1 className="text-3xl font-bold">Lista de Posts</h1>
+          <p className="text-muted-foreground">Gerencie seus post aqui.</p>
+        </div>
+
         <PostsDataTable
           posts={posts || []}
         />

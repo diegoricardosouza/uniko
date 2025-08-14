@@ -1,11 +1,10 @@
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { User } from "@/entities/User"
 import { ColumnDef } from "@tanstack/react-table"
-import { ChevronsUpDown, Edit, Trash2, UserCog } from "lucide-react"
-import Link from "next/link"
+import { ChevronsUpDown, Shield, UserPen } from "lucide-react"
 import { useMemo } from "react"
+import { DataTableRowAction } from "./DataTableRowAction"
 
 export function useColumnsUser(onDelete: (id: string) => void): ColumnDef<User>[] {
   const columns = useMemo<ColumnDef<User>[]>(() => [
@@ -23,7 +22,7 @@ export function useColumnsUser(onDelete: (id: string) => void): ColumnDef<User>[
       ),
       cell: ({ row }) => {
         return (
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 pl-3">
             <div className="grid gap-1">
               <p className="text-sm font-medium leading-none">
                 {row.original.name}
@@ -47,7 +46,7 @@ export function useColumnsUser(onDelete: (id: string) => void): ColumnDef<User>[
       ),
       cell: ({ row }) => {
         return (
-          <div className="flex items-center gap-4 pl-4">
+          <div className="flex items-center gap-4 pl-3">
             <div className="grid gap-1">
               <p className="text-sm font-medium leading-none">
                 {row.original.email}
@@ -70,8 +69,19 @@ export function useColumnsUser(onDelete: (id: string) => void): ColumnDef<User>[
       ),
       cell: ({ row }) => {
         return (
-          <div className="pl-4">
-            <Badge className="pb-1"><UserCog /> {row.original.role === 'ADMIN' ? 'Administrador' : 'Editor'}</Badge>
+          <div className="pl-3">
+            {row.original.role === 'ADMIN' && (
+              <div className="flex items-center gap-x-2">
+                <Shield className='w-4 h-4 text-muted-foreground' /> 
+                <span className='text-sm capitalize'>Administrador</span>
+              </div>
+            )}
+            {row.original.role === 'EDITOR' && (
+              <div className="flex items-center gap-x-2">
+                <UserPen className='w-4 h-4 text-muted-foreground' />
+                <span className='text-sm capitalize'>Editor</span>
+              </div>
+            )}
           </div>
         );
       },
@@ -94,11 +104,15 @@ export function useColumnsUser(onDelete: (id: string) => void): ColumnDef<User>[
       ),
       cell: ({ row }) => {
         return (
-          <div className="pl-4">
+          <div className="pl-3">
             {row.original.active ? (
-              <Badge className="pb-1 bg-green-600">Ativo</Badge>
+              <Badge variant="outline" className="bg-teal-100/30 text-teal-900 dark:text-teal-200 border-teal-200">
+                Ativo
+              </Badge>
             ) : (
-              <Badge className="pb-1" variant="destructive">Inativo</Badge>
+              <Badge variant="outline" className="bg-destructive/10 dark:bg-destructive/50 text-destructive dark:text-primary border-destructive/10">
+                Inativo
+              </Badge>
             )}
             
           </div>
@@ -110,42 +124,7 @@ export function useColumnsUser(onDelete: (id: string) => void): ColumnDef<User>[
       enableHiding: false,
       size: 100,
       cell: ({ row }) => (
-        <div className="flex items-center gap-0">
-          <Button variant="ghost" size="icon" className="h-8 w-8" asChild>
-            <Link href={`/dashboard/users/edit/${row.original.id}`}>
-              <Edit className="w-4 h-4 text-blue-700" />
-              <span className="sr-only">Editar</span>
-            </Link>
-          </Button>
-          <AlertDialog>
-            <AlertDialogTrigger>
-              <Button
-                className="bg-transparent text-[#020817] cursor-pointer h-8 w-8"
-                variant="ghost"
-                asChild
-                size="icon"
-              >
-                <a>
-                  <Trash2 className="w-4 h-4 text-red-800" />
-                </a>
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Deseja realmente excluir?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  Essa ação não pode ser desfeita. Os dados serão removidos permanentemente.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel className="cursor-pointer">Cancelar</AlertDialogCancel>
-                <AlertDialogAction className="cursor-pointer" onClick={() => onDelete(row.original.id)}>
-                  Confirmar
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        </div>
+        <DataTableRowAction row={row} onDelete={onDelete} />
       ),
     },
   ], [onDelete]);

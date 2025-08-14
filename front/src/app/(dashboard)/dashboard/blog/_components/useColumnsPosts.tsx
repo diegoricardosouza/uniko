@@ -1,13 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { CategoryPostsCat, Post } from "@/entities/Post"
 import { ColumnDef } from "@tanstack/react-table"
 import { format } from "date-fns"
-import { ChevronsUpDown, Edit, Trash2 } from "lucide-react"
-import Link from "next/link"
+import { ChevronsUpDown } from "lucide-react"
 import { useMemo } from "react"
+import { DataTableRowAction } from "./DataTableRowAction"
 
 export function useColumnsPosts(onDelete: (id: string) => void): ColumnDef<Post>[] {
   const columns = useMemo<ColumnDef<Post>[]>(() => [
@@ -25,7 +24,7 @@ export function useColumnsPosts(onDelete: (id: string) => void): ColumnDef<Post>
       ),
       cell: ({ row }) => {
         return (
-          <div className="flex items-center gap-4 pl-4">
+          <div className="flex items-center gap-4 pl-3">
             <div className="grid gap-1">
               <p className="text-sm font-medium leading-none">
                 {row.original.medias?.map((media) => (
@@ -56,7 +55,7 @@ export function useColumnsPosts(onDelete: (id: string) => void): ColumnDef<Post>
       ),
       cell: ({ row }) => {
         return (
-          <div className="pl-4">
+          <div className="pl-3">
             <p className="text-sm font-medium leading-none">
               {row.original.name}
             </p>
@@ -78,9 +77,9 @@ export function useColumnsPosts(onDelete: (id: string) => void): ColumnDef<Post>
       ),
       cell: ({ row }) => {
         return (
-          <div className="pl-4 flex gap-2 flex-wrap">
+          <div className="pl-3 flex gap-2 flex-wrap">
             {row.original.categories?.map((category, index) => (
-              <Badge key={index} variant="secondary" className="font-bold">
+              <Badge key={index} variant="outline" className="!bg-neutral-300/40 border-neutral-300">
                 {category.name}
               </Badge>
             ))}
@@ -107,7 +106,7 @@ export function useColumnsPosts(onDelete: (id: string) => void): ColumnDef<Post>
       ),
       cell: ({ row }) => {
         return (
-          <div className="pl-4">
+          <div className="pl-3">
             <p className="text-sm font-medium leading-none">
               {format(row.original.createdAt!, 'dd/MM/yyyy')}
             </p>
@@ -120,42 +119,7 @@ export function useColumnsPosts(onDelete: (id: string) => void): ColumnDef<Post>
       enableHiding: false,
       size: 50,
       cell: ({ row }) => (
-        <div className="flex items-center gap-0">
-          <Button variant="ghost" size="icon" className="h-8 w-8" asChild>
-            <Link href={`/dashboard/blog/edit/${row.original.id}`}>
-              <Edit className="w-4 h-4 text-blue-700" />
-              <span className="sr-only">Editar</span>
-            </Link>
-          </Button>
-          <AlertDialog>
-            <AlertDialogTrigger>
-              <Button
-                className="bg-transparent text-[#020817] cursor-pointer h-8 w-8"
-                variant="ghost"
-                asChild
-                size="icon"
-              >
-                <a>
-                  <Trash2 className="w-4 h-4 text-red-800" />
-                </a>
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Deseja realmente excluir?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  Essa ação não pode ser desfeita. Os dados serão removidos permanentemente.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel className="cursor-pointer">Cancelar</AlertDialogCancel>
-                <AlertDialogAction className="cursor-pointer" onClick={() => onDelete(row.original.id)}>
-                  Confirmar
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        </div>
+        <DataTableRowAction row={row} onDelete={onDelete} />
       ),
     },
   ], [onDelete]);

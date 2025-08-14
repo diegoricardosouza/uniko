@@ -1,7 +1,9 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Building2, Laptop, Share2 } from "lucide-react";
 import { BreadcrumbSettings } from "../_components/BreadcrumbSettings";
 import { ProtectedRoute } from "../_components/ProtectedRoute";
 import CompanyUnitsForm from "./_components/CompanyUnitsForm";
+import { SeoForm } from "./_components/SeoForm";
 import SocialLinksForm from "./_components/SocialLinksForm";
 
 export default function Settings() {
@@ -15,73 +17,48 @@ export default function Settings() {
           <p className="text-muted-foreground">Gerencie as configurações gerais do sistema</p>
         </div>
 
-        <Tabs defaultValue="company" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="company" className="transition-smooth">Empresa</TabsTrigger>
-            <TabsTrigger value="social" className="transition-smooth">Redes Sociais</TabsTrigger>
-            <TabsTrigger value="seo" className="transition-smooth">SEO</TabsTrigger>
-          </TabsList>
+        <hr />
 
-          <TabsContent value="company">
-            <CompanyUnitsForm />
-          </TabsContent>
+        <Tabs defaultValue="company" className="space-y-6 flex lg:flex-row gap-6">
+          <div className="w-full lg:max-w-[265px]">
+            <TabsList className="w-full flex lg:flex-col !h-auto gap-1 bg-white">
+              <TabsTrigger 
+                value="company" 
+                className="data-[state=active]:bg-secondary !shadow-none transition-smooth w-full py-2 px-4 text-sm lg:justify-start"
+              >
+                <Building2 className="h-6 w-6 mr-2" />
+                Empresa
+              </TabsTrigger>
+              <TabsTrigger 
+                value="social" 
+                className="data-[state=active]:bg-secondary !shadow-none transition-smooth w-full py-2 px-4 text-sm lg:justify-start"
+              >
+                <Share2 className="h-6 w-6 mr-2" />
+                Redes Sociais
+                </TabsTrigger>
+              <TabsTrigger 
+                value="seo" 
+                className="data-[state=active]:bg-secondary !shadow-none transition-smooth w-full py-2 px-4 text-sm lg:justify-start"
+              >
+                <Laptop className="h-6 w-6 mr-2" />
+                SEO
+                </TabsTrigger>
+            </TabsList>
+          </div>
 
-          <TabsContent value="social">
-            <SocialLinksForm />
-          </TabsContent>
+          <div className="w-full">
+            <TabsContent value="company">
+              <CompanyUnitsForm />
+            </TabsContent>
 
-          <TabsContent value="seo">
-            Seo Content
-            {/* <Card className="bg-gradient-card shadow-card border-0">
-              <CardHeader>
-                <CardTitle>Configurações de SEO</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="seo-title">Título do Site *</Label>
-                    <Input
-                      id="seo-title"
-                      value={seoSettings.title}
-                      onChange={(e) => setSeoSettings(prev => ({ ...prev, title: e.target.value }))}
-                      className="transition-smooth focus:shadow-primary"
-                    />
-                    <p className="text-xs text-muted-foreground">Máximo 60 caracteres</p>
-                  </div>
+            <TabsContent value="social">
+              <SocialLinksForm />
+            </TabsContent>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="seo-description">Descrição do Site *</Label>
-                    <Textarea
-                      id="seo-description"
-                      value={seoSettings.description}
-                      onChange={(e) => setSeoSettings(prev => ({ ...prev, description: e.target.value }))}
-                      className="transition-smooth focus:shadow-primary"
-                    />
-                    <p className="text-xs text-muted-foreground">Máximo 160 caracteres</p>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="seo-keywords">Palavras-chave</Label>
-                    <Textarea
-                      id="seo-keywords"
-                      value={seoSettings.keywords}
-                      onChange={(e) => setSeoSettings(prev => ({ ...prev, keywords: e.target.value }))}
-                      className="transition-smooth focus:shadow-primary"
-                      placeholder="Separe as palavras-chave por vírgula"
-                    />
-                  </div>
-                </div>
-
-                <Button
-                  onClick={handleSaveSEO}
-                  className="bg-gradient-primary hover:bg-primary-light transition-smooth shadow-primary"
-                >
-                  <Save className="h-4 w-4 mr-2" />
-                  Salvar SEO
-                </Button>
-              </CardContent>
-            </Card> */}
-          </TabsContent>
+            <TabsContent value="seo">
+              <SeoForm />
+            </TabsContent>
+          </div>
         </Tabs>
       </div>
     </ProtectedRoute>
