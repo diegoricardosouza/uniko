@@ -5,14 +5,17 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Building2, Clock, Mail, MapPin, Phone, PlusCircle, Save, Smartphone, Trash2 } from "lucide-react";
+import { Setting } from "@/entities/Setting";
+import { Building2, Clock, Loader2, Mail, MapPin, Phone, PlusCircle, Save, Smartphone, Trash2 } from "lucide-react";
 import { useCompanyUnitsController } from "../useCompanyUnitsController";
 
 
+interface  CompanyUnitsFormProps {
+  setting: Setting[]
+}
 
-
-export default function CompanyUnitsForm() {
-  const { form, fields, watchedUnits, control, addUnit, onSubmit, remove } = useCompanyUnitsController();
+export default function CompanyUnitsForm({ setting }: CompanyUnitsFormProps) {
+  const { form, fields, watchedUnits, control, isLoading, addUnit, onSubmit, remove } = useCompanyUnitsController(setting);
 
   return (
     <Form {...form}>
@@ -210,9 +213,18 @@ export default function CompanyUnitsForm() {
               ))}
             </Accordion>
 
-            <Button>
-              <Save className="h-4 w-4 mr-2" />
-              Salvar Unidades
+            <Button type="submit" disabled={isLoading}>
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Atualizando...
+                </>
+              ) : (
+                <>
+                  <Save className="h-4 w-4 mr-2" />
+                    Salvar Unidades
+                </>
+              )}
             </Button>
           </CardContent>
         </Card>

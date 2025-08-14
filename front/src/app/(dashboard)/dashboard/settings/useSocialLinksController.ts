@@ -1,9 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
+import { createSettingAction } from "@/app/actions/settings/create-setting";
+import { getUpdateSettingAction } from "@/app/actions/settings/update-setting";
+import { Setting, SocialMediaProps } from "@/entities/Setting";
 import { generateIconSvg } from "@/lib/svg";
 import { socialMediaSchema } from "@/schemas/socialMediaSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useFieldArray, useForm, useWatch } from "react-hook-form";
+import { toast } from "sonner";
 import z from "zod";
 import { IconSpec } from "./_components/SocialIcon";
 
@@ -13,7 +18,8 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
-export function useSocialLinksController() {
+export function useSocialLinksController(setting: Setting[]) {
+  const [isLoading, setIsLoading] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [svgCache, setSvgCache] = useState<Record<string, string>>({});
@@ -25,6 +31,22 @@ export function useSocialLinksController() {
     },
   });
 
+  useEffect(() => {
+    if (setting.length > 0) {
+      if (!setting[0].socialMedia) return;
+
+      form.reset({
+        socials: setting[0].socialMedia?.map((social: SocialMediaProps) => ({
+          label: social.name ?? "",
+          url: social.url ?? "",
+          // icon: social.icon ?? "",
+          icon: social.iconJson as string | undefined,
+        }))
+      })
+    }
+
+  }, [form, setting])
+
   const { control } = form;
 
   const { fields, append, remove } = useFieldArray({
@@ -32,7 +54,8 @@ export function useSocialLinksController() {
     name: "socials",
   });
 
-  const updateSvgCache = async (spec: IconSpec, index: number) => {
+  const updateSvgCache = async (spec: IconSpec | string, index: number) => {
+    if (typeof spec === 'string') return null as any;
     const key = `${index}-${spec.library}-${spec.name}`;
 
     if (!svgCache[key]) {
@@ -77,17 +100,61 @@ export function useSocialLinksController() {
   };
 
   const onSubmit = form.handleSubmit(async (data) => {
-    const socialsWithSvg = await Promise.all(
-      data.socials.map(async (social, index) => {
-        const key = `${index}-${social.icon.library}-${social.icon.name}`;
-        return {
-          ...social,
-          iconSvg: svgCache[key] || await generateIconSvg(social.icon)
-        };
-      })
-    );
+    setIsLoading(true);
+    if (setting.length > 0) {
+      try {
+        const socialsWithSvg = await Promise.all(
+          data.socials.map(async (social, index) => {
+            if (typeof social.icon === 'string') return null as any;
 
-    console.log(socialsWithSvg);
+            const key = `${index}-${social.icon?.library}-${social.icon?.name}`;
+            return {
+              name: social.label,
+              url: social.url,
+              icon: svgCache[key] || await generateIconSvg(social.icon),
+              iconJson: social.icon,
+            };
+          })
+        );
+
+        const payload = {
+          id: setting[0].id,
+          socialMedia: socialsWithSvg
+        }
+        await getUpdateSettingAction(payload);
+        toast.success("As informações das unidades foram atualizadas com sucesso.");
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+      return
+    }
+
+    try {
+      const socialsWithSvg = await Promise.all(
+        data.socials.map(async (social, index) => {
+          if (typeof social.icon === 'string') return null as any;
+
+          const key = `${index}-${social.icon?.library}-${social.icon?.name}`;
+          return {
+            name: social.label,
+            url: social.url,
+            icon: svgCache[key] || await generateIconSvg(social.icon),
+            iconJson: social.icon,
+          };
+        })
+      );
+      const payload = {
+        socialMedia: socialsWithSvg
+      }
+      await createSettingAction(payload);
+      toast.success("As informações das unidades foram atualizadas com sucesso.");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   });
 
   return {
@@ -95,6 +162,7 @@ export function useSocialLinksController() {
     fields,
     watchedSocials,
     pickerOpen,
+    isLoading,
     remove,
     addLink,
     onSubmit,

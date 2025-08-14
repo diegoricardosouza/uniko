@@ -32,6 +32,7 @@ export class SettingsService {
               name: sm.name,
               url: sm.url,
               icon: sm.icon,
+              iconJson: sm.iconJson
             })),
           }
           : undefined,
@@ -155,6 +156,7 @@ export class SettingsService {
               name: sm.name,
               url: sm.url,
               icon: sm.icon,
+              iconJson: sm.iconJson
             })),
           }
           : undefined,

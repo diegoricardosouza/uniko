@@ -15,6 +15,7 @@ interface SocialMediaProps {
   name?: string;
   url?: string;
   icon?: string;
+  iconJson?: Record<string, any>;
 }
 
 export class CreateSettingDto {

@@ -5,11 +5,16 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { BookOpen, Save, Type } from "lucide-react";
+import { Setting } from "@/entities/Setting";
+import { BookOpen, Loader2, Save, Type } from "lucide-react";
 import { useSeoController } from "../useSeoController";
 
-export function SeoForm() {
-  const { form, onSubmit } = useSeoController();
+interface SeoFormProps {
+  setting: Setting[]
+}
+
+export function SeoForm({ setting }: SeoFormProps) {
+  const { form, isLoading, onSubmit } = useSeoController(setting);
 
   return (
     <Form {...form}>
@@ -41,6 +46,7 @@ export function SeoForm() {
                         type="text"
                         className="transition-smooth focus:shadow-primary pl-10"
                         {...field}
+                        value={field.value ?? ""}
                       />
                     </div>
                   </FormControl>
@@ -62,6 +68,7 @@ export function SeoForm() {
                         id="seo-description"
                         className="transition-smooth focus:shadow-primary pl-10 h-[160px]"
                         {...field}
+                        value={field.value ?? ""}
                       />
                     </div>
                   </FormControl>
@@ -70,9 +77,18 @@ export function SeoForm() {
               )}
             />
 
-            <Button type="submit">
-              <Save className="h-4 w-4 mr-2" />
-              Salvar SEO
+            <Button type="submit" disabled={isLoading}>
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Atualizando...
+                </>
+              ) : (
+                <>
+                    <Save className="h-4 w-4 mr-2" />
+                    Salvar SEO
+                </>
+              )}
             </Button>
           </CardContent>
         </Card>

@@ -1,3 +1,4 @@
+import { getSettingsAction } from "@/app/actions/settings/get-settings";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Building2, Laptop, Share2 } from "lucide-react";
 import { BreadcrumbSettings } from "../_components/BreadcrumbSettings";
@@ -6,7 +7,9 @@ import CompanyUnitsForm from "./_components/CompanyUnitsForm";
 import { SeoForm } from "./_components/SeoForm";
 import SocialLinksForm from "./_components/SocialLinksForm";
 
-export default function Settings() {
+export default async function Settings() {
+  const setting = await getSettingsAction();
+
   return (
     <ProtectedRoute requiredRoles={["ADMIN"]}>
       <BreadcrumbSettings />
@@ -48,15 +51,15 @@ export default function Settings() {
 
           <div className="w-full">
             <TabsContent value="company">
-              <CompanyUnitsForm />
+              <CompanyUnitsForm setting={setting} />
             </TabsContent>
 
             <TabsContent value="social">
-              <SocialLinksForm />
+              <SocialLinksForm setting={setting} />
             </TabsContent>
 
             <TabsContent value="seo">
-              <SeoForm />
+              <SeoForm setting={setting} />
             </TabsContent>
           </div>
         </Tabs>

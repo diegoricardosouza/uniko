@@ -5,24 +5,30 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Link, PlusCircle, Save, Share2, Trash2 } from "lucide-react";
+import { Setting } from "@/entities/Setting";
+import { Link, Loader2, PlusCircle, Save, Share2, Trash2 } from "lucide-react";
 import { useSocialLinksController } from "../useSocialLinksController";
 import IconPickerDialog from "./IconPickerDialog";
 import SocialIcon from "./SocialIcon";
 
-export default function SocialLinksForm() {
+interface  SocialLinksFormProps {
+  setting: Setting[]
+}
+
+export default function SocialLinksForm({ setting }: SocialLinksFormProps) {
   const {
     form,
     watchedSocials,
     fields,
     pickerOpen,
+    isLoading,
     openPicker,
     addLink,
     remove,
     onSubmit,
     handleSelectIcon,
     setPickerOpen
-  } = useSocialLinksController();
+  } = useSocialLinksController(setting);
 
   return (
     <Form {...form}>
@@ -142,11 +148,11 @@ export default function SocialLinksForm() {
                                 <div className="flex items-center gap-2 px-3 py-2 border rounded-md">
                                   <SocialIcon spec={field.value} size={20} />
                                   <span className="text-xs text-muted-foreground">
-                                    {field.value
-                                      ? (field.value.library === "lucide"
+                                    {typeof field.value !== 'string'
+                                      ? (field.value?.library === "lucide"
                                         ? String(field.value.name)
-                                        : `${field.value.pack}:${field.value.name}`)
-                                      : "Nenhum"}
+                                        : `${field.value?.pack}:${field.value?.name}`)
+                                      : field.value}
                                   </span>
                                 </div>
                                 <Button
@@ -168,9 +174,18 @@ export default function SocialLinksForm() {
               ))}
             </Accordion>
 
-            <Button type="submit">
-              <Save className="h-4 w-4 mr-2" />
-              Salvar Redes Sociais
+            <Button type="submit" disabled={isLoading}>
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Atualizando...
+                </>
+              ) : (
+                <>
+                  <Save className="h-4 w-4 mr-2" />
+                    Salvar Redes Sociais
+                </>
+              )}
             </Button>
           </CardContent>
 

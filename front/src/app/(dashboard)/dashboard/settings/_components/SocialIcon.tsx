@@ -7,7 +7,7 @@ export type IconSpec =
   | { library: "react-icons"; pack: "fa" | "ai" | "bs" | "ci"; name: string };
 
 interface SocialIconProps {
-  spec: IconSpec | undefined;
+  spec: IconSpec | undefined | string;
   className?: string;
   size?: number;
 }
@@ -22,6 +22,8 @@ const Fallback = ({ className, size = 20 }: { className?: string; size?: number 
 
 const SocialIcon: React.FC<SocialIconProps> = ({ spec, className, size = 20 }) => {
   const LazyIcon = useMemo(() => {
+    if (typeof spec === 'string') return null as any;
+
     if (!spec) return null as any;
 
     if (spec.library === "lucide") {

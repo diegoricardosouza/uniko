@@ -144,6 +144,7 @@ model SocialMediaSetting {
   name      String?
   url       String?
   icon      String?
+  iconJson  Json?    @map("icon_json")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
