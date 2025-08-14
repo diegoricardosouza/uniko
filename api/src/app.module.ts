@@ -9,6 +9,7 @@ import { MediasModule } from './modules/medias/medias.module';
 import { PostsModule } from './modules/posts/posts.module';
 import { UsersModule } from './modules/users/users.module';
 import { DatabaseModule } from './shared/database/database.module';
+import { SettingsModule } from './modules/settings/settings.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { DatabaseModule } from './shared/database/database.module';
     CategoryPostsModule,
     PostsModule,
     MediasModule,
+    SettingsModule,
   ],
   controllers: [],
   providers: [
