@@ -324,8 +324,6 @@ export class MediasService {
       await this.deleteFile(filePath);
     }
 
-    
-
     // if (hardDelete) {
     //   // Remove o arquivo físico
     //   const filePath = join(process.cwd(), media.url);
@@ -348,7 +346,7 @@ export class MediasService {
     return null;
 
     // try {
-      
+
     // } catch (error) {
     //   throw new InternalServerErrorException('Erro interno ao remover mídia');
     // }
