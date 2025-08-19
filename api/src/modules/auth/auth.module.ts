@@ -4,6 +4,7 @@ import { env } from 'src/shared/config/env';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { MailService } from './mail.service';
+import { SeedService } from './seed.service';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { MailService } from './mail.service';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, MailService],
+  providers: [AuthService, MailService, SeedService],
+  exports: [SeedService]
 })
 export class AuthModule {}

@@ -426,4 +426,43 @@ export class MediasService {
       // Não lança erro para não interromper o fluxo principal
     }
   }
+
+  async findByEntityId(entityType: string, entityId: string) {
+    return this.mediasRepo.findMany({
+      where: {
+        entityType,
+        entityId,
+        isActive: true,
+      },
+      orderBy: { order: 'asc' },
+      select: {
+        id: true,
+        filename: true,
+        originalName: true,
+        url: true,
+        order: true,
+        mediaType: true,
+      },
+    });
+  }
+
+  async findByEntityIds(entityType: string, entityIds: string[]) {
+    return this.mediasRepo.findMany({
+      where: {
+        entityType,
+        entityId: { in: entityIds },
+        isActive: true,
+      },
+      orderBy: { order: 'asc' },
+      select: {
+        id: true,
+        filename: true,
+        originalName: true,
+        url: true,
+        order: true,
+        mediaType: true,
+        entityId: true, // Importante para agrupamento
+      },
+    });
+  }
 }

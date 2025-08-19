@@ -13,63 +13,58 @@ import {
   UploadedFile,
 } from '@nestjs/common';
 import { FileUpload } from 'src/shared/decorators/FileUpload';
-import { CreatePostDto } from './dto/create-post.dto';
-import { UpdatePostDto } from './dto/update-post.dto';
-import { FindPostsOptions, PostsService } from './posts.service';
+import { CreatePageDto } from './dto/create-page.dto';
+import { UpdatePageDto } from './dto/update-page.dto';
+import { FindPagesOptions, PagesService } from './pages.service';
 
-@Controller('posts')
-export class PostsController {
-  constructor(private readonly postsService: PostsService) {}
+@Controller('pages')
+export class PagesController {
+  constructor(private readonly pagesService: PagesService) {}
 
   @Post()
   @FileUpload({
     fieldName: 'featuredImage',
-    destination: 'uploads/posts/featured',
+    destination: 'uploads/pages/featured',
     mimeTypes: /^(image\/(jpeg|jpg|png|webp|gif)|application\/pdf|video\/mp4)$/,
     fileTypes: /\/(jpg|jpeg|png|webp)$/,
     filePrefix: 'featured',
   })
   create(
-    @Body() createPostDto: CreatePostDto,
+    @Body() createPageDto: CreatePageDto,
     @UploadedFile() featuredImage?: Express.Multer.File,
   ) {
-    return this.postsService.create(createPostDto, featuredImage);
+    return this.pagesService.create(createPageDto, featuredImage);
   }
 
   @Get()
-  findAll(@Query() options: FindPostsOptions) {
-    return this.postsService.findAll(options);
+  findAll(@Query() options: FindPagesOptions) {
+    return this.pagesService.findAll(options);
   }
 
   @Get(':id')
   findOne(@Param('id', ParseUUIDPipe) id: string) {
-    return this.postsService.findOne(id);
-  }
-
-  @Get('slug/:slug')
-  findBySlug(@Param('slug') slug: string) {
-    return this.postsService.findBySlug(slug);
+    return this.pagesService.findOne(id);
   }
 
   @Patch(':id')
   @FileUpload({
     fieldName: 'featuredImage',
-    destination: 'uploads/posts/featured',
+    destination: 'uploads/pages/featured',
     mimeTypes: /^(image\/(jpeg|jpg|png|webp|gif)|application\/pdf|video\/mp4)$/,
     fileTypes: /\/(jpg|jpeg|png|webp)$/,
     filePrefix: 'featured',
   })
   update(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body() updatePostDto: UpdatePostDto,
+    @Body() updatePageDto: UpdatePageDto,
     @UploadedFile() featuredImage?: Express.Multer.File,
   ) {
-    return this.postsService.update(id, updatePostDto, featuredImage);
+    return this.pagesService.update(id, updatePageDto, featuredImage);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id', ParseUUIDPipe) id: string) {
-    return this.postsService.remove(id);
+    return this.pagesService.remove(id);
   }
 }

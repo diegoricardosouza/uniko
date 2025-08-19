@@ -10,6 +10,7 @@ import { PostsModule } from './modules/posts/posts.module';
 import { UsersModule } from './modules/users/users.module';
 import { DatabaseModule } from './shared/database/database.module';
 import { SettingsModule } from './modules/settings/settings.module';
+import { PagesModule } from './modules/pages/pages.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { SettingsModule } from './modules/settings/settings.module';
     PostsModule,
     MediasModule,
     SettingsModule,
+    PagesModule,
   ],
   controllers: [],
   providers: [

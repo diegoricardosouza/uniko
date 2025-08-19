@@ -35,7 +35,8 @@ model Post {
   categories PostCategory[]
 
   // Relação com mídias (polimórfica)
-  medias Media[]
+  // medias Media[]
+  // medias Media[] @relation("PostMedias")
 
   @@map("posts")
 }
@@ -78,11 +79,11 @@ model Media {
   originalName String  @map("original_name") // Nome original do arquivo
   mimeType     String  @map("mime_type") // image/jpeg, video/mp4, etc
   size         Int // Tamanho em bytes
-  url          String // URL ou caminho do arquivo
+  url          String
   thumbnailUrl String? @map("thumbnail_url") // URL da thumbnail (para vídeos/imagens)
-  alt          String? // Texto alternativo
-  title        String? // Título da mídia
-  description  String? // Descrição da mídia
+  alt          String?
+  title        String?
+  description  String?
 
   // Campos para relacionamento polimórfico
   entityType String  @map("entity_type") // 'Post', 'Property', 'User', etc
@@ -97,13 +98,16 @@ model Media {
   updatedAt DateTime @updatedAt
 
   // Relacionamentos condicionais baseados no entityType
-  post Post? @relation(fields: [entityId], references: [id], onDelete: Cascade)
+  // post Post? @relation("PostMedias", fields: [entityId], references: [id])
+  // page Page? @relation("PageMedias", fields: [entityId], references: [id])
+  // post Post? @relation(fields: [entityId], references: [id], onDelete: Cascade)
+  // page Page? @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  // page Page? @relation(fields: [entityId], references: [id], onDelete: Cascade)
   // property Property? @relation(fields: [entityId], references: [id], onDelete: Cascade)
   // user User? @relation(fields: [entityId], references: [id], onDelete: Cascade)
 
   // Índices para performance
   @@index([entityType, entityId])
-  @@index([entityType, entityId, mediaType])
   @@index([entityType, entityId, order])
   @@map("medias")
 }
@@ -151,4 +155,18 @@ model SocialMediaSetting {
   setting Setting? @relation(fields: [settingId], references: [id])
 
   @@map("social_medias")
+}
+
+model Page {
+  id      String  @id @default(uuid()) @db.Uuid
+  name    String
+  slug    String  @unique
+  content String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // medias Media[] @relation("PageMedias")
+
+  @@map("pages")
 }

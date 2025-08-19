@@ -28,21 +28,7 @@ export interface FindPostsOptions {
   orderDirection?: 'asc' | 'desc';
 }
 
-type PostCategoryWithRelation = Prisma.PostCategoryGetPayload<{
-  include: {
-    category: {
-      select: {
-        id: true;
-        name: true;
-        slug: true;
-        description: true;
-        createdAt: true;
-      };
-    };
-  };
-}>;
-
-type PostWithCategoriesAndMedia = Prisma.PostGetPayload<{
+type PostWithCategories = Prisma.PostGetPayload<{
   include: {
     categories: {
       include: {
@@ -55,16 +41,6 @@ type PostWithCategoriesAndMedia = Prisma.PostGetPayload<{
             createdAt: true;
           };
         };
-      };
-    };
-    medias: {
-      select: {
-        id: true;
-        filename: true;
-        originalName: true;
-        url: true;
-        order: true;
-        mediaType: true;
       };
     };
   };
@@ -90,18 +66,6 @@ const postSelectFields = {
       },
     },
   },
-  medias: {
-    where: { isActive: true },
-    orderBy: { order: 'asc' } as const,
-    select: {
-      id: true,
-      filename: true,
-      originalName: true,
-      url: true,
-      order: true,
-      mediaType: true,
-    },
-  },
 };
 
 @Injectable()
@@ -111,13 +75,19 @@ export class PostsService {
     private readonly mediasRepo: MediasService,
   ) {}
 
+  private async getPostMedias(pageId: string) {
+    return this.mediasRepo.findByEntityId('Post', pageId);
+  }
+
+  private async getPostsMedias(pageIds: string[]) {
+    return this.mediasRepo.findByEntityIds('Post', pageIds);
+  }
+
   async create(
     createPostDto: CreatePostDto,
     featuredImageFile?: Express.Multer.File,
-  ): Promise<PostWithRelations> {
+  ) {
     const { name, subtitle, content, categoryIds } = createPostDto;
-
-    console.log(categoryIds);
 
     const slug = slugify(name);
     let uniqueSlug = slug;
@@ -163,17 +133,6 @@ export class PostsService {
             id: true,
           },
         },
-        medias: {
-          where: { isActive: true },
-          orderBy: { order: 'asc' } as const,
-          select: {
-            id: true,
-            filename: true,
-            originalName: true,
-            url: true,
-            order: true,
-          },
-        },
         createdAt: true,
       },
     });
@@ -195,15 +154,14 @@ export class PostsService {
       }
     }
 
-    return post;
+    const medias = await this.getPostMedias(post.id);
+    return { ...post, medias };
   }
 
   /**
    * Busca todos os posts com filtros e paginação
    */
-  async findAll(
-    options: FindPostsOptions = {},
-  ): Promise<PostWithCategoriesAndMedia[]> {
+  async findAll(options: FindPostsOptions = {}) {
     const { search, categoryIds } = options;
 
     // Construir filtros
@@ -233,7 +191,7 @@ export class PostsService {
         createdAt: 'desc',
       },
       select: postSelectFields,
-    })) as PostWithCategoriesAndMedia[];
+    })) as PostWithCategories[];
 
     // transformar a estrutura
     const posts = rawPosts.map((post) => ({
@@ -247,19 +205,40 @@ export class PostsService {
       categories: post.categories.map((item: any) => item.category),
     }));
 
-    return posts;
+    // Recuperar mídias para todas as páginas de uma vez
+    const pageIds = posts.map((page) => page.id);
+    const allMedias = await this.getPostsMedias(pageIds);
+
+    // Agrupar mídias por página
+    const mediasByPageId = allMedias.reduce((acc, media) => {
+      if (!acc[media.entityId]) {
+        acc[media.entityId] = [];
+      }
+      acc[media.entityId].push(media);
+      return acc;
+    }, {});
+
+    // Adicionar mídias às páginas
+    const postsWithMedias = posts.map((post) => ({
+      ...post,
+      medias: mediasByPageId[post.id] || [],
+    }));
+
+    return postsWithMedias;
   }
 
   /**
    * Busca um post específico por ID
    */
-  async findOne(id: string): Promise<PostWithRelations> {
-    await this.existsPost(id);
-
+  async findOne(id: string) {
     const rawPost = (await this.postsRepo.findUnique({
       where: { id },
       select: postSelectFields,
-    })) as PostWithCategoriesAndMedia;
+    })) as PostWithCategories;
+
+    if (!rawPost) {
+      throw new ConflictException('Post not found');
+    }
 
     const post = {
       ...rawPost,
@@ -272,7 +251,8 @@ export class PostsService {
       categories: rawPost.categories.map((item: any) => item.category),
     };
 
-    return post;
+    const medias = await this.getPostMedias(id);
+    return { ...post, medias };
   }
 
   /**
@@ -282,7 +262,7 @@ export class PostsService {
     id: string,
     updatePostDto: UpdatePostDto,
     featuredImageFile?: Express.Multer.File,
-  ): Promise<PostWithRelations> {
+  ) {
     const { name } = updatePostDto;
 
     // Verifica se o post existe
@@ -366,30 +346,25 @@ export class PostsService {
             id: true,
           },
         },
-        medias: {
-          where: { isActive: true },
-          orderBy: { order: 'asc' } as const,
-          select: {
-            id: true,
-            filename: true,
-            originalName: true,
-            url: true,
-            order: true,
-          },
-        },
         createdAt: true,
       },
     });
 
-    return updatedPost;
+    const medias = await this.getPostMedias(id);
+    return { ...updatedPost, medias };
   }
 
   /**
    * Remove um post
    */
-  async remove(id: string, hardDelete: boolean = false): Promise<void> {
-    // Verifica se o post existe
-    await this.existsPost(id);
+  async remove(id: string, hardDelete: boolean = false) {
+    const currentCat = await this.postsRepo.findUnique({
+      where: { id },
+    });
+
+    if (!currentCat) {
+      throw new ConflictException('Post not found');
+    }
 
     try {
       if (hardDelete) {
@@ -413,10 +388,7 @@ export class PostsService {
   /**
    * Busca post por slug
    */
-  async findBySlug(
-    slug: string,
-    includeRelations: boolean = true,
-  ): Promise<PostWithRelations> {
+  async findBySlug(slug: string, includeRelations: boolean = true) {
     const include = includeRelations
       ? {
           categories: {
@@ -424,23 +396,31 @@ export class PostsService {
               category: true,
             },
           },
-          medias: {
-            where: { isActive: true },
-            orderBy: { order: 'asc' } as const,
-          },
         }
       : undefined;
 
-    const post = await this.postsRepo.findUnique({
+    const rawPost = (await this.postsRepo.findUnique({
       where: { slug },
-      include,
-    });
+      select: postSelectFields,
+    })) as PostWithCategories;
 
-    if (!post) {
+    if (!rawPost) {
       throw new NotFoundException(`Post com slug "${slug}" não encontrado`);
     }
 
-    return post;
+    const post = {
+      ...rawPost,
+      id: rawPost.id,
+      name: rawPost.name,
+      slug: rawPost.slug,
+      subtitle: rawPost.subtitle,
+      content: rawPost.content,
+      createdAt: rawPost.createdAt,
+      categories: rawPost.categories.map((item: any) => item.category),
+    };
+
+    const medias = await this.getPostMedias(post.id);
+    return { ...post, medias };
   }
 
   /**
@@ -501,13 +481,6 @@ export class PostsService {
           include: {
             category: true,
           },
-        },
-        medias: {
-          where: {
-            isActive: true,
-            mediaType: 'featured_image',
-          },
-          take: 1,
         },
       },
       take: limit,
