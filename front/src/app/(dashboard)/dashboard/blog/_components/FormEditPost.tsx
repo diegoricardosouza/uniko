@@ -7,7 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { CategoryPosts } from "@/entities/CategoryPosts";
-import { BookOpen, FileText, ImageIcon, Loader2, Tag, Trash, Type } from "lucide-react";
+import { BookOpen, FileText, ImageIcon, Loader2, Save, Tag, Trash, Type } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useEditBlogController } from "../edit/[id]/useEditBlogController";
 
@@ -268,15 +268,18 @@ export function FormEditPost({ categorias }: FormNewPost) {
                 </div>
               </div>
 
-              <div className="flex gap-4 pt-4">
-                <Button type="submit" className="flex-1 cursor-pointer" disabled={isLoading}>
+              <div className="pt-4">
+                <Button type="submit" className="cursor-pointer" disabled={isLoading}>
                   {isLoading ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                       Atualizando...
                     </>
                   ) : (
-                    "Atualizar Post"
+                    <>
+                      <Save className="h-4 w-4 mr-2" />
+                      Atualizar Post
+                    </>
                   )}
                 </Button>
               </div>

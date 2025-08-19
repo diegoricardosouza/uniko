@@ -6,7 +6,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { CheckCircle, Loader2, Lock, Mail, ShieldUserIcon, User } from "lucide-react";
+import { CheckCircle, Loader2, Lock, Mail, Save, ShieldUserIcon, User } from "lucide-react";
 import { BreadcrumbEditUser } from "../../../_components/BreadcrumbEditUser";
 import { ProtectedRoute } from "../../../_components/ProtectedRoute";
 import { useEditUserController } from "./useEditUserController";
@@ -149,14 +149,17 @@ export default function UserEdit() {
                       )}
                     />
 
-                    <Button type="submit" className="w-full cursor-pointer" disabled={isLoading}>
+                    <Button type="submit" className="cursor-pointer" disabled={isLoading}>
                       {isLoading ? (
                         <>
                           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                           Atualizando...
                         </>
                       ) : (
-                        "Atualizar"
+                        <>
+                          <Save className="h-4 w-4 mr-2" />
+                          Atualizar
+                        </>
                       )}
                     </Button>
                   </form>

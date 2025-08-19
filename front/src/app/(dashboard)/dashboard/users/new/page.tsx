@@ -6,7 +6,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { CheckCircle, Loader2, Lock, Mail, ShieldUserIcon, User } from "lucide-react";
+import { CheckCircle, Loader2, Lock, Mail, Save, ShieldUserIcon, User } from "lucide-react";
 import { BreadcrumbNewUser } from "../../_components/BreadcrumbNewUser";
 import { ProtectedRoute } from "../../_components/ProtectedRoute";
 import { useNewUserController } from "./useNewUserController";
@@ -143,14 +143,17 @@ export default function UsersNew() {
                       )}
                     />
 
-                    <Button type="submit" className="w-full cursor-pointer" disabled={isLoading}>
+                    <Button type="submit" className="cursor-pointer" disabled={isLoading}>
                       {isLoading ? (
                         <>
                           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                           Cadastrando...
                         </>
                       ) : (
-                        "Cadastrar"
+                        <>
+                          <Save className="h-4 w-4 mr-2" />
+                          Cadastrar
+                        </>
                       )}
                     </Button>
                   </form>
