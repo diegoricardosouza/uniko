@@ -51,10 +51,10 @@ export function DataTableRowAction({ row, onDelete }: {
         </DropdownMenuTrigger>
         <DropdownMenuContent align='end' className='w-[160px]'>
           <DropdownMenuItem
-            className="cursor-pointer"
+            className="cursor-pointer p-0"
           >
-            <Button variant="ghost" size="icon" className="h-8 w-8" asChild>
-              <Link href={`/dashboard/blog/edit/${row.original.id}`} className="w-full font-normal p-0 h-[20px]">
+            <Button variant="ghost" size="icon" className="h-8 w-8 px-2 py-[6px]" asChild>
+              <Link href={`/dashboard/blog/edit/${row.original.id}`} className="w-full font-normal p-0 h-[32px]">
                 Editar
                 <DropdownMenuShortcut>
                   <Edit className="w-4 h-4" />
