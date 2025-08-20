@@ -42,11 +42,11 @@ const data = {
       items: [
         {
           title: "Listar Todas",
-          url: "#",
+          url: "/dashboard/pages",
         },
         {
           title: "Adicionar Nova",
-          url: "#",
+          url: "/dashboard/pages/new",
         }
       ],
     },

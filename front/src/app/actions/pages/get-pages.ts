@@ -3,7 +3,7 @@
 import { pagesService } from '@/services/pagesService';
 import axios from 'axios';
 
-export async function getPostsAction() {
+export async function getPagesAction() {
   try {
     return pagesService.getAll();
   } catch (error) {

@@ -3,7 +3,7 @@
 import { pagesService } from '@/services/pagesService';
 import axios from 'axios';
 
-export async function getUpdatepostAction(id: string, formData: FormData) {
+export async function updatePageAction(id: string, formData: FormData) {
   try {
     const result = await pagesService.update(id, formData);
     return result;
