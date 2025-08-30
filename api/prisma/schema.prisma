@@ -190,3 +190,45 @@ enum EmailStatus {
   SENT
   FAILED
 }
+
+model State {
+  id      String @id @default(uuid()) @db.Uuid
+  name    String
+  slug    String @unique
+  acronym String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  cities    City[]
+
+  @@map("states")
+}
+
+model City {
+  id      String @id @default(uuid()) @db.Uuid
+  name    String
+  slug    String @unique
+  stateId String @map("state_id") @db.Uuid
+
+  state State @relation(fields: [stateId], references: [id], onDelete: Cascade)
+
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  neighborhoods Neighborhood[]
+
+  @@map("cities")
+}
+
+model Neighborhood {
+  id     String @id @default(uuid()) @db.Uuid
+  name   String
+  slug   String @unique
+  cityId String @map("city_id") @db.Uuid
+
+  city City @relation(fields: [cityId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("neighborhoods")
+}

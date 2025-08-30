@@ -12,6 +12,9 @@ import { DatabaseModule } from './shared/database/database.module';
 import { SettingsModule } from './modules/settings/settings.module';
 import { PagesModule } from './modules/pages/pages.module';
 import { EmailsModule } from './modules/emails/emails.module';
+import { StatesModule } from './modules/states/states.module';
+import { CitiesModule } from './modules/cities/cities.module';
+import { NeighborhoodsModule } from './modules/neighborhoods/neighborhoods.module';
 
 @Module({
   imports: [
@@ -28,6 +31,9 @@ import { EmailsModule } from './modules/emails/emails.module';
     SettingsModule,
     PagesModule,
     EmailsModule,
+    StatesModule,
+    CitiesModule,
+    NeighborhoodsModule,
   ],
   controllers: [],
   providers: [
