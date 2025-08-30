@@ -11,6 +11,7 @@ import { UsersModule } from './modules/users/users.module';
 import { DatabaseModule } from './shared/database/database.module';
 import { SettingsModule } from './modules/settings/settings.module';
 import { PagesModule } from './modules/pages/pages.module';
+import { EmailsModule } from './modules/emails/emails.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { PagesModule } from './modules/pages/pages.module';
     MediasModule,
     SettingsModule,
     PagesModule,
+    EmailsModule,
   ],
   controllers: [],
   providers: [

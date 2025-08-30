@@ -34,10 +34,6 @@ model Post {
   // Relação many-to-many com CategoryPost
   categories PostCategory[]
 
-  // Relação com mídias (polimórfica)
-  // medias Media[]
-  // medias Media[] @relation("PostMedias")
-
   @@map("posts")
 }
 
@@ -96,15 +92,6 @@ model Media {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  // Relacionamentos condicionais baseados no entityType
-  // post Post? @relation("PostMedias", fields: [entityId], references: [id])
-  // page Page? @relation("PageMedias", fields: [entityId], references: [id])
-  // post Post? @relation(fields: [entityId], references: [id], onDelete: Cascade)
-  // page Page? @relation(fields: [pageId], references: [id], onDelete: Cascade)
-  // page Page? @relation(fields: [entityId], references: [id], onDelete: Cascade)
-  // property Property? @relation(fields: [entityId], references: [id], onDelete: Cascade)
-  // user User? @relation(fields: [entityId], references: [id], onDelete: Cascade)
 
   // Índices para performance
   @@index([entityType, entityId])
@@ -166,7 +153,40 @@ model Page {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // medias Media[] @relation("PageMedias")
-
   @@map("pages")
+}
+
+model Email {
+  id           String            @id @default(uuid()) @db.Uuid
+  name         String
+  to           String
+  subject      String
+  htmlContent  String            @map("html_content")
+  status       EmailStatus       @default(PENDING)
+  sentAt       DateTime?         @map("sent_at")
+  errorMessage String?           @map("error_message")
+  attachments  EmailAttachment[]
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  @@map("emails")
+}
+
+model EmailAttachment {
+  id       String @id @default(uuid()) @db.Uuid
+  emailId  String @map("email_id") @db.Uuid
+  filename String
+  path     String
+  mimetype String
+  size     Int
+
+  email Email @relation(fields: [emailId], references: [id], onDelete: Cascade)
+
+  @@map("email_attachments")
+}
+
+enum EmailStatus {
+  PENDING
+  SENT
+  FAILED
 }
