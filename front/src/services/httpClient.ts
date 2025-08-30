@@ -2,6 +2,7 @@
 import { localStoragekeys } from '@/config/localStorageKeys';
 import { auth } from '@/lib/auth';
 import axios from 'axios';
+import { redirect } from 'next/navigation';
 
 export const httpClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -44,6 +45,8 @@ httpClient.interceptors.response.use(
         localStorage.removeItem(localStoragekeys.TOKEN);
         window.location.href = '/login';
       }
+
+      redirect('/login');
     }
     return Promise.reject(error);
   }

@@ -122,7 +122,7 @@ export function useSocialLinksController(setting: Setting[]) {
           socialMedia: socialsWithSvg
         }
         await getUpdateSettingAction(payload);
-        toast.success("As informações das unidades foram atualizadas com sucesso.");
+        toast.success("As informações das redes sociais foram atualizadas com sucesso.");
       } catch (error) {
         console.log(error);
       } finally {
@@ -149,7 +149,7 @@ export function useSocialLinksController(setting: Setting[]) {
         socialMedia: socialsWithSvg
       }
       await createSettingAction(payload);
-      toast.success("As informações das unidades foram atualizadas com sucesso.");
+      toast.success("As informações das redes sociais foram atualizadas com sucesso.");
     } catch (error) {
       console.log(error);
     } finally {

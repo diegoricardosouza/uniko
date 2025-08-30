@@ -3,6 +3,7 @@
 import {
   Building,
   Home,
+  Mails,
   Newspaper,
   NotebookText,
   Settings2,
@@ -102,6 +103,11 @@ const data = {
           url: "/dashboard/users/new",
         }
       ],
+    },
+    {
+      title: "Emails",
+      url: "/dashboard/emails",
+      icon: Mails
     },
     {
       title: "Configurações",
