@@ -74,7 +74,8 @@ export class NeighborhoodsService {
         }
       },
       omit: {
-        updatedAt: true
+        updatedAt: true,
+        cityId: true
       }
     });
   }
@@ -98,7 +99,8 @@ export class NeighborhoodsService {
         }
       },
       omit: {
-        updatedAt: true
+        updatedAt: true,
+        cityId: true
       }
     });
 
@@ -158,7 +160,8 @@ export class NeighborhoodsService {
         }
       },
       omit: {
-        updatedAt: true
+        updatedAt: true,
+        cityId: true
       }
     });
   }
