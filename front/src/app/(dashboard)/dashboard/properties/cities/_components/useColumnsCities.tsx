@@ -17,7 +17,7 @@ export function useColumnsCities(onDelete: (id: string) => void, onEdit: (id: st
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Nome
+          Cidade
           <ChevronsUpDown className="ml-2 h-4 w-4" />
         </Button>
       ),
@@ -29,6 +29,28 @@ export function useColumnsCities(onDelete: (id: string) => void, onEdit: (id: st
                 {row.original.name}
               </p>
             </div>
+          </div>
+        );
+      }
+    },
+    {
+      accessorKey: "slug",
+      size: 150,
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Slug
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      ),
+      cell: ({ row }) => {
+        return (
+          <div className="flex items-center gap-4 pl-3">
+            <Badge variant="outline" className="!bg-neutral-300/40 border-neutral-300">
+              {row.original.slug}
+            </Badge>
           </div>
         );
       }
@@ -48,7 +70,7 @@ export function useColumnsCities(onDelete: (id: string) => void, onEdit: (id: st
       cell: ({ row }) => {
         return (
           <div className="flex items-center gap-4 pl-3">
-            <Badge variant="outline" className="!bg-neutral-300/40 border-neutral-300">
+            <Badge variant="outline" className="bg-sky-200/40 text-sky-900 dark:text-sky-100 border-sky-300">
               {row.original.state?.name}
             </Badge>
           </div>

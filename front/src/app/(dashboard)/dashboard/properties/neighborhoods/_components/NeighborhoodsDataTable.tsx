@@ -7,7 +7,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { City } from "@/entities/City";
+import { Neighborhood } from "@/entities/Neighborhood";
 import {
   type ColumnFiltersState,
   type SortingState,
@@ -19,18 +19,18 @@ import {
   getSortedRowModel,
   useReactTable
 } from "@tanstack/react-table";
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Loader2, MapPinned, Plus, Type } from "lucide-react";
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Loader2, MapPinHouse, Plus, Type } from "lucide-react";
 import { useState } from "react";
-import { useCitiesController } from "../useCitiesController";
-import { useColumnsCities } from "./useColumnsCities";
+import { useNeighborhoodsController } from "../useNeighborhoodsController";
+import { useColumnsNeighborhoods } from "./useColumnsNeighborhoods";
 
 
 interface UsersDataTableProps {
-  cities: City[];
+  neighborhoods: Neighborhood[];
   isLoading?: boolean;
 }
 
-export function CitiesDataTable({ cities, isLoading }: UsersDataTableProps) {
+export function NeighborhoodsDataTable({ neighborhoods, isLoading }: UsersDataTableProps) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
@@ -41,19 +41,19 @@ export function CitiesDataTable({ cities, isLoading }: UsersDataTableProps) {
     isDialogOpen, 
     editingCategory, 
     isLoading: isLoadingForm,
-    states,
+    cities,
     setIsDialogOpen, 
     handleSubmit, 
     handleCloseDialog, 
     handleEdit, 
     handleNew,
     handleDelete
-  } = useCitiesController()
+  } = useNeighborhoodsController()
 
-  const columnsUser = useColumnsCities(handleDelete, handleEdit);
+  const columnsUser = useColumnsNeighborhoods(handleDelete, handleEdit);
 
   const table = useReactTable({
-    data: cities,
+    data: neighborhoods,
     columns: columnsUser,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -76,19 +76,19 @@ export function CitiesDataTable({ cities, isLoading }: UsersDataTableProps) {
       <div className="flex">
         <Button type="button" onClick={handleNew}>
           <Plus className="mr-1 h-4 w-4" />
-          Nova Cidade
+          Novo Bairro
         </Button>
 
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogContent className="sm:max-w-md" onOpenAutoFocus={(e) => e.preventDefault()} onCloseAutoFocus={(e) => e.preventDefault()}>
             <DialogHeader>
               <DialogTitle>
-                {editingCategory ? "Editar Cidade" : "Nova Cidade"}
+                {editingCategory ? "Editar Bairro" : "Novo Bairro"}
               </DialogTitle>
               <DialogDescription>
                 {editingCategory
-                  ? "Atualize as informações da cidade"
-                  : "Crie uma nova cidade para seus imóveis"
+                  ? "Atualize as informações do bairro"
+                  : "Crie um novo bairro para seus imóveis"
                 }
               </DialogDescription>
             </DialogHeader>
@@ -97,23 +97,23 @@ export function CitiesDataTable({ cities, isLoading }: UsersDataTableProps) {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <FormField
                   control={form.control}
-                  name="stateId"
+                  name="cityId"
                   render={({ field }) => (
                     <FormItem className="w-full">
-                      <FormLabel>Estado</FormLabel>
+                      <FormLabel>Cidade</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger className="w-full cursor-pointer">
                             <div className="flex items-center gap-2">
-                              <MapPinned className="h-4 w-4 text-gray-400" />
-                              <SelectValue placeholder="Selecione o estado" />
+                              <MapPinHouse className="h-4 w-4 text-gray-400" />
+                              <SelectValue placeholder="Selecione a cidade" />
                             </div>
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {states?.map((state) => (
-                            <SelectItem key={state.id} value={state.id} className="cursor-pointer">
-                              {state.name}
+                          {cities?.map((city) => (
+                            <SelectItem key={city.id} value={city.id} className="cursor-pointer">
+                              {city.name}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -128,11 +128,11 @@ export function CitiesDataTable({ cities, isLoading }: UsersDataTableProps) {
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Cidade</FormLabel>
+                      <FormLabel>Bairro</FormLabel>
                       <FormControl>
                         <div className="relative">
                           <Type className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                          <Input placeholder="Digite a cidade" className="pl-10" {...field} />
+                          <Input placeholder="Digite o bairro" className="pl-10" {...field} />
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -164,13 +164,13 @@ export function CitiesDataTable({ cities, isLoading }: UsersDataTableProps) {
         <div>
           <div className="flex items-center justify-between gap-2 py-4">
             <Input
-              placeholder="Filtrar cidades..."
+              placeholder="Filtrar bairros..."
               value={globalFilter}
               onChange={(event) => setGlobalFilter(event.target.value)}
               className="max-w-sm"
             />
 
-            <span className="text-sm">{cities.length} itens</span>
+            <span className="text-sm">{neighborhoods.length} itens</span>
           </div>
           <div className="rounded-md border">
             <Table className="table-fixed w-full">

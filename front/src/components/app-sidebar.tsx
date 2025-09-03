@@ -65,8 +65,24 @@ const data = {
           url: "#",
         },
         {
-          title: "Categorias",
+          title: "Finalidade",
           url: "#",
+        },
+        {
+          title: "Tipo",
+          url: "#",
+        },
+        {
+          title: "Estados",
+          url: "/dashboard/properties/states",
+        },
+        {
+          title: "Cidades",
+          url: "/dashboard/properties/cities",
+        },
+        {
+          title: "Bairros",
+          url: "/dashboard/properties/neighborhoods",
         },
       ],
     },
