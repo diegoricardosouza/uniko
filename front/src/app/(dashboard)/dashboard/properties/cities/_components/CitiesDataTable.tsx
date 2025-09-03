@@ -1,15 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { deleteEmailAction } from "@/app/actions/emails/delete-email";
 import { Spinner } from "@/components/Spinner";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Email } from "@/entities/Email";
-import { formatFileSize } from "@/lib/image";
+import { City } from "@/entities/City";
 import {
   type ColumnFiltersState,
   type SortingState,
@@ -21,44 +19,41 @@ import {
   getSortedRowModel,
   useReactTable
 } from "@tanstack/react-table";
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Paperclip } from "lucide-react";
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Loader2, MapPinned, Plus, Type } from "lucide-react";
 import { useState } from "react";
-import { toast } from "sonner";
-import { useEmailsController } from "../useEmailsController";
-import { useColumnsEmail } from "./useColumnsEmail";
+import { useCitiesController } from "../useCitiesController";
+import { useColumnsCities } from "./useColumnsCities";
 
 
 interface UsersDataTableProps {
-  emails: Email[];
+  cities: City[];
   isLoading?: boolean;
 }
 
-export function EmailsDataTable({ emails, isLoading }: UsersDataTableProps) {
+export function CitiesDataTable({ cities, isLoading }: UsersDataTableProps) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [globalFilter, setGlobalFilter] = useState("")
 
-  const {
-    isDialogOpen,
-    emailItem,
-    handleSee,
-    setIsDialogOpen
-  } = useEmailsController();
+  const { 
+    form, 
+    isDialogOpen, 
+    editingCategory, 
+    isLoading: isLoadingForm,
+    states,
+    setIsDialogOpen, 
+    handleSubmit, 
+    handleCloseDialog, 
+    handleEdit, 
+    handleNew,
+    handleDelete
+  } = useCitiesController()
 
-  const handleDelete = async (id: string) => {
-    try {
-      await deleteEmailAction(id);
-      toast.success('E-mail excluído com sucesso!')
-    } catch (error: any) {
-      toast.error(error.message || 'Erro ao excluir e-mail')
-    }
-  }
-
-  const columnsUser = useColumnsEmail(handleDelete, handleSee);
+  const columnsUser = useColumnsCities(handleDelete, handleEdit);
 
   const table = useReactTable({
-    data: emails,
+    data: cities,
     columns: columnsUser,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -78,40 +73,87 @@ export function EmailsDataTable({ emails, isLoading }: UsersDataTableProps) {
 
   return (
     <>
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="sm:max-w-md" onOpenAutoFocus={(e) => e.preventDefault()} onCloseAutoFocus={(e) => e.preventDefault()}>
-          <DialogHeader>
-            <DialogTitle>
-              {emailItem?.name}
-            </DialogTitle>
-            <DialogDescription>
-              Informações sobre o e-mail
-            </DialogDescription>
-          </DialogHeader>
-  
-          {emailItem && (
-            <div>
-              <div
-                dangerouslySetInnerHTML={{ __html: emailItem.htmlContent }}
-              />
+      <div className="flex">
+        <Button type="button" onClick={handleNew}>
+          <Plus className="mr-1 h-4 w-4" />
+          Nova Cidade
+        </Button>
 
-              {emailItem.attachments && emailItem.attachments.length > 0 && (
-                <div className="mt-3">
-                  <strong>Anexos do e-mail:</strong>
-                  {emailItem.attachments.map((attachment) => (
-                    <div key={attachment.id} className="flex items-center gap-2">
-                      <Paperclip className="w-3.5 h-3.5" />
-                      <span className="text-sm text-foreground">
-                        {attachment.filename} <span className="text-[11px] italic">({formatFileSize(attachment.size)})</span>
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogContent className="sm:max-w-md" onOpenAutoFocus={(e) => e.preventDefault()} onCloseAutoFocus={(e) => e.preventDefault()}>
+            <DialogHeader>
+              <DialogTitle>
+                {editingCategory ? "Editar Cidade" : "Nova Cidade"}
+              </DialogTitle>
+              <DialogDescription>
+                {editingCategory
+                  ? "Atualize as informações da cidade"
+                  : "Crie uma nova cidade para seus imóveis"
+                }
+              </DialogDescription>
+            </DialogHeader>
+
+            <Form {...form}>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="stateId"
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormLabel>Estado</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger className="w-full cursor-pointer">
+                            <div className="flex items-center gap-2">
+                              <MapPinned className="h-4 w-4 text-gray-400" />
+                              <SelectValue placeholder="Selecione o estado" />
+                            </div>
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {states?.map((state) => (
+                            <SelectItem key={state.id} value={state.id} className="cursor-pointer">
+                              {state.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Cidade</FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <Type className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                          <Input placeholder="Digite o estado" className="pl-10" {...field} />
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <DialogFooter>
+                  <Button variant="outline" onClick={handleCloseDialog} type="button" className="cursor-pointer">
+                    Cancelar
+                  </Button>
+                  <Button onClick={handleSubmit} type="submit" className="cursor-pointer" disabled={isLoadingForm}>
+                    {isLoadingForm && (<Loader2 className="mr-0 h-4 w-4 animate-spin" />)}
+                    {editingCategory ? "Atualizar" : "Criar"}
+                  </Button>
+                </DialogFooter>
+              </form>
+            </Form>
+          </DialogContent>
+        </Dialog>
+      </div>
 
       <div className="w-full min-h-[300px] relative overflow-hidden">
         {isLoading && (
@@ -122,13 +164,13 @@ export function EmailsDataTable({ emails, isLoading }: UsersDataTableProps) {
         <div>
           <div className="flex items-center justify-between gap-2 py-4">
             <Input
-              placeholder="Filtrar e-mails..."
+              placeholder="Filtrar cidades..."
               value={globalFilter}
               onChange={(event) => setGlobalFilter(event.target.value)}
               className="max-w-sm"
             />
 
-            <span className="text-sm">{emails.length} itens</span>
+            <span className="text-sm">{cities.length} itens</span>
           </div>
           <div className="rounded-md border">
             <Table className="table-fixed w-full">
@@ -157,7 +199,7 @@ export function EmailsDataTable({ emails, isLoading }: UsersDataTableProps) {
                 ) : (
                   <TableRow>
                     <TableCell colSpan={columnsUser.length} className="h-24 text-center">
-                      No results.
+                      Nenhum resultado.
                     </TableCell>
                   </TableRow>
                 )}

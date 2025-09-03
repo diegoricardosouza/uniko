@@ -179,70 +179,74 @@ export function UsersDataTable({ users, user, isLoading }: UsersDataTableProps) 
           </div>
         )}
         <div>
-          <div className="flex items-center gap-2 py-4">
-            <Input
-              placeholder="Filtrar usuários..."
-              value={globalFilter}
-              onChange={(event) => setGlobalFilter(event.target.value)}
-              className="max-w-sm"
-            />
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button variant="outline" size="sm" className="h-10 border-dashed text-sm">
-                  {getStatusDisplay()}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-[200px] p-0" align="start">
-                <div className="flex items-center border-b px-2">
-                  <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
-                  <input
-                    placeholder="Nível"
-                    className="flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
-                    value={statusSearch}
-                    onChange={(e) => setStatusSearch(e.target.value)}
-                  />
-                </div>
-                <div className="max-h-[300px] overflow-auto p-1">
-                  {filteredStatusOptions.map((option) => (
-                    <div
-                      key={option.value}
-                      className="flex items-center justify-between rounded-sm px-2 py-1.5 hover:bg-muted"
-                    >
-                      <div className="flex items-center gap-2 text-sm font-light">
-                        <Checkbox
-                          id={option.value}
-                          checked={statusFilter.includes(option.value)}
-                          onCheckedChange={(checked) => {
-                            if (checked) {
-                              handleStatusToggle(option.value)
-                            } else {
-                              handleStatusToggle(option.value)
-                            }
-                          }}
-                        />
-                        <label htmlFor={option.value} className="flex-1 cursor-pointer font-medium">
-                          {option.label}
-                        </label>
-                      </div>
-                      <span className="text-muted-foreground text-sm">{option.count}</span>
-                    </div>
-                  ))}
-                </div>
-                {statusFilter.length > 0 && (
-                  <div className="border-t p-1">
-                    <Button variant="ghost" className="w-full justify-center font-normal text-sm h-8" onClick={clearFilters}>
-                      Limpar Filtros
-                    </Button>
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 py-4">
+              <Input
+                placeholder="Filtrar usuários..."
+                value={globalFilter}
+                onChange={(event) => setGlobalFilter(event.target.value)}
+                className="max-w-sm"
+              />
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="outline" size="sm" className="h-10 border-dashed text-sm">
+                    {getStatusDisplay()}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-[200px] p-0" align="start">
+                  <div className="flex items-center border-b px-2">
+                    <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+                    <input
+                      placeholder="Nível"
+                      className="flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
+                      value={statusSearch}
+                      onChange={(e) => setStatusSearch(e.target.value)}
+                    />
                   </div>
-                )}
-              </PopoverContent>
-            </Popover>
-            {statusFilter.length > 0 && (
-              <Button variant="ghost" onClick={clearFilters} className="h-8 px-2 lg:px-3">
-                Limpar
-                <X className="ml-2 h-4 w-4" />
-              </Button>
-            )}
+                  <div className="max-h-[300px] overflow-auto p-1">
+                    {filteredStatusOptions.map((option) => (
+                      <div
+                        key={option.value}
+                        className="flex items-center justify-between rounded-sm px-2 py-1.5 hover:bg-muted"
+                      >
+                        <div className="flex items-center gap-2 text-sm font-light">
+                          <Checkbox
+                            id={option.value}
+                            checked={statusFilter.includes(option.value)}
+                            onCheckedChange={(checked) => {
+                              if (checked) {
+                                handleStatusToggle(option.value)
+                              } else {
+                                handleStatusToggle(option.value)
+                              }
+                            }}
+                          />
+                          <label htmlFor={option.value} className="flex-1 cursor-pointer font-medium">
+                            {option.label}
+                          </label>
+                        </div>
+                        <span className="text-muted-foreground text-sm">{option.count}</span>
+                      </div>
+                    ))}
+                  </div>
+                  {statusFilter.length > 0 && (
+                    <div className="border-t p-1">
+                      <Button variant="ghost" className="w-full justify-center font-normal text-sm h-8" onClick={clearFilters}>
+                        Limpar Filtros
+                      </Button>
+                    </div>
+                  )}
+                </PopoverContent>
+              </Popover>
+              {statusFilter.length > 0 && (
+                <Button variant="ghost" onClick={clearFilters} className="h-8 px-2 lg:px-3">
+                  Limpar
+                  <X className="ml-2 h-4 w-4" />
+                </Button>
+              )}
+            </div>
+
+            <span className="text-sm">{users.length} itens</span>
           </div>
           <div className="rounded-md border">
             <Table className="table-fixed w-full">
