@@ -66,11 +66,11 @@ const data = {
         },
         {
           title: "Finalidade",
-          url: "#",
+          url: "/dashboard/properties/finalities",
         },
         {
           title: "Tipo",
-          url: "#",
+          url: "/dashboard/properties/types",
         },
         {
           title: "Estados",
