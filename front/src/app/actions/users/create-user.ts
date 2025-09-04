@@ -4,7 +4,7 @@ import { usersService } from '@/services/usersService';
 import { UserParams } from '@/services/usersService/create';
 import axios from 'axios';
 
-export async function createUser(user: UserParams) {
+export async function createUserAction(user: UserParams) {
   try {
     await usersService.create(user)
     // revalidatePath('/dashboard/users')

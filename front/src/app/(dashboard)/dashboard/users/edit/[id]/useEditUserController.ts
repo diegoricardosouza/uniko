@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { getUpdateUserAction } from "@/app/actions/get-update-user";
-import { getUserAction } from "@/app/actions/get-user";
+import { updateUserAction } from "@/app/actions/users/get-update-user";
+import { getUserAction } from "@/app/actions/users/get-user";
 import { userUpdateSchema } from "@/schemas/userUpdateSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useParams } from "next/navigation";
@@ -46,7 +46,6 @@ export function useEditUserController() {
   const handleSubmit = form.handleSubmit(async (data) => {
     try {
       setIsLoading(true)
-      console.log(data);
       const newData = {
         name: data.name,
         email: data.email,
@@ -54,11 +53,11 @@ export function useEditUserController() {
         role: data.role,
         active: data.active ?? true
       }
-      await getUpdateUserAction({ ...newData, id })
+      await updateUserAction({ ...newData, id })
       toast.success("Usuário atualizado com sucesso!")
     } catch (error) {
-      console.log('error', error);
-      toast.error("Erro ao cadastrar usuário");
+      const errorApi = error instanceof Error ? error.message : "Erro ao atualizar usuário"
+      toast.error(errorApi);
     } finally {
       setIsLoading(false)
     }

@@ -4,7 +4,7 @@ import { usersService } from '@/services/usersService';
 import axios from 'axios';
 import { revalidatePath } from 'next/cache';
 
-export async function deleteUser(id: string) {
+export async function deleteUserAction(id: string) {
   try {
     await usersService.remove(id)
     revalidatePath('/dashboard/users')

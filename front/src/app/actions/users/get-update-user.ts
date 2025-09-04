@@ -5,7 +5,7 @@ import { UpdateUserParams } from '@/services/usersService/update';
 import axios from 'axios';
 import { revalidatePath } from 'next/cache';
 
-export async function getUpdateUserAction(user: UpdateUserParams) {
+export async function updateUserAction(user: UpdateUserParams) {
   try {
     const response = await usersService.update(user);
     revalidatePath('/dashboard')

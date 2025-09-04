@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { deleteUser } from "@/app/actions/delete-user";
+import { deleteUserAction } from "@/app/actions/users/delete-user";
 import { Spinner } from "@/components/Spinner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -46,7 +46,7 @@ export function UsersDataTable({ users, user, isLoading }: UsersDataTableProps) 
 
   const handleDelete = async (id: string) => {
     try {
-      await deleteUser(id);
+      await deleteUserAction(id);
       toast.success('Usuário excluído com sucesso!')
     } catch (error: any) {
       toast.error(error.message || 'Erro ao excluir usuário')

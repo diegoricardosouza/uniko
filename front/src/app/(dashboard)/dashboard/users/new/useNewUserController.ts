@@ -1,4 +1,4 @@
-import { createUser } from "@/app/actions/create-user"
+import { createUserAction } from "@/app/actions/users/create-user"
 import { userCreateSchema } from "@/schemas/userCreateSchema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "next/navigation"
@@ -28,7 +28,7 @@ export function useNewUserController() {
     try {
       setIsLoading(true)
       
-      await createUser({ ...data, active: data.active ?? true });
+      await createUserAction({ ...data, active: data.active ?? true });
 
       toast.success("Usuário cadastrado com sucesso!")
       router.push('/dashboard/users');
