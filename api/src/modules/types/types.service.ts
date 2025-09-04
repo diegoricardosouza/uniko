@@ -1,36 +1,34 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { StatesRepository } from 'src/shared/database/repositories/states.repositories';
+import { TypesRepository } from 'src/shared/database/repositories/types.repositories';
 import { slugify } from 'src/utils/slugify';
-import { CreateStateDto } from './dto/create-state.dto';
-import { UpdateStateDto } from './dto/update-state.dto';
+import { CreateTypeDto } from './dto/create-type.dto';
+import { UpdateTypeDto } from './dto/update-type.dto';
 
 @Injectable()
-export class StatesService {
-  constructor(private readonly statesRepo: StatesRepository) {}
+export class TypesService {
+  constructor(private readonly typesRepo: TypesRepository) {}
 
-  async create(createStateDto: CreateStateDto) {
-    const { name, acronym } = createStateDto;
+  async create(createTypeDto: CreateTypeDto) {
+    const { name } = createTypeDto;
 
     const slug = slugify(name);
     let uniqueSlug = slug;
     let counter = 1;
-    while (await this.statesRepo.findUnique({ where: { slug: uniqueSlug } })) {
+    while (await this.typesRepo.findUnique({ where: { slug: uniqueSlug } })) {
       uniqueSlug = `${slug}-${counter}`;
       counter++;
     }
 
-    return this.statesRepo.create({
+    return this.typesRepo.create({
       data: {
         name,
         slug: uniqueSlug,
-        acronym,
       },
       select: {
         id: true,
         name: true,
         slug: true,
-        acronym: true,
         createdAt: true,
       },
     });
@@ -39,31 +37,22 @@ export class StatesService {
   findAll(filters: { search?: string }) {
     const { search } = filters;
 
-    const conditions: Prisma.StateWhereInput[] = [
+    const conditions: Prisma.CategoryTypeWhereInput[] = [
       search
         ? {
             OR: [
               {
                 name: { contains: search, mode: Prisma.QueryMode.insensitive },
               },
-              {
-                acronym: {
-                  contains: search,
-                  mode: Prisma.QueryMode.insensitive,
-                },
-              },
             ],
           }
         : undefined,
     ].filter(Boolean);
 
-    return this.statesRepo.findAll({
+    return this.typesRepo.findAll({
       where: conditions.length > 0 ? { AND: conditions } : undefined,
       orderBy: {
         createdAt: 'desc',
-      },
-      include: {
-        cities: true,
       },
       omit: {
         updatedAt: true,
@@ -72,39 +61,36 @@ export class StatesService {
   }
 
   async findOne(id: string) {
-    const state = await this.statesRepo.findUnique({
+    const type = await this.typesRepo.findUnique({
       where: { id },
-      include: {
-        cities: true,
-      },
       omit: {
         updatedAt: true,
       },
     });
 
-    if (!state) {
-      throw new ConflictException('State not found');
+    if (!type) {
+      throw new ConflictException('Type not found');
     }
 
-    return state;
+    return type;
   }
 
-  async update(id: string, updateStateDto: UpdateStateDto) {
-    const { name, acronym } = updateStateDto;
+  async update(id: string, updateTypeDto: UpdateTypeDto) {
+    const { name } = updateTypeDto;
 
-    const currentState = await this.statesRepo.findUnique({
+    const currentState = await this.typesRepo.findUnique({
       where: { id },
     });
 
     if (!currentState) {
-      throw new ConflictException('State not found');
+      throw new ConflictException('Type not found');
     }
 
     const slug = slugify(name);
     let uniqueSlug = slug;
     let counter = 1;
     while (
-      await this.statesRepo.findUnique({
+      await this.typesRepo.findUnique({
         where: {
           slug: uniqueSlug,
           NOT: { id },
@@ -115,15 +101,11 @@ export class StatesService {
       counter++;
     }
 
-    return await this.statesRepo.update({
+    return await this.typesRepo.update({
       where: { id },
       data: {
         name,
-        slug: uniqueSlug ? uniqueSlug : updateStateDto.slug,
-        acronym,
-      },
-      include: {
-        cities: true,
+        slug: uniqueSlug ? uniqueSlug : updateTypeDto.slug,
       },
       omit: {
         updatedAt: true,
@@ -132,15 +114,15 @@ export class StatesService {
   }
 
   async remove(id: string) {
-    const currentState = await this.statesRepo.findUnique({
+    const currentState = await this.typesRepo.findUnique({
       where: { id },
     });
 
     if (!currentState) {
-      throw new ConflictException('State not found');
+      throw new ConflictException('Type not found');
     }
 
-    await this.statesRepo.delete({
+    await this.typesRepo.delete({
       where: { id },
     });
 

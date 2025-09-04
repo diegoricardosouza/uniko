@@ -15,6 +15,8 @@ import { EmailsModule } from './modules/emails/emails.module';
 import { StatesModule } from './modules/states/states.module';
 import { CitiesModule } from './modules/cities/cities.module';
 import { NeighborhoodsModule } from './modules/neighborhoods/neighborhoods.module';
+import { TypesModule } from './modules/types/types.module';
+import { FinalitiesModule } from './modules/finalities/finalities.module';
 
 @Module({
   imports: [
@@ -34,6 +36,8 @@ import { NeighborhoodsModule } from './modules/neighborhoods/neighborhoods.modul
     StatesModule,
     CitiesModule,
     NeighborhoodsModule,
+    TypesModule,
+    FinalitiesModule,
   ],
   controllers: [],
   providers: [

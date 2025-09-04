@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
-export class CreateStateDto {
+export class CreateTypeDto {
   @IsString()
   @IsNotEmpty()
   name: string;
@@ -8,8 +8,4 @@ export class CreateStateDto {
   @IsString()
   @IsOptional()
   slug?: string;
-
-  @IsString()
-  @IsNotEmpty()
-  acronym: string;
 }
