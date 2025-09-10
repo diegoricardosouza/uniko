@@ -9,6 +9,7 @@ import { MediasRepository } from './repositories/medias.repositories';
 import { NeighborhoodsRepository } from './repositories/neighborhoods.repositories';
 import { PagesRepository } from './repositories/pages.repositories';
 import { PostsRepository } from './repositories/posts.repositories';
+import { PropertiesRepository } from './repositories/properties.repositories';
 import { SettingsRepository } from './repositories/settings.repositories';
 import { StatesRepository } from './repositories/states.repositories';
 import { TypesRepository } from './repositories/types.repositories';
@@ -31,6 +32,7 @@ import { UsersRepository } from './repositories/users.repositories';
     NeighborhoodsRepository,
     TypesRepository,
     FinalitiesRepository,
+    PropertiesRepository
   ],
   exports: [
     UsersRepository,
@@ -46,6 +48,7 @@ import { UsersRepository } from './repositories/users.repositories';
     NeighborhoodsRepository,
     TypesRepository,
     FinalitiesRepository,
+    PropertiesRepository
   ],
 })
 export class DatabaseModule {}

@@ -215,6 +215,7 @@ model City {
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   neighborhoods Neighborhood[]
+  Property      Property[]
 
   @@map("cities")
 }
@@ -227,8 +228,9 @@ model Neighborhood {
 
   city City @relation(fields: [cityId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Property  Property[]
 
   @@map("neighborhoods")
 }
@@ -241,6 +243,8 @@ model CategoryType {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  properties PropertyType[]
+
   @@map("types")
 }
 
@@ -252,5 +256,109 @@ model CategoryFinality {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  properties PropertyFinality[]
+
   @@map("finalities")
+}
+
+model Property {
+  id               String  @id @default(uuid()) @db.Uuid
+  title            String
+  description      String?
+  slug             String  @unique
+  reference        String
+  price            Float
+  priceCondominium Float?  @map("price_condominium")
+  priceIptu        Float?  @map("price_iptu")
+  delivery         String?
+  totalArea        Float?  @map("total_area")
+  privateArea      Float?  @map("private_area")
+  bedrooms         Int?
+  bathrooms        Int?
+  parkingSpaces    Int?    @map("parking_spaces")
+  address          String?
+  number           String?
+  complement       String?
+  zipCode          String? @map("zip_code")
+  active           Boolean @default(true)
+  featured         Boolean @default(false)
+  cityId           String? @map("city_id") @db.Uuid
+  neighborhoodId   String? @map("neighborhood_id") @db.Uuid
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  city         City?         @relation(fields: [cityId], references: [id])
+  neighborhood Neighborhood? @relation(fields: [neighborhoodId], references: [id])
+
+  // Relações many-to-many com categorias
+  types      PropertyType[]
+  finalities PropertyFinality[]
+
+  characteristics PropertyCharacteristics[]
+  infrastructures PropertyCondominiumInfrastructure[]
+
+  @@map("properties")
+}
+
+// Tabela para "Outras Características"
+model PropertyCharacteristics {
+  id         String   @id @default(uuid()) @db.Uuid
+  name       String
+  propertyId String   @map("property_id") @db.Uuid
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // Relação com Property
+  property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  @@map("property_characteristics")
+}
+
+// Tabela para "Infraestrutura do Condomínio"
+model PropertyCondominiumInfrastructure {
+  id         String   @id @default(uuid()) @db.Uuid
+  name       String
+  propertyId String   @map("property_id") @db.Uuid
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // Relação com Property
+  property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  @@map("property_condominium_infrastructures")
+}
+
+// Tabela de junção para Property e CategoryType
+model PropertyType {
+  id         String   @id @default(uuid()) @db.Uuid
+  propertyId String   @map("property_id") @db.Uuid
+  typeId     String   @map("type_id") @db.Uuid
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // Relacionamentos
+  property Property     @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  type     CategoryType @relation(fields: [typeId], references: [id], onDelete: Cascade)
+
+  // Índice único para evitar duplicatas
+  @@unique([propertyId, typeId])
+  @@map("property_types")
+}
+
+// Tabela de junção para Property e CategoryFinality
+model PropertyFinality {
+  id         String   @id @default(uuid()) @db.Uuid
+  propertyId String   @map("property_id") @db.Uuid
+  finalityId String   @map("finality_id") @db.Uuid
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // Relacionamentos
+  property Property         @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  finality CategoryFinality @relation(fields: [finalityId], references: [id], onDelete: Cascade)
+
+  // Índice único para evitar duplicatas
+  @@unique([propertyId, finalityId])
+  @@map("property_finalities")
 }

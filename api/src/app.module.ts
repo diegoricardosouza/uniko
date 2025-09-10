@@ -17,6 +17,7 @@ import { CitiesModule } from './modules/cities/cities.module';
 import { NeighborhoodsModule } from './modules/neighborhoods/neighborhoods.module';
 import { TypesModule } from './modules/types/types.module';
 import { FinalitiesModule } from './modules/finalities/finalities.module';
+import { PropertiesModule } from './modules/properties/properties.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { FinalitiesModule } from './modules/finalities/finalities.module';
     NeighborhoodsModule,
     TypesModule,
     FinalitiesModule,
+    PropertiesModule,
   ],
   controllers: [],
   providers: [
