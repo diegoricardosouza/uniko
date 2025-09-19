@@ -235,7 +235,7 @@ export function PostsDataTable({ posts, isLoading }: PostsDataTableProps) {
               />
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant="outline" size="sm" className="h-10 border-dashed text-sm">
+                  <Button variant="outline" size="sm" className="h-9 border-dashed text-sm">
                     {getStatusDisplay()}
                   </Button>
                 </PopoverTrigger>

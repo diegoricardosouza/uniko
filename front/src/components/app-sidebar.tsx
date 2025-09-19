@@ -58,11 +58,11 @@ const data = {
       items: [
         {
           title: "Listar Todos",
-          url: "#",
+          url: "/dashboard/properties",
         },
         {
           title: "Adicionar Novo",
-          url: "#",
+          url: "/dashboard/properties/new",
         },
         {
           title: "Finalidade",

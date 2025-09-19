@@ -1,3 +1,4 @@
+import { Neighborhood } from "./Neighborhood";
 import { State } from "./State";
 
 export interface City {
@@ -6,4 +7,5 @@ export interface City {
   slug?: string;
   createdAt?: string;
   state?: State;
+  neighborhoods?: Neighborhood[]
 }

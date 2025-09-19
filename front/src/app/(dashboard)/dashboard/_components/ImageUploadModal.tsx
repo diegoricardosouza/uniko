@@ -39,7 +39,7 @@ export const ImageUploadModal: React.FC<ImageUploadModalProps> = ({
   const [selectedImageDetails, setSelectedImageDetails] = useState<Medias | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('upload');
-  const [visibleItemsCount, setVisibleItemsCount] = useState(12);
+  const [visibleItemsCount, setVisibleItemsCount] = useState(27);
   const [isDragOver, setIsDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -128,7 +128,7 @@ export const ImageUploadModal: React.FC<ImageUploadModalProps> = ({
   const hasMoreImages = filteredImages.length > visibleItemsCount;
 
   const handleLoadMore = () => {
-    setVisibleItemsCount(prev => prev + 12);
+    setVisibleItemsCount(prev => prev + 9);
   };
 
   const handleFileSelect = () => {
@@ -281,7 +281,7 @@ export const ImageUploadModal: React.FC<ImageUploadModalProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="!max-w-[90%] !max-h-[86vh] overflow-hidden">
+      <DialogContent className="!max-w-[90%] !max-h-[90vh] overflow-hidden">
         <div>
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
@@ -381,7 +381,7 @@ export const ImageUploadModal: React.FC<ImageUploadModalProps> = ({
               </div>
 
               {/* Image Grid */}
-              <div className="grid lg:grid-cols-9 gap-3 max-h-[540px] overflow-y-auto p-1">
+              <div className="grid lg:grid-cols-9 gap-3 max-h-[490px] overflow-y-auto p-1">
                 {visibleImages.map((image) => (
                   <div
                     key={image.id}

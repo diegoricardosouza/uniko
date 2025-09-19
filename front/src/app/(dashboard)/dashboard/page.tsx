@@ -1,5 +1,6 @@
 import { getPagesAction } from "@/app/actions/pages/get-pages";
 import { getPostsAction } from "@/app/actions/posts/get-posts";
+import { getPropertiesAction } from "@/app/actions/properties/get-properties";
 import { getUsersAction } from "@/app/actions/users/get-users";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,16 +9,17 @@ import Link from "next/link";
 import { BreadcrumbDashboard } from "./_components/BreadcrumbDashboard";
 
 export default async function Dashboard() {
-  const [posts, users, pages] = await Promise.all([
+  const [posts, users, pages, properties] = await Promise.all([
     getPostsAction(),
     getUsersAction(),
     getPagesAction(),
+    getPropertiesAction()
   ]);
 
   const stats = [
     {
       title: "Total de Imóveis",
-      value: "127",
+      value: properties.length || "0",
       icon: Building,
       label: 'Imóveis'
     },
@@ -41,11 +43,12 @@ export default async function Dashboard() {
     },
   ];
 
-  const recentProperties = [
-    { id: 1, title: "Casa Moderna no Centro", type: "Casa", price: "R$ 450.000", status: "Disponível" },
-    { id: 2, title: "Apartamento Vista Mar", type: "Apartamento", price: "R$ 320.000", status: "Vendido" },
-    { id: 3, title: "Cobertura Duplex", type: "Cobertura", price: "R$ 850.000", status: "Disponível" },
-  ];
+  // const recentProperties = [
+  //   { id: 1, title: "Casa Moderna no Centro", type: "Casa", price: "R$ 450.000", status: "Disponível" },
+  //   { id: 2, title: "Apartamento Vista Mar", type: "Apartamento", price: "R$ 320.000", status: "Vendido" },
+  //   { id: 3, title: "Cobertura Duplex", type: "Cobertura", price: "R$ 850.000", status: "Disponível" },
+  // ];
+  const recentProperties = properties.slice(0, 3)
 
   const recentPosts = [
     { id: 1, title: "Como escolher o imóvel ideal", author: "Admin", date: "2024-01-15" },
@@ -106,12 +109,16 @@ export default async function Dashboard() {
                     <div key={property.id} className="flex items-center justify-between p-3 bg-accent rounded-lg">
                       <div>
                         <p className="font-medium">{property.title}</p>
-                        <p className="text-sm text-muted-foreground">{property.type}</p>
+                        <p className="text-sm text-muted-foreground">{property.types?.[0]?.name ?? ""}</p>
                       </div>
                       <div className="text-right">
-                        <p className="font-medium">{property.price}</p>
-                        <p className={`text-xs ${property.status === 'Disponível' ? 'text-primary' : 'text-muted-foreground'}`}>
-                          {property.status}
+                        <p className="font-medium">
+                          {property.price
+                            ? new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(property.price))
+                            : ""}
+                        </p>
+                        <p className={`text-xs ${property.finalities?.[0]?.name === 'Venda' ? 'text-primary' : 'text-muted-foreground'}`}>
+                          {property.finalities?.[0]?.name}
                         </p>
                       </div>
                     </div>
