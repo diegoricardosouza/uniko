@@ -63,7 +63,8 @@ export class CitiesService {
           omit: {
             updatedAt: true
           }
-        }
+        },
+        neighborhoods: true
       },
       omit: {
         updatedAt: true

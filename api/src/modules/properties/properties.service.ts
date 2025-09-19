@@ -91,6 +91,11 @@ export class PropertiesService {
         title,
         slug: uniqueSlug,
         ...propertyData,
+        price: Number(createPropertyDto.price),
+        priceCondominium: Number(createPropertyDto.priceCondominium),
+        priceIptu: Number(createPropertyDto.priceIptu),
+        totalArea: Number(createPropertyDto.totalArea),
+        privateArea: Number(createPropertyDto.privateArea),
         ...(typeIds?.length && {
           types: {
             create: typeIds.map((typeId) => ({ typeId })),
@@ -145,12 +150,13 @@ export class PropertiesService {
       }
 
       // galeria de imagens
-      if (gallery.length) {
-        for (const file of gallery) {
+      if (gallery && gallery.length > 0) {
+        for (const [index, file] of gallery.entries()) {
           await this.mediasRepo.create(file, {
             entityId: property.id,
             entityType: 'Property',
             mediaType: 'gallery',
+            order: index + 1
           });
         }
       }
@@ -225,11 +231,7 @@ export class PropertiesService {
             stateId: true,
           },
         },
-        neighborhood: {
-          omit: {
-            cityId: true,
-          },
-        },
+        neighborhood: true,
         types: {
           include: {
             type: true,
@@ -388,7 +390,7 @@ export class PropertiesService {
     try {
       // Adiciona imagem destacada se fornecida
       if (featuredImageFile) {
-        await this.mediasRepo.removeAllFromEntity('Property', id, true);
+        await this.mediasRepo.removeAllFromEntity('Property', id, true, 'featured_image');
 
         await this.mediasRepo.create(featuredImageFile, {
           entityId: id,
@@ -398,17 +400,29 @@ export class PropertiesService {
       }
 
       // galeria de imagens
-      if (gallery.length) {
-        await this.mediasRepo.removeAllFromEntity('Property', id, true);
+      if (gallery && gallery.length > 0) {
+        await this.mediasRepo.removeAllFromEntity('Property', id, true, 'gallery');
 
-        for (const file of gallery) {
+        for (const [index, file] of gallery.entries()) {
           await this.mediasRepo.create(file, {
             entityId: id,
             entityType: 'Property',
             mediaType: 'gallery',
+            order: index + 1
           });
         }
       }
+      // if (gallery.length) {
+      //   await this.mediasRepo.removeAllFromEntity('Property', id, true);
+
+      //   for (const file of gallery) {
+      //     await this.mediasRepo.create(file, {
+      //       entityId: id,
+      //       entityType: 'Property',
+      //       mediaType: 'gallery',
+      //     });
+      //   }
+      // }
     } catch (mediaError) {
       // rollback básico se der erro nas mídias
       await this.propertiesRepo.delete({ where: { id } });
@@ -434,6 +448,60 @@ export class PropertiesService {
       ) {
         uniqueSlug = `${baseSlug}-${counter}`;
         counter++;
+      }
+    }
+
+    let processedCharacteristics;
+    let processedInfrastructures;
+
+    if (characteristic) {
+      if (typeof characteristic === 'string') {
+        try {
+          const parsed = JSON.parse(characteristic);
+          // Se parsed for um array de strings
+          if (Array.isArray(parsed) && parsed.every(item => typeof item === 'string')) {
+            processedCharacteristics = parsed;
+          }
+          // Se parsed for um array de objetos com name
+          else if (Array.isArray(parsed) && parsed.every(item => item.name)) {
+            processedCharacteristics = parsed.map(item => item.name);
+          }
+        } catch {
+          // Se não conseguir fazer parse, assume que é um array
+          processedCharacteristics = Array.isArray(characteristic)
+            ? (characteristic as Array<string | { name: string }>).map(item => typeof item === 'string' ? item : item.name)
+            : [];
+        }
+      } else if (Array.isArray(characteristic)) {
+        processedCharacteristics = characteristic.map((item: any) =>
+          typeof item === 'string' ? item : item.name
+        );
+      }
+    }
+
+    // Se infrastructure for uma string JSON, parse ela
+    if (infrastructure) {
+      if (typeof infrastructure === 'string') {
+        try {
+          const parsed = JSON.parse(infrastructure);
+          // Se parsed for um array de strings
+          if (Array.isArray(parsed) && parsed.every(item => typeof item === 'string')) {
+            processedInfrastructures = parsed;
+          }
+          // Se parsed for um array de objetos com name
+          else if (Array.isArray(parsed) && parsed.every(item => item.name)) {
+            processedInfrastructures = parsed.map(item => item.name);
+          }
+        } catch {
+          // Se não conseguir fazer parse, assume que é um array
+          processedInfrastructures = Array.isArray(infrastructure)
+            ? (infrastructure as Array<string | { name: string }>).map(item => typeof item === 'string' ? item : item.name)
+            : [];
+        }
+      } else if (Array.isArray(infrastructure)) {
+        processedInfrastructures = infrastructure.map((item: any) =>
+          typeof item === 'string' ? item : item.name
+        );
       }
     }
 
@@ -468,16 +536,16 @@ export class PropertiesService {
             })),
           },
         }),
-        ...(characteristic !== undefined && {
+        ...(processedCharacteristics !== undefined && {
           characteristics: {
             deleteMany: {},
-            create: characteristic.map((name) => ({ name })),
+            create: processedCharacteristics.map((name) => ({ name })),
           },
         }),
-        ...(infrastructure !== undefined && {
+        ...(processedInfrastructures !== undefined && {
           infrastructures: {
             deleteMany: {},
-            create: infrastructure.map((name) => ({ name })),
+            create: processedInfrastructures.map((name) => ({ name })),
           },
         }),
       },

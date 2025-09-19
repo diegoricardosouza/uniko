@@ -359,8 +359,9 @@ export class MediasService {
     entityType: string,
     entityId: string,
     hardDelete: boolean = false,
+    mediaType?: 'featured_image' | 'gallery',
   ): Promise<void> {
-    const medias = await this.findAll({ entityType, entityId });
+    const medias = await this.findAll({ entityType, entityId, mediaType });
 
     if (hardDelete) {
       // Remove arquivos físicos
@@ -375,12 +376,12 @@ export class MediasService {
 
       // Remove do banco
       await this.mediasRepo.deleteMany({
-        where: { entityType, entityId },
+        where: { entityType, entityId, mediaType },
       });
     } else {
       // Soft delete
       await this.mediasRepo.updateMany({
-        where: { entityType, entityId },
+        where: { entityType, entityId, mediaType },
         data: { isActive: false },
       });
     }
@@ -440,6 +441,7 @@ export class MediasService {
         url: true,
         order: true,
         mediaType: true,
+        size: true
       },
     });
   }
@@ -460,6 +462,7 @@ export class MediasService {
         order: true,
         mediaType: true,
         entityId: true, // Importante para agrupamento
+        size: true
       },
     });
   }

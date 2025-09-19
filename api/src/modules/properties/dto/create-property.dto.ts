@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsArray,
   IsBoolean,
@@ -108,20 +108,52 @@ export class CreatePropertyDto {
   @IsUUID()
   neighborhoodId?: string;
 
-  @IsOptional()
+  @Transform(({ value }) => {
+    try {
+      const parsed = typeof value === 'string' ? JSON.parse(value) : value;
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  })
   @IsArray()
+  @IsOptional()
   @IsUUID('all', { each: true })
   typeIds?: string[];
 
-  @IsOptional()
+  @Transform(({ value }) => {
+    try {
+      const parsed = typeof value === 'string' ? JSON.parse(value) : value;
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  })
   @IsArray()
+  @IsOptional()
   @IsUUID('all', { each: true })
   finalityIds?: string[];
 
+  @Transform(({ value }) => {
+    try {
+      const parsed = typeof value === 'string' ? JSON.parse(value) : value;
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  })
   @IsOptional()
   @IsArray()
   characteristic?: string[];
 
+  @Transform(({ value }) => {
+    try {
+      const parsed = typeof value === 'string' ? JSON.parse(value) : value;
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  })
   @IsOptional()
   @IsArray()
   infrastructure?: string[];
