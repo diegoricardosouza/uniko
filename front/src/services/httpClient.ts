@@ -2,7 +2,6 @@
 import { localStoragekeys } from '@/config/localStorageKeys';
 import { auth } from '@/lib/auth';
 import axios from 'axios';
-import { redirect } from 'next/navigation';
 
 export const httpClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -36,21 +35,19 @@ httpClient.interceptors.request.use(async (config) => {
 });
 
 // Interceptor de response para lidar com tokens expirados
-httpClient.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    if (error.response?.status === 401) {
-      if (typeof window !== 'undefined') {
-        // ✅ Só executa no browser
-        localStorage.removeItem(localStoragekeys.TOKEN);
-        window.location.href = '/login';
-      }
-
-      redirect('/login');
-    }
-    return Promise.reject(error);
-  }
-);
+// httpClient.interceptors.response.use(
+//   (response) => response,
+//   async (error) => {
+//     if (error.response?.status === 401) {
+//       if (typeof window !== 'undefined') {
+//         // ✅ Só executa no browser
+//         localStorage.removeItem(localStoragekeys.TOKEN);
+//         // window.location.href = '/login';
+//       }
+//     }
+//     return Promise.reject(error);
+//   }
+// );
 
 // Função para definir token manualmente (útil para compatibilidade)
 export const setAuthToken = (token: string) => {
