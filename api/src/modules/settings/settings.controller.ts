@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
+import { IsPublic } from 'src/shared/decorators/IsPublic';
 import { CreateSettingDto } from './dto/create-setting.dto';
 import { UpdateSettingDto } from './dto/update-setting.dto';
 import { SettingsService } from './settings.service';
@@ -12,6 +13,7 @@ export class SettingsController {
     return this.settingsService.create(createSettingDto);
   }
 
+  @IsPublic()
   @Get()
   findAll() {
     return this.settingsService.findAll();
