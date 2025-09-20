@@ -63,7 +63,18 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
         typedToken.accessToken = typedUser.accessToken;
         typedToken.role = typedUser.role;
         typedToken.active = typedUser.active;
+
+        // Define quando o token expira (7 dias a partir de agora)
+        typedToken.exp = Math.floor(Date.now() / 1000) + (7 * 24 * 60 * 60);
       }
+
+      // Verifica se o token ainda é válido
+      const now = Math.floor(Date.now() / 1000);
+      if (token.exp && now > token.exp) {
+        // Token expirado, força logout
+        return null;
+      }
+      
       return token;
     },
     async session({ session, token }) {
@@ -92,5 +103,20 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
   session: {
     strategy: 'jwt',
     maxAge:  7 * 24 * 60 * 60, // 7 days
+  },
+  jwt: {
+    maxAge: 7 * 24 * 60 * 60, // 7 dias em segundos - garante que o JWT também expire
+  },
+  cookies: {
+    sessionToken: {
+      name: 'next-auth.session-token',
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 7 * 24 * 60 * 60, // 7 dias em segundos
+      },
+    },
   },
 });
