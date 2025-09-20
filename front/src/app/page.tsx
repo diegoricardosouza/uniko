@@ -1,103 +1,115 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+
+import { MenuHome } from "@/components/Header/MenuHome";
+import { Socials } from "@/components/Socials";
 import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useRef } from "react";
+import { LuArrowRight } from "react-icons/lu";
+
+declare global {
+  interface Window {
+    YT: any;
+    onYouTubeIframeAPIReady: () => void;
+  }
+}
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const playerRef = useRef<HTMLDivElement>(null);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    // Cria script do YouTube API
+    const tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(tag);
+
+    // Função chamada quando API estiver pronta
+    window.onYouTubeIframeAPIReady = () => {
+      if (playerRef.current) {
+        new window.YT.Player(playerRef.current, {
+          videoId: "6Q5Nv5h0qKw", // ID do vídeo
+          playerVars: {
+            autoplay: 1,
+            controls: 0,
+            rel: 0,
+            modestbranding: 1,
+            fs: 0,
+            disablekb: 1,
+            loop: 1,
+            playlist: "6Q5Nv5h0qKw",
+          },
+          events: {
+            onReady: (event: any) => {
+              event.target.mute(); // muta o áudio
+              event.target.playVideo(); // força autoplay
+            },
+          },
+        });
+      }
+    };
+  }, []);
+
+  return (
+    <div>
+      <div className="relative h-screen">
+        <div 
+          className="absolute top-0 left-0 w-full h-full bg-black/45 flex flex-col" 
+        >
+          <header className="w-full bg-black">
+            <div className="container grid grid-cols-2 lg:grid-cols-3">
+              <div className="hidden lg:block"></div>
+              <div className="flex justify-center my-[15px] lg:my-[25px]">
+                <Link href="/">
+                  <Image
+                    src="/logo.png"
+                    width={180}
+                    height={60}
+                    alt="Logo Úniko"
+                    title="Logo Úniko"
+                  />
+                </Link>
+              </div>
+              <div className="flex justify-end items-center gap-3.5">
+                <MenuHome />
+                <div className="hidden lg:block">
+                  <Socials />
+                </div>
+              </div>
+            </div>
+          </header>
+
+          <div className="flex flex-col items-center justify-center h-full flex-1">
+            <h1 
+              className="text-white text-[40px] leading-[43px] lg:text-[48px] lg:leading-[58px] font-normal font-montserrat text-center mb-10"
+            >
+              O IMÓVEL DOS SEUS SONHOS<br />
+              <strong>É ESPECIAL E ÚNIKO</strong>
+            </h1>
+
+            <div className="flex justify-center gap-4 lg:gap-8">
+              <Link 
+                href="#" 
+                className="flex items-center bg-white text-[#343434] px-[18px] py-[13px] lg:px-[20px] lg:py-[15px] font-montserrat text-[15px] leading-[19px] lg:text-[18px] lg:leading-[22px] font-semibold gap-[3px] shadow-[0px_3px_6px_#00000029] transition-all hover:bg-[#C5AF62] hover:text-white mb-2.5 lg:mb-0 justify-center"
+              >
+                Curitiba <LuArrowRight className="w-[15px] h-[15px] lg:w-[19px] lg:h-[19px]" />
+              </Link>
+
+              <Link
+                href="#"
+                className="flex items-center bg-white text-[#343434] px-[18px] py-[13px] lg:px-[20px] lg:py-[15px] font-montserrat text-[15px] leading-[19px] lg:text-[18px] lg:leading-[22px] font-semibold gap-[3px] shadow-[0px_3px_6px_#00000029] transition-all hover:bg-[#C5AF62] hover:text-white mb-2.5 lg:mb-0 justify-center"
+              >
+                Belo Horizonte <LuArrowRight className="w-[15px] h-[15px] lg:w-[19px] lg:h-[19px]" />
+              </Link>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        <div
+          ref={playerRef}
+          className="w-full h-full"
+        />
+      </div>
     </div>
   );
 }
