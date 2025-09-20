@@ -21,4 +21,5 @@ export interface AuthToken {
   sub?: string;
   email?: string;
   name?: string;
+  exp?: number | string;
 }

@@ -1,6 +1,7 @@
 import { IconSpec } from "@/app/(dashboard)/dashboard/settings/_components/SocialIcon";
 
 export type UnitCompanyProps = {
+  id?: string;
   name?: string;
   email?: string;
   telephone?: string;
