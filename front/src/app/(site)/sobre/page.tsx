@@ -1,9 +1,15 @@
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { Metadata } from "next";
 import Image from "next/image";
 import { FaWhatsapp } from "react-icons/fa6";
 import { LuArrowRight } from "react-icons/lu";
+
+export const metadata: Metadata = {
+  title: "Sobre - Úniko Imóveis",
+  description: "Úniko Imóveis - Melhores imóveis no Brasil",
+};
 
 export default function Sobre() {
   return (
