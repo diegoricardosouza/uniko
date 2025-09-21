@@ -13,6 +13,7 @@ import {
   UploadedFile,
 } from '@nestjs/common';
 import { FileUpload } from 'src/shared/decorators/FileUpload';
+import { IsPublic } from 'src/shared/decorators/IsPublic';
 import { CreatePageDto } from './dto/create-page.dto';
 import { UpdatePageDto } from './dto/update-page.dto';
 import { FindPagesOptions, PagesService } from './pages.service';
@@ -44,6 +45,12 @@ export class PagesController {
   @Get(':id')
   findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.pagesService.findOne(id);
+  }
+
+  @IsPublic()
+  @Get('slug/:slug')
+  findSlug(@Param('slug') slug: string) {
+    return this.pagesService.findSlug(slug);
   }
 
   @Patch(':id')

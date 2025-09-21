@@ -151,6 +151,26 @@ export class PagesService {
     return { ...page, medias };
   }
 
+  async findSlug(slug: string) {
+    const page = await this.pagesRepo.findUnique({
+      where: { slug },
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        content: true,
+        createdAt: true,
+      },
+    });
+
+    if (!page) {
+      throw new ConflictException('Page not found');
+    }
+
+    const medias = await this.getPageMedias(page.id);
+    return { ...page, medias };
+  }
+
   async update(
     id: string,
     updatePageDto: UpdatePageDto,
