@@ -26,11 +26,11 @@ export const menuLeft = [
         label: "Lançamentos"
       },
       {
-        href: "/imoveis?tipo=lancamentos",
+        href: "/anunciar-imovel?city=curitiba",
         label: "Anunciar Imóvel"
       },
       {
-        href: "/imoveis?tipo=lancamentos",
+        href: "/procurar-imovel?city=curitiba",
         label: "Procurar Imóvel"
       },
     ]
@@ -52,11 +52,11 @@ export const menuLeft = [
         label: "Lançamentos"
       },
       {
-        href: "/imoveis?tipo=lancamentos",
+        href: "/anunciar-imovel?city=belo-horizonte",
         label: "Anunciar Imóvel"
       },
       {
-        href: "/imoveis?tipo=lancamentos",
+        href: "/procurar-imovel?city=belo-horizonte",
         label: "Procurar Imóvel"
       },
     ]

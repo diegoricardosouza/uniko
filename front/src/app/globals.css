@@ -128,7 +128,7 @@
 }
 
 .container {
-  @apply !w-full !max-w-[1200px] px-3 m-auto;
+  @apply !w-full !max-w-[1224px] px-3 m-auto;
 }
 
 .MenuItem {
@@ -149,7 +149,11 @@
 }
 
 .button-geral {
-  @apply py-[11px] px-[17px] lg:py-[14px] lg:px-[20px] bg-white text-[#343434] font-inter uppercase font-medium text-[13px] lg:text-[14px] leading-[19px] inline-flex gap-[9px] transition-all items-center
+  @apply py-[11px] px-[17px] md:py-[14px] md:px-[20px] bg-white text-[#343434] font-inter uppercase font-normal text-[13px] md:text-[14px] leading-[19px] inline-flex gap-[9px] transition-all items-center
+}
+
+.button-geral:hover {
+  @apply bg-black text-white
 }
 
 .content p {
@@ -204,11 +208,52 @@
   @apply font-semibold
 }
 
-
-
-.button-geral:hover {
-  @apply bg-black text-white
+.breadcrumb-list {
+  @apply flex justify-center gap-[3px]
 }
+
+.breadcrumb-list li {
+  @apply text-white font-inter font-light text-[14px] leading-[19px]
+}
+
+.title-card-contato {
+  @apply text-[25px] font-montserrat font-normal leading-[30px] text-gold mb-[5px] tracking-[-0.63px] text-center
+}
+
+.title-card-contato strong {
+  @apply font-semibold
+}
+
+.fone-card-items {
+  @apply my-[10px]
+}
+
+.fone-card-items span {
+  @apply block font-montserrat font-semibold text-[22px] leading-[26px] text-gold text-center
+}
+
+.gm-style-iw-d {
+  @apply mt-[-30px]
+}
+
+/* CONTATO */
+.form-contato input,
+.form-contato textarea {
+  @apply !border-0 !shadow-none bg-white rounded-none font-montserrat text-[18px] text-title font-normal leading-[22px] p-5 h-[62px]
+}
+
+.form-contato textarea {
+  @apply h-[134px]
+}
+
+.form-label-accept {
+  @apply font-inter text-[15px] text-black leading-[20px] font-normal
+}
+
+.form-button-submit {
+  @apply border-0 shadow-none rounded-none uppercase font-inter font-medium text-[14px] leading-[19px] py-[14px] px-[15px] flex gap-[14px] h-[47px] hover:!bg-gold items-center
+}
+
 
 /* FOOTER */
 .footer-title_units {

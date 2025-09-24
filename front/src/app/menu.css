@@ -8,6 +8,7 @@
 
 .desktop-nav .menu-items {
   position: relative;
+  min-height: 43px;
 }
 
 .desktop-nav .menu-items a {

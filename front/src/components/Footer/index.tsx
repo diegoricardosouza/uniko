@@ -177,7 +177,7 @@ export async function Footer() {
 
               <Image
                 src="/minas.png"
-                width={43}
+                width={46}
                 height={30}
                 alt="Minas Gerais"
                 title="Minas Gerais"

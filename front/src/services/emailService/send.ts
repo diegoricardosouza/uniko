@@ -15,7 +15,7 @@ export async function send(params: EmailsParams) {
   formData.append("to", params.to);
   formData.append("subject", params.subject);
   formData.append("htmlContent", params.htmlContent);
-  
+
   if (params.attachments) formData.append("attachments", params.attachments);
 
   const { data } = await httpClient.post("/emails/send", formData, {
