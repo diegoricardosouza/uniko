@@ -11,6 +11,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
+import { IsPublic } from 'src/shared/decorators/IsPublic';
 import { CreateTypeDto } from './dto/create-type.dto';
 import { UpdateTypeDto } from './dto/update-type.dto';
 import { TypesService } from './types.service';
@@ -24,6 +25,7 @@ export class TypesController {
     return this.typesService.create(createTypeDto);
   }
 
+  @IsPublic()
   @Get()
   findAll(@Query('search') search?: string) {
     return this.typesService.findAll({ search });

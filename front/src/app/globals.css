@@ -246,6 +246,14 @@
   @apply h-[134px]
 }
 
+.form-contato .form-select button {
+  @apply bg-white rounded-none h-[62px] font-montserrat text-content text-[18px] px-5 border-0 shadow-none
+}
+
+.form-contato .form-select button svg {
+  @apply w-[25px] h-[25px]
+}
+
 .form-label-accept {
   @apply font-inter text-[15px] text-black leading-[20px] font-normal
 }

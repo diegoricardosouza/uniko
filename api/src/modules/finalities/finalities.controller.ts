@@ -11,6 +11,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
+import { IsPublic } from 'src/shared/decorators/IsPublic';
 import { CreateFinalityDto } from './dto/create-finality.dto';
 import { UpdateFinalityDto } from './dto/update-finality.dto';
 import { FinalitiesService } from './finalities.service';
@@ -24,6 +25,7 @@ export class FinalitiesController {
     return this.finalitiesService.create(createFinalityDto);
   }
 
+  @IsPublic()
   @Get()
   findAll(@Query('search') search?: string) {
     return this.finalitiesService.findAll({ search });
