@@ -1,6 +1,7 @@
 import { createPostAction } from "@/app/actions/posts/create-post";
 import { blogCreateSchema } from "@/schemas/blogCreateSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -11,6 +12,7 @@ type FormData = z.infer<typeof blogCreateSchema>
 export function useNewBlogController() {
   const [isLoading, setIsLoading] = useState(false)
   const [imagePreview, setImagePreview] = useState<string>("")
+  const router = useRouter();
 
   const form = useForm<FormData>({
     resolver: zodResolver(blogCreateSchema),
@@ -51,6 +53,7 @@ export function useNewBlogController() {
       });
       
       toast.success("Post cadastrado com sucesso!");
+      router.push('/dashboard/blog');
     } catch (error) {
       console.log('error', error);
       toast.error("Erro ao cadastrar usuário");

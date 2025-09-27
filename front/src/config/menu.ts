@@ -6,7 +6,7 @@ export interface MenuItem {
 
 export const menuLeft = [
   {
-    href: "/",
+    href: "/home",
     label: "Home"
   },
   {
@@ -121,7 +121,7 @@ export const menuHome = [
 
 export const menuMobile = [
   {
-    href: "/",
+    href: "/home",
     label: "Home"
   },
   {
@@ -129,12 +129,24 @@ export const menuMobile = [
     label: "Curitiba",
     submenu: [
       {
-        href: "/noticias",
-        label: "Notícias"
+        href: "/imoveis?tipo=comprar",
+        label: "Comprar"
       },
       {
-        href: "/videos",
-        label: "Vídeos"
+        href: "/imoveis?tipo=alugar",
+        label: "Alugar"
+      },
+      {
+        href: "/imoveis?tipo=lancamentos",
+        label: "Lançamentos"
+      },
+      {
+        href: "/anunciar-imovel?city=curitiba",
+        label: "Anunciar Imóvel"
+      },
+      {
+        href: "/procurar-imovel?city=curitiba",
+        label: "Procurar Imóvel"
       },
     ]
   },
@@ -143,12 +155,24 @@ export const menuMobile = [
     label: "Belo Horizonte",
     submenu: [
       {
-        href: "/noticias",
-        label: "Notícias"
+        href: "/imoveis?tipo=comprar",
+        label: "Comprar"
       },
       {
-        href: "/videos",
-        label: "Vídeos"
+        href: "/imoveis?tipo=alugar",
+        label: "Alugar"
+      },
+      {
+        href: "/imoveis?tipo=lancamentos",
+        label: "Lançamentos"
+      },
+      {
+        href: "/anunciar-imovel?city=belo-horizonte",
+        label: "Anunciar Imóvel"
+      },
+      {
+        href: "/procurar-imovel?city=belo-horizonte",
+        label: "Procurar Imóvel"
       },
     ]
   },

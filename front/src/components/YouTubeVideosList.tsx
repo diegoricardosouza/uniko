@@ -8,7 +8,7 @@ import { CardVideo } from './CardVideo';
 import { HeaderYoutube } from './HeaderYoutube';
 import { Spinner } from './Spinner';
 
-interface YouTubeData {
+export interface YouTubeData {
   channel: YouTubeChannel;
   videos: YouTubeVideo[];
   totalVideos: number;

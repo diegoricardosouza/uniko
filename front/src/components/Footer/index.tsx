@@ -97,12 +97,12 @@ export async function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/anunciar-imovel?city=belo-horizonte#">
+                <Link href="/anunciar-imovel?city=belo-horizonte">
                   Anunciar Imóvel
                 </Link>
               </li>
               <li>
-                <Link href="/procurar-imovel?city=belo-horizonte#">
+                <Link href="/procurar-imovel?city=belo-horizonte">
                   Procurar Imóvel
                 </Link>
               </li>
@@ -119,7 +119,7 @@ export async function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="#">
+                <Link href="/videos">
                   Vídeos
                 </Link>
               </li>
@@ -142,7 +142,7 @@ export async function Footer() {
           </div>
 
           <div className="footer-links">
-            <Link href="#">
+            <Link href="/contato">
               <h4>Contato</h4>
             </Link><br />
 

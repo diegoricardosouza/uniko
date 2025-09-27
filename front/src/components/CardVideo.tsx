@@ -57,8 +57,8 @@ export function CardVideo({ video }: CardVideoProps) {
           </div>
 
           {/* Informações do vídeo */}
-          <div className="p-3">
-            <h4 className="font-montserrat font-semibold text-sm line-clamp-2 text-title mb-2 leading-tight">
+          <div className="p-3 pl-0">
+            <h4 className="font-montserrat font-semibold text-sm line-clamp-2 text-title leading-tight">
               {video.title}
             </h4>
           </div>

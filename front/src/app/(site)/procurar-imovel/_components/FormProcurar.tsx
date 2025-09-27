@@ -268,11 +268,11 @@ export function FormProcurar() {
                 <FormControl>
                   {/* radiogroup container (acessível) */}
                   <div className="flex items-center gap-5">
-                    <span className="font-montserrat text-[18px] text-content">
+                    <span className="font-montserrat flex-1 text-[14px] md:text-[18px] text-content">
                       Dormitório(s)
                     </span>
 
-                    <div role="radiogroup" aria-label="Número de quartos" className="flex flex-1 gap-0 border border-border rounded-none overflow-hidden bg-background">
+                    <div role="radiogroup" aria-label="Número de quartos" className="flex gap-0 border border-border rounded-none overflow-hidden bg-background">
                       {options.map((option, index) => {
                         const isSelected = String(field.value) === String(option.value);
 
@@ -297,7 +297,7 @@ export function FormProcurar() {
                             <label
                               htmlFor={`bedroom-${option.value}`}
                               className={cn(
-                                "flex items-center justify-center px-4 py-3 text-center text-[17px] font-normal cursor-pointer transition-colors w-full h-[62px] font-inter text-content",
+                                "flex items-center justify-center px-4 py-3 text-center text-[15px] md:text-[17px] font-normal cursor-pointer transition-colors w-[50px] h-[50px] md:h-[62px] md:w-[62px] font-inter text-content",
                                 isSelected ? "bg-gold text-white" : "hover:bg-muted/50"
                               )}
                             >
@@ -322,11 +322,11 @@ export function FormProcurar() {
                 <FormControl>
                   {/* radiogroup container (acessível) */}
                   <div className="flex items-center gap-5">
-                    <span className="font-montserrat text-[18px] text-content">
+                    <span className="font-montserrat flex-1 text-[14px] md:text-[18px] text-content">
                       Vaga(s)
                     </span>
 
-                    <div role="radiogroup" aria-label="Número de vagas" className="flex flex-1 gap-0 border border-border rounded-none overflow-hidden bg-background">
+                    <div role="radiogroup" aria-label="Número de vagas" className="flex gap-0 border border-border rounded-none overflow-hidden bg-background">
                       {options.map((option, index) => {
                         const isSelected = String(field.value) === String(option.value);
 
@@ -351,7 +351,7 @@ export function FormProcurar() {
                             <label
                               htmlFor={`parkingSpaces-${option.value}`}
                               className={cn(
-                                "flex items-center justify-center px-4 py-3 text-center text-[17px] font-normal cursor-pointer transition-colors w-full h-[62px] font-inter text-content",
+                                "flex items-center justify-center px-4 py-3 text-center text-[15px] md:text-[17px] font-normal cursor-pointer transition-colors w-[50px] h-[50px] md:h-[62px] md:w-[62px] font-inter text-content",
                                 isSelected ? "bg-gold text-white" : "hover:bg-muted/50"
                               )}
                             >

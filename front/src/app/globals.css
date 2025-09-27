@@ -236,10 +236,35 @@
   @apply mt-[-30px]
 }
 
+.card-type-button {
+  @apply flex flex-col items-end
+}
+
+.card-type-button .card-title {
+  @apply w-full max-w-[181px] mx-auto bg-white flex gap-[5px] rounded-[10px_10px_10px_0px] h-[52px] items-center justify-center text-[18px] font-montserrat font-semibold text-title mt-[-25px] transition-all
+}
+
+.card-type-button:hover .card-title {
+  @apply bg-gold text-white
+}
+
+.search-tablist {
+  @apply p-0 bg-transparent border-0
+}
+
+/* .search-tablist */
+
+.search-tab {
+  @apply font-montserrat text-[14px] md:text-[18px] font-medium  leading-[22px] rounded-none px-[15px] py-2 mr-[1px] bg-gold text-white hover:!bg-white hover:!text-title data-[state=active]:!bg-white data-[state=active]:!text-title
+}
+
+
+
+
 /* CONTATO */
 .form-contato input,
 .form-contato textarea {
-  @apply !border-0 !shadow-none bg-white rounded-none font-montserrat text-[18px] text-title font-normal leading-[22px] p-5 h-[62px]
+  @apply !border-0 !shadow-none bg-white rounded-none font-montserrat text-[14px] md:text-[18px] text-title font-normal leading-[22px] p-5 h-[50px] md:h-[62px]
 }
 
 .form-contato textarea {
@@ -247,7 +272,7 @@
 }
 
 .form-contato .form-select button {
-  @apply bg-white rounded-none h-[62px] font-montserrat text-content text-[18px] px-5 border-0 shadow-none
+  @apply bg-white rounded-none h-[50px] md:h-[62px] font-montserrat text-content text-[14px] md:text-[18px] px-5 border-0 shadow-none
 }
 
 .form-contato .form-select button svg {
@@ -261,7 +286,6 @@
 .form-button-submit {
   @apply border-0 shadow-none rounded-none uppercase font-inter font-medium text-[14px] leading-[19px] py-[14px] px-[15px] flex gap-[14px] h-[47px] hover:!bg-gold items-center
 }
-
 
 /* FOOTER */
 .footer-title_units {
