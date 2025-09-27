@@ -10,7 +10,13 @@ import { ConsultorImobiliario } from "@/components/icons/ConsultorImobiliario";
 import { Digital } from "@/components/icons/Digital";
 import { FotografiaImobiliaria } from "@/components/icons/FotografiaImobiliaria";
 import { MultiplosCanais } from "@/components/icons/MultiplosCanais";
+import { Metadata } from "next";
 import { FormAnunciar } from "./_components/FormAnunciar";
+
+export const metadata: Metadata = {
+  title: "Anuciar Imóvel - Úniko Imóveis",
+  description: "Úniko Imóveis - Melhores imóveis no Brasil",
+};
 
 export default async function AnunciarImovel() {
   return (

@@ -8,7 +8,13 @@ import { BuscaAvancada } from "@/components/icons/BuscaAvancada";
 import { ContatoCorretor } from "@/components/icons/ContatoCorretor";
 import { ContratacaoImovel } from "@/components/icons/ContratacaoImovel";
 import { PreenchaFormulario } from "@/components/icons/PreenchaFormulario";
+import { Metadata } from "next";
 import { FormProcurar } from "./_components/FormProcurar";
+
+export const metadata: Metadata = {
+  title: "Procurar Imóvel - Úniko Imóveis",
+  description: "Úniko Imóveis - Melhores imóveis no Brasil",
+};
 
 export default async function AnunciarImovel() {
   return (

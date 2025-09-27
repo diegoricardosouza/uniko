@@ -100,7 +100,6 @@ export function FormProcurar() {
   const handleSubmit = form.handleSubmit(async (data) => {
     try {
       setIsLoading(true)
-      console.log(data);
 
       const html = `
           <p><b>Tipo do imóvel: </b>${data.type}<br>
