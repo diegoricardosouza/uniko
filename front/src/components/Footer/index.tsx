@@ -65,12 +65,12 @@ export async function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="#">
+                <Link href="/anunciar-imovel?city=curitiba">
                   Anunciar Imóvel
                 </Link>
               </li>
               <li>
-                <Link href="#">
+                <Link href="/procurar-imovel?city=curitiba">
                   Procurar Imóvel
                 </Link>
               </li>
@@ -97,12 +97,12 @@ export async function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="#">
+                <Link href="/anunciar-imovel?city=belo-horizonte#">
                   Anunciar Imóvel
                 </Link>
               </li>
               <li>
-                <Link href="#">
+                <Link href="/procurar-imovel?city=belo-horizonte#">
                   Procurar Imóvel
                 </Link>
               </li>
@@ -129,12 +129,12 @@ export async function Footer() {
 
             <ul>
               <li>
-                <Link href="#">
+                <Link href="/sobre">
                   Sobre
                 </Link>
               </li>
               <li>
-                <Link href="#">
+                <Link href="/financiamento">
                   Financiamento
                 </Link>
               </li>

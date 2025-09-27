@@ -1,14 +1,21 @@
+import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 
 interface CardAnuncieProps {
   icon: ReactNode;
   title: string;
   content: string;
+  classname?: string;
 }
 
-export function CardAnuncie({ icon, title, content }: CardAnuncieProps) {
+export function CardAnuncie({ icon, title, content, classname }: CardAnuncieProps) {
   return (
-    <article className="w-full max-w-full md:max-w-[288px] bg-bggray rounded-[0_20px_20px_20px] p-[19px] flex flex-col items-center pt-0">
+    <article 
+      className={cn(
+        'w-full max-w-full md:max-w-[288px] bg-bggray rounded-[0_20px_20px_20px] p-[19px] flex flex-col items-center pt-0',
+        classname
+      )}
+    >
       <div className="bg-white rounded-[0_20px_20px_20px] shadow-[0px_0px_5px_#00000029] w-[90px] h-[90px] flex items-center justify-center mt-[-64px]">
         {icon}
       </div>
