@@ -114,7 +114,7 @@ export async function Footer() {
 
             <ul>
               <li>
-                <Link href="#">
+                <Link href="/noticias">
                   Notícias
                 </Link>
               </li>

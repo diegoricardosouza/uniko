@@ -11,6 +11,7 @@ export interface CategoryPostsCat {
 export interface Post {
   id: string;
   name: string;
+  slug?: string;
   subtitle?: string;
   featuredImage: string | File;
   content?: string;

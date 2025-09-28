@@ -39,7 +39,6 @@ export default async function Contato() {
         {settings[0].unitCompany?.map((unit, index) => (
           <div className="container" key={unit.id}>
             <GoogleMaps
-
               address={unit.address ?? ""}
               businessName={unit.name}
               phone1={unit.telephone}
