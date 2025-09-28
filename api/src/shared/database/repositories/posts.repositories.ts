@@ -18,6 +18,10 @@ export class PostsRepository {
     return this.prismaService.post.findMany(findAllDto);
   }
 
+  count(findAllDto: Prisma.PostCountArgs) {
+    return this.prismaService.post.count(findAllDto);
+  }
+
   findFirst(findFirstDto: Prisma.PostFindFirstArgs) {
     return this.prismaService.post.findFirst(findFirstDto);
   }

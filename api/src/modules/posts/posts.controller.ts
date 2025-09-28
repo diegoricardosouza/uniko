@@ -13,9 +13,10 @@ import {
   UploadedFile,
 } from '@nestjs/common';
 import { FileUpload } from 'src/shared/decorators/FileUpload';
+import { IsPublic } from 'src/shared/decorators/IsPublic';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { FindPostsOptions, PostsService } from './posts.service';
+import { FindPostsOptions, PaginatedResponse, PostsService } from './posts.service';
 
 @Controller('posts')
 export class PostsController {
@@ -36,9 +37,18 @@ export class PostsController {
     return this.postsService.create(createPostDto, featuredImage);
   }
 
+  @IsPublic()
   @Get()
   findAll(@Query() options: FindPostsOptions) {
     return this.postsService.findAll(options);
+  }
+
+  @IsPublic()
+  @Get('paginate')
+  findAllPaginate(@Query() options: FindPostsOptions): Promise<PaginatedResponse<any>> {
+    console.log(options);
+    
+    return this.postsService.findAllPaginate(options);
   }
 
   @Get(':id')

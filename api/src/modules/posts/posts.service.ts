@@ -28,6 +28,18 @@ export interface FindPostsOptions {
   orderDirection?: 'asc' | 'desc';
 }
 
+export interface PaginatedResponse<T> {
+  data: T[];
+  meta: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+  };
+}
+
 type PostWithCategories = Prisma.PostGetPayload<{
   include: {
     categories: {
@@ -225,6 +237,113 @@ export class PostsService {
     }));
 
     return postsWithMedias;
+  }
+
+  async findAllPaginate(options: FindPostsOptions = {}) {
+    // IMPORTANTE: Garantir que os valores são números
+    const page = Number(options.page) || 1;
+    const limit = Number(options.limit) || 10;
+    const { search, categoryIds } = options;
+
+    console.log('🔧 Service - Parâmetros processados:', {
+      page,
+      limit,
+      pageType: typeof page,
+      limitType: typeof limit,
+      search,
+      categoryIds
+    });
+
+    // Calcular offset para paginação
+    const skip = (page - 1) * limit;
+
+    // Construir filtros
+    const where: Prisma.PostWhereInput = {};
+
+    if (search) {
+      where.OR = [
+        { name: { contains: search, mode: 'insensitive' } },
+        { subtitle: { contains: search, mode: 'insensitive' } },
+        { content: { contains: search, mode: 'insensitive' } },
+      ];
+    }
+
+    if (categoryIds?.length) {
+      where.categories = {
+        some: {
+          categoryId: {
+            in: categoryIds,
+          },
+        },
+      };
+    }
+
+    console.log('🗃️  Parâmetros para o Prisma:', {
+      skip,
+      take: limit,
+      skipType: typeof skip,
+      takeType: typeof limit
+    });
+
+    // Buscar posts paginados e contar total
+    const [rawPosts, totalCount] = await Promise.all([
+      this.postsRepo.findAll({
+        where,
+        orderBy: {
+          createdAt: 'desc',
+        },
+        select: postSelectFields,
+        skip, // deve ser number
+        take: limit, // deve ser number
+      }) as Promise<PostWithCategories[]>,
+      
+      this.postsRepo.count({ where })
+    ]);
+
+    // Resto da sua lógica...
+    const posts = rawPosts.map((post) => ({
+      ...post,
+      id: post.id,
+      name: post.name,
+      slug: post.slug,
+      subtitle: post.subtitle,
+      content: post.content,
+      createdAt: post.createdAt,
+      categories: post.categories.map((item: any) => item.category),
+    }));
+
+    const pageIds = posts.map((page) => page.id);
+    const allMedias = await this.getPostsMedias(pageIds);
+
+    const mediasByPageId = allMedias.reduce((acc, media) => {
+      if (!acc[media.entityId]) {
+        acc[media.entityId] = [];
+      }
+      acc[media.entityId].push(media);
+      return acc;
+    }, {});
+
+    const postsWithMedias = posts.map((post) => ({
+      ...post,
+      medias: mediasByPageId[post.id] || [],
+    }));
+
+    // Calcular metadados da paginação
+    const totalPages = Math.ceil(totalCount / limit);
+    const hasNextPage = page < totalPages;
+    const hasPreviousPage = page > 1;
+
+    return {
+      data: postsWithMedias,
+      meta: {
+        total: totalCount,
+        page,
+        limit,
+        totalPages,
+        hasNextPage,
+        hasPreviousPage,
+      },
+    };
   }
 
   /**
