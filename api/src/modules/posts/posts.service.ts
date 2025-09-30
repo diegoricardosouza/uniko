@@ -245,15 +245,6 @@ export class PostsService {
     const limit = Number(options.limit) || 10;
     const { search, categoryIds } = options;
 
-    console.log('🔧 Service - Parâmetros processados:', {
-      page,
-      limit,
-      pageType: typeof page,
-      limitType: typeof limit,
-      search,
-      categoryIds
-    });
-
     // Calcular offset para paginação
     const skip = (page - 1) * limit;
 
@@ -278,13 +269,6 @@ export class PostsService {
       };
     }
 
-    console.log('🗃️  Parâmetros para o Prisma:', {
-      skip,
-      take: limit,
-      skipType: typeof skip,
-      takeType: typeof limit
-    });
-
     // Buscar posts paginados e contar total
     const [rawPosts, totalCount] = await Promise.all([
       this.postsRepo.findAll({
@@ -296,8 +280,8 @@ export class PostsService {
         skip, // deve ser number
         take: limit, // deve ser number
       }) as Promise<PostWithCategories[]>,
-      
-      this.postsRepo.count({ where })
+
+      this.postsRepo.count({ where }),
     ]);
 
     // Resto da sua lógica...
@@ -562,7 +546,13 @@ export class PostsService {
     postId: string,
     limit: number = 5,
   ): Promise<PostWithRelations[]> {
-    await this.existsPost(postId);
+    const currentCat = await this.postsRepo.findUnique({
+      where: { id: postId },
+    });
+
+    if (!currentCat) {
+      throw new ConflictException('Post not found');
+    }
 
     // Busca categorias do post atual
     const currentPost: PostWithRelations = await this.postsRepo.findUnique({
@@ -570,15 +560,22 @@ export class PostsService {
       include: {
         categories: {
           include: {
-            category: true,
+            category: {
+              select: {
+                id: true,
+                name: true,
+                slug: true,
+                description: true,
+                createdAt: true,
+              },
+            },
           },
-          select: { categoryId: true },
         },
       },
     });
 
     const categoryIds = currentPost.categories.map((c) => c.categoryId);
-
+    
     if (!categoryIds.length) {
       return [];
     }
@@ -602,30 +599,40 @@ export class PostsService {
           },
         },
       },
-      take: limit,
+      take: limit ? Number(limit) : 3,
       orderBy: { createdAt: 'desc' },
-    });
+    }) as PostWithCategories[];
 
-    // Processar resultados
-    return relatedPosts.map((post) => {
-      const result: PostWithRelations = { ...post };
+    const posts = relatedPosts.map((post) => ({
+      ...post,
+      id: post.id,
+      name: post.name,
+      slug: post.slug,
+      subtitle: post.subtitle,
+      content: post.content,
+      createdAt: post.createdAt,
+      categories: post.categories.map((item: any) => item.category),
+    }));
 
-      // if (post.medias?.length) {
-      //   result.featuredImage = post.medias[0];
-      //   delete result.medias;
-      // }
+    // Recuperar mídias para todas as páginas de uma vez
+    const pageIds = posts.map((page) => page.id);
+    const allMedias = await this.getPostsMedias(pageIds);
 
-      return result;
-    });
-  }
+    // Agrupar mídias por página
+    const mediasByPageId = allMedias.reduce((acc, media) => {
+      if (!acc[media.entityId]) {
+        acc[media.entityId] = [];
+      }
+      acc[media.entityId].push(media);
+      return acc;
+    }, {});
 
-  private async existsPost(id: string) {
-    const currentCat = await this.postsRepo.findUnique({
-      where: { id },
-    });
+    // Adicionar mídias às páginas
+    const postsWithMedias = posts.map((post) => ({
+      ...post,
+      medias: mediasByPageId[post.id] || [],
+    }));
 
-    if (!currentCat) {
-      throw new ConflictException('Post not found');
-    }
+    return postsWithMedias;
   }
 }

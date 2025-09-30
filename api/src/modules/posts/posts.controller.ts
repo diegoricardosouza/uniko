@@ -56,9 +56,19 @@ export class PostsController {
     return this.postsService.findOne(id);
   }
 
+  @IsPublic()
   @Get('slug/:slug')
   findBySlug(@Param('slug') slug: string) {
     return this.postsService.findBySlug(slug);
+  }
+
+  @IsPublic()
+  @Get('related/:id')
+  findRelated(
+    @Param('id') id: string,
+    @Query('limit') limit: number
+  ) {
+    return this.postsService.findRelated(id, limit);
   }
 
   @Patch(':id')

@@ -28,9 +28,6 @@ export default async function Noticias({ searchParams }: NoticiasProps) {
     page,
     limit
   });
-
-  // console.log({ params, page, limit });
-  
   
   return (
     <div>
@@ -50,7 +47,7 @@ export default async function Noticias({ searchParams }: NoticiasProps) {
 
           <div className="flex flex-col md:grid grid-cols-3 gap-[26px]">
             {postsData.data.map((post) => (
-              <CardPost key={post.id} post={post} />
+              <CardPost key={post.id} post={post} type="with button" />
             ))}
           </div>
 

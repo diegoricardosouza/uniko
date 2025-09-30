@@ -157,11 +157,24 @@
 }
 
 .content p {
-  @apply m-0 mb-[25px] text-[17px] text-content leading-[22px] font-inter font-light
+  @apply m-0 mb-[25px] text-[17px] text-content leading-[20px] font-inter font-light
 }
 
 .content h2 {
   @apply text-[25px] font-montserrat text-gold font-semibold leading-[30px] m-0 mb-[5px]
+}
+
+.content h3 {
+  @apply text-gold text-[20px] font-montserrat leading-[24px] mb-[5px]
+}
+
+.content ul {
+  list-style: inherit;
+  @apply m-0 text-[17px] text-content leading-[20px] font-inter font-light pl-5 mb-[30px] -mt-5
+}
+
+.content ::marker {
+  @apply text-gold;
 }
 
 .content h4 {
