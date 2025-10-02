@@ -201,6 +201,10 @@
   @apply !pl-[15px]
 }
 
+.content strong {
+  @apply font-bold
+}
+
 .box-sobre-missao {
   @apply bg-bggray rounded-[0_20px_20px_20px] p-[0_30px_30px_30px]
 }

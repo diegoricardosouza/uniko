@@ -160,7 +160,7 @@ export async function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="#">
+                <Link href="/contestacao-de-vistorias">
                   Contestação de Vistorias
                 </Link>
               </li>
