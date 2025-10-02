@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { httpClient } from "../httpClient";
 
 export interface EmailsParams {
@@ -5,7 +6,7 @@ export interface EmailsParams {
   to: string;
   subject: string;
   htmlContent: string;
-  attachments?: string | File | undefined;
+  attachments?: File[] | undefined;
 }
 
 export async function send(params: EmailsParams) {
@@ -16,7 +17,13 @@ export async function send(params: EmailsParams) {
   formData.append("subject", params.subject);
   formData.append("htmlContent", params.htmlContent);
 
-  if (params.attachments) formData.append("attachments", params.attachments);
+  // if (params.attachments) formData.append("attachments", params.attachments);
+
+  if (params.attachments && params.attachments.length > 0) {
+    params.attachments.forEach((file: any) => {
+      formData.append("attachments", file);
+    });
+  }
 
   const { data } = await httpClient.post("/emails/send", formData, {
     headers: {

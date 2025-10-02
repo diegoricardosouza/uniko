@@ -150,7 +150,7 @@ export async function Footer() {
 
             <ul className="mb-6">
               <li>
-                <Link href="#">
+                <Link href="/fundo-de-reservas">
                   Fundo de Reservas
                 </Link>
               </li>

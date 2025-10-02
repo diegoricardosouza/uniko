@@ -113,6 +113,11 @@ export function FormAnunciar() {
           </p>
         `
 
+      const attachments: File[] = [];
+      if (data.file instanceof File) {
+        attachments.push(data.file);
+      }
+
       const subject = !city && city === 'curitiba' ? 'Anuncie Imóvel Curitiba' : 'Anuncie Imóvel Belo Horizonte'
       const nameForm = !city && city === 'curitiba' ? 'Anuncie Imóvel Curitiba' : 'Anuncie Imóvel Belo Horizonte'
 
@@ -121,7 +126,7 @@ export function FormAnunciar() {
         to: "diegoricardoweb@gmail.com",
         subject,
         htmlContent: html,
-        attachments: data.file
+        attachments: attachments.length > 0 ? attachments : undefined
       }
 
       await sendMailAction(payload);
