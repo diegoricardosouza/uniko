@@ -155,7 +155,7 @@ export async function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="#">
+                <Link href="/aviso-de-desocupacao">
                   Aviso de Desocupação
                 </Link>
               </li>
