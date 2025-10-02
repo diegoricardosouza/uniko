@@ -18,6 +18,10 @@ export class PropertiesRepository {
     return this.prismaService.property.findMany(findAllDto);
   }
 
+  count(findAllDto: Prisma.PropertyCountArgs) {
+    return this.prismaService.property.count(findAllDto);
+  }
+
   findFirst(findFirstDto: Prisma.PropertyFindFirstArgs) {
     return this.prismaService.property.findFirst(findFirstDto);
   }

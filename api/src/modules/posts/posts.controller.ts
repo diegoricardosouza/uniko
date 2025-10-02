@@ -16,7 +16,11 @@ import { FileUpload } from 'src/shared/decorators/FileUpload';
 import { IsPublic } from 'src/shared/decorators/IsPublic';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { FindPostsOptions, PaginatedResponse, PostsService } from './posts.service';
+import {
+  FindPostsOptions,
+  PaginatedResponse,
+  PostsService,
+} from './posts.service';
 
 @Controller('posts')
 export class PostsController {
@@ -45,9 +49,9 @@ export class PostsController {
 
   @IsPublic()
   @Get('paginate')
-  findAllPaginate(@Query() options: FindPostsOptions): Promise<PaginatedResponse<any>> {
-    console.log(options);
-    
+  findAllPaginate(
+    @Query() options: FindPostsOptions,
+  ): Promise<PaginatedResponse<any>> {
     return this.postsService.findAllPaginate(options);
   }
 
@@ -64,10 +68,7 @@ export class PostsController {
 
   @IsPublic()
   @Get('related/:id')
-  findRelated(
-    @Param('id') id: string,
-    @Query('limit') limit: number
-  ) {
+  findRelated(@Param('id') id: string, @Query('limit') limit: number) {
     return this.postsService.findRelated(id, limit);
   }
 

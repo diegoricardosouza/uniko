@@ -45,6 +45,7 @@ export type NeighborhoodProps = {
 export interface Property {
   id: string;
   title: string;
+  slug?: string;
   description?: string;
   reference: string;
   price: number;

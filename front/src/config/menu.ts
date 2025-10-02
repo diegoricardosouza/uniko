@@ -14,15 +14,15 @@ export const menuLeft = [
     label: "Curitiba",
     submenu: [
       {
-        href: "/imoveis?tipo=comprar",
+        href: "/imoveis?finalidade=comprar&city=curitiba",
         label: "Comprar"
       },
       {
-        href: "/imoveis?tipo=alugar",
+        href: "/imoveis?finalidade=alugar&city=curitiba",
         label: "Alugar"
       },
       {
-        href: "/imoveis?tipo=lancamentos",
+        href: "/imoveis?finalidade=lancamentos&city=curitiba",
         label: "Lançamentos"
       },
       {
@@ -40,15 +40,15 @@ export const menuLeft = [
     label: "Belo Horizonte",
     submenu: [
       {
-        href: "/imoveis?tipo=comprar",
+        href: "/imoveis?finalidade=comprar&city=belo-horizonte",
         label: "Comprar"
       },
       {
-        href: "/imoveis?tipo=alugar",
+        href: "/imoveis?finalidade=alugar&city=belo-horizonte",
         label: "Alugar"
       },
       {
-        href: "/imoveis?tipo=lancamentos",
+        href: "/imoveis?finalidade=lancamentos&city=belo-horizonte",
         label: "Lançamentos"
       },
       {
@@ -129,15 +129,15 @@ export const menuMobile = [
     label: "Curitiba",
     submenu: [
       {
-        href: "/imoveis?tipo=comprar",
+        href: "/imoveis?finalidade=comprar&city=curitiba",
         label: "Comprar"
       },
       {
-        href: "/imoveis?tipo=alugar",
+        href: "/imoveis?finalidade=alugar&city=curitiba",
         label: "Alugar"
       },
       {
-        href: "/imoveis?tipo=lancamentos",
+        href: "/imoveis?finalidade=lancamentos&city=curitiba",
         label: "Lançamentos"
       },
       {
@@ -155,15 +155,15 @@ export const menuMobile = [
     label: "Belo Horizonte",
     submenu: [
       {
-        href: "/imoveis?tipo=comprar",
+        href: "/imoveis?finalidade=comprar&city=belo-horizonte",
         label: "Comprar"
       },
       {
-        href: "/imoveis?tipo=alugar",
+        href: "/imoveis?finalidade=alugar&city=belo-horizonte",
         label: "Alugar"
       },
       {
-        href: "/imoveis?tipo=lancamentos",
+        href: "/imoveis?finalidade=lancamentos&city=belo-horizonte",
         label: "Lançamentos"
       },
       {

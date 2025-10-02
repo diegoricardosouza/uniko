@@ -13,6 +13,7 @@ import {
   UploadedFiles,
 } from '@nestjs/common';
 import { FileUploadMulti } from 'src/shared/decorators/FileUploadMulti';
+import { IsPublic } from 'src/shared/decorators/IsPublic';
 import { CreatePropertyDto } from './dto/create-property.dto';
 import { UpdatePropertyDto } from './dto/update-property.dto';
 import { FindPropertiesOptions, PropertiesService } from './properties.service';
@@ -58,9 +59,18 @@ export class PropertiesController {
     );
   }
 
+  @IsPublic()
   @Get()
   findAll(@Query() options: FindPropertiesOptions) {
     return this.propertiesService.findAll(options);
+  }
+
+  @IsPublic()
+  @Get('paginate')
+  findAllPaginate(
+    @Query() options: FindPropertiesOptions,
+  ) {
+    return this.propertiesService.findAllPaginate(options);
   }
 
   @Get(':id')

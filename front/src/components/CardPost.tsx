@@ -36,7 +36,7 @@ export function CardPost({ post, className, type }: CardPostProps) {
               {post.name}
             </h2>
           </header>
-          <p className="font-inter text-[17px] text-content leading-[20px] font-normal">
+          <p className="font-inter text-[15px] md:text-[17px] text-content leading-[20px] font-normal">
             {trimWords(post.subtitle! || post.content!, 16)}
           </p>
         </Link>

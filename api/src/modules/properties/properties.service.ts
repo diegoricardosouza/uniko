@@ -299,6 +299,191 @@ export class PropertiesService {
     return propertiesWithMedias;
   }
 
+  async findAllPaginate(options: FindPropertiesOptions = {}) {
+    // Garantir que page e limit são números
+    const page = Number(options.page) || 1;
+    const limit = Number(options.limit) || 10;
+    const { search, city, neighborhood, types, finalities } = options;
+
+    // Calcular offset para paginação
+    const skip = (page - 1) * limit;
+
+    // Construir filtros (mesmo do findAll)
+    const where: Prisma.PropertyWhereInput = {};
+
+    if (search) {
+      where.OR = [
+        { title: { contains: search, mode: 'insensitive' } },
+        { description: { contains: search, mode: 'insensitive' } },
+        { reference: { contains: search, mode: 'insensitive' } },
+      ];
+    }
+
+    if (city) {
+      where.city = {
+        OR: [
+          {
+            slug: {
+              contains: city,
+              mode: 'insensitive'
+            },
+          },
+          {
+            name: {
+              contains: city,
+              mode: 'insensitive'
+            },
+          },
+        ]
+      };
+    }
+
+    if (neighborhood) {
+      where.neighborhood = {
+        OR: [
+          {
+            name: {
+              contains: neighborhood,
+              mode: 'insensitive'
+            },
+          },
+          {
+            slug: {
+              contains: neighborhood,
+              mode: 'insensitive'
+            },
+          },
+        ]
+      };
+    }
+
+    if (types?.length) {
+      where.types = {
+        some: {
+          typeId: { in: types },
+        },
+      };
+    }
+
+    if (finalities?.length) {
+      where.finalities = {
+        some: {
+          finality: {
+            OR: [
+              { name: { in: finalities, mode: 'insensitive' } },
+              { slug: { in: finalities } },
+            ],
+          },
+        },
+      };
+    }
+
+    // Buscar properties paginadas e contar total em paralelo
+    const [rawProperties, totalCount] = await Promise.all([
+      this.propertiesRepo.findAll({
+        where,
+        orderBy: {
+          createdAt: options.orderDirection ? options.orderDirection : 'desc',
+        },
+        include: {
+          city: {
+            include: {
+              state: true,
+            },
+            omit: {
+              stateId: true,
+            },
+          },
+          neighborhood: true,
+          types: {
+            include: {
+              type: true,
+            },
+            omit: {
+              propertyId: true,
+              typeId: true,
+            },
+          },
+          finalities: {
+            include: {
+              finality: true,
+            },
+            omit: {
+              propertyId: true,
+              finalityId: true,
+            },
+          },
+          characteristics: {
+            omit: {
+              propertyId: true,
+              createdAt: true,
+              updatedAt: true,
+            },
+          },
+          infrastructures: {
+            omit: {
+              propertyId: true,
+              createdAt: true,
+              updatedAt: true,
+            },
+          },
+        },
+        omit: {
+          cityId: true,
+          neighborhoodId: true,
+        },
+        skip: Number(skip),
+        take: Number(limit),
+      }) as Promise<PropertyWithTypesAndFinalities[]>,
+
+      this.propertiesRepo.count({ where })
+    ]);
+
+    // Transformar a estrutura
+    const properties = rawProperties.map((property) => ({
+      ...property,
+      id: property.id,
+      types: property.types.map((pt) => pt.type),
+      finalities: property.finalities.map((pf) => pf.finality),
+    }));
+
+    // Recuperar mídias para todas as properties de uma vez
+    const propertiesIds = properties.map((property) => property.id);
+    const allMedias = await this.getPropertiesMedias(propertiesIds);
+
+    // Agrupar mídias por property
+    const mediasByPropertyId = allMedias.reduce((acc, media) => {
+      if (!acc[media.entityId]) {
+        acc[media.entityId] = [];
+      }
+      acc[media.entityId].push(media);
+      return acc;
+    }, {});
+
+    // Adicionar mídias às properties
+    const propertiesWithMedias = properties.map((property) => ({
+      ...property,
+      medias: mediasByPropertyId[property.id] || [],
+    }));
+
+    // Calcular metadados da paginação
+    const totalPages = Math.ceil(totalCount / limit);
+    const hasNextPage = page < totalPages;
+    const hasPreviousPage = page > 1;
+
+    return {
+      data: propertiesWithMedias,
+      meta: {
+        total: totalCount,
+        page,
+        limit,
+        totalPages,
+        hasNextPage,
+        hasPreviousPage,
+      },
+    };
+  }
+
   async findOne(id: string) {
     const rawProperty = (await this.propertiesRepo.findUnique({
       where: { id },
