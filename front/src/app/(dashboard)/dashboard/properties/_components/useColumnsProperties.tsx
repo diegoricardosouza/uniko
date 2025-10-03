@@ -59,6 +59,7 @@ export function useColumnsProperties(onDelete: (id: string) => void): ColumnDef<
           <div className="pl-3">
             <p className="text-sm font-medium leading-none">
               {row.original.title}
+              <span className="text-[#b1b1b1] font-normal block mt-1">Ref.: {row.original.reference}</span>
             </p>
           </div>
         );

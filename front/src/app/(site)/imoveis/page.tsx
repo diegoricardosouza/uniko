@@ -7,6 +7,7 @@ import { DifferentiatedService } from "@/components/DifferentiatedService";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Pagination } from "@/components/Pagination";
+import { FilterProperty } from "./_components/FilterProperty";
 
 interface PropertiesProps {
   searchParams: Promise<{
@@ -27,12 +28,10 @@ export default async function Imoveis({ searchParams }: PropertiesProps) {
     city: params.city,
     finalities: params.finalidade ? [params.finalidade] : undefined,
     page,
-    limit
+    limit,
+    orderDirection: params.orderDirection
   });
-
-  console.log(params.city);
   
-
   const recentPosts = await getPostsPaginateAction({
     limit: 3
   });
@@ -44,12 +43,14 @@ export default async function Imoveis({ searchParams }: PropertiesProps) {
       <main>
         <Breadcrumb title={params.finalidade?.toUpperCase() || ''} />
 
+        <FilterProperty total={properties.meta.total} />
+
         <section className="container flex flex-col gap-[30px] !mt-[30px]">
           {properties.data.map((property) => (
             <CardProperty key={property.id} property={property} type={params.finalidade} />
           ))}
         </section>
-
+        
         <div className="container !mt-[60px]">
           {properties.meta.totalPages > 1 && (
             <Pagination

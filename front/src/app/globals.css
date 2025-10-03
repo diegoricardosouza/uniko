@@ -301,6 +301,17 @@
   @apply opacity-100
 }
 
+.filterProperty button {
+  @apply bg-white rounded-[5px] h-[37px] md:h-[47px] font-inter text-content text-[12px] md:text-[15px] px-[15px] border-[2px] border-[#DDDDDD] shadow-none
+}
+
+.filterProperty button svg {
+  @apply w-[20px] h-[20px]
+}
+
+
+
+
 
 
 /* CONTATO */

@@ -17,6 +17,7 @@ interface CardPropertyProps {
 }
 
 export function CardProperty({ property, type }: CardPropertyProps) {
+  
   const [sliderState, setSliderState] = useState({
     isBeginning: true,
     isEnd: false
@@ -27,13 +28,13 @@ export function CardProperty({ property, type }: CardPropertyProps) {
   );
   const finalityText = hasAluguel ? 'Aluguel' : 'Venda';
   const featuredImageUrl = property.medias?.filter((media) => media.mediaType === 'featured_image')[0]?.url;
-  const imagesUrl = property.medias?.filter((media) => media.mediaType !== 'featured_image');
+  const imagesUrl = property.medias?.filter((media) => media.mediaType !== 'featured_image');  
   
   return (
     <article className="md:flex border-2 border-gold rounded-[0px_20px_20px_20px] bg-bggray overflow-hidden">
       <div className="w-full max-w-[376px] h-full rounded-[0px_20px_20px_20px] overflow-hidden relative">
         <Swiper 
-          className="mySwiperProperty"
+          className={`mySwiperProperty mySwiper${property.id}`}
           onSlideChange={swiper => {
             setSliderState({
               isBeginning: swiper.isBeginning,
@@ -49,8 +50,8 @@ export function CardProperty({ property, type }: CardPropertyProps) {
 
             <Image 
               src={`${process.env.NEXT_PUBLIC_API_URL}${featuredImageUrl!}`}
-              width={752}
-              height={564}
+              width={1128}
+              height={846}
               alt={property.title}
               className="h-[282px] w-full object-cover object-center"
             />

@@ -19,7 +19,7 @@ export interface GetPropertiesParams {
   limit?: number;
   search?: string;
   finalities?: string[];
-  orderDirection?: 'asc' | 'desc';
+  orderDirection?: string;
   city?: string;
   neighborhood?: string;
   types?: string[];

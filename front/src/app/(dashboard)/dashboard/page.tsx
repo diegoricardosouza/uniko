@@ -49,12 +49,13 @@ export default async function Dashboard() {
   //   { id: 3, title: "Cobertura Duplex", type: "Cobertura", price: "R$ 850.000", status: "Disponível" },
   // ];
   const recentProperties = properties.slice(0, 3)
+  const recentPosts = posts.slice(0, 3)
 
-  const recentPosts = [
-    { id: 1, title: "Como escolher o imóvel ideal", author: "Admin", date: "2024-01-15" },
-    { id: 2, title: "Tendências do mercado imobiliário", author: "Admin", date: "2024-01-12" },
-    { id: 3, title: "Dicas para primeira compra", author: "Admin", date: "2024-01-10" },
-  ];
+  // const recentPosts = [
+  //   { id: 1, title: "Como escolher o imóvel ideal", author: "Admin", date: "2024-01-15" },
+  //   { id: 2, title: "Tendências do mercado imobiliário", author: "Admin", date: "2024-01-12" },
+  //   { id: 3, title: "Dicas para primeira compra", author: "Admin", date: "2024-01-10" },
+  // ];
 
   return (
     <div>
@@ -146,10 +147,10 @@ export default async function Dashboard() {
                 <div className="space-y-4">
                   {recentPosts.map((post) => (
                     <div key={post.id} className="p-3 bg-accent rounded-lg">
-                      <p className="font-medium">{post.title}</p>
+                      <p className="font-medium">{post.name}</p>
                       <div className="flex items-center justify-between text-sm text-muted-foreground mt-1">
-                        <span>Por {post.author}</span>
-                        <span>{new Date(post.date).toLocaleDateString('pt-BR')}</span>
+                        <span>{post.categories?.[0].name}</span>
+                        <span>{new Date(post.createdAt!).toLocaleDateString('pt-BR')}</span>
                       </div>
                     </div>
                   ))}

@@ -1,7 +1,9 @@
 import { getPostsRelatedAction } from "@/app/actions/posts/get-post-related";
 import { getPostSlugAction } from "@/app/actions/posts/get-post-slug";
+import { getPropertiesPaginateAction } from "@/app/actions/properties/get-properties-paginate";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { CardPost } from "@/components/CardPost";
+import { CardPropertySingle } from "@/components/CardPropertySingle";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import NotFound from "@/components/NotFound";
@@ -59,6 +61,7 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
 
   try {
     const post = await getPostSlugAction(slug);
+    const properties = await getPropertiesPaginateAction({ limit: 4, finalities: ["lancamentos"] });
 
     if (!post) {
       return (
@@ -152,7 +155,7 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
                     Publicações <strong className="font-semibold">Relacionadas</strong>
                   </h2>
 
-                  <div className="grid grid-cols-2 gap-[26px]">
+                  <div className="flex flex-col md:grid grid-cols-2 gap-[26px]">
                     {relatedPosts.map(post => (
                       <CardPost key={post.id} post={post} className="border-0" type="simple" />
                     ))}
@@ -160,7 +163,19 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
                 </section>
               </div>
 
-              <aside className="w-full max-w-[376px]"></aside>
+              <aside className="w-full max-w-[376px] border-t border-gold">
+                <header>
+                  <h2 className="font-montserrat text-[25px] tracking-[-0.63px] leading-[30px] text-black font-normal my-5 text-center">
+                    Encontre seu lar, <strong className="font-semibold">doce lar!</strong>
+                  </h2>
+                </header>
+
+                <div className="flex flex-col gap-[60px] mb-[60px] md:mb-0">
+                  {properties.data.map((property) => (
+                    <CardPropertySingle key={property.id} property={property} />
+                  ))}
+                </div>
+              </aside>
             </div>
           </article>
         </main>
