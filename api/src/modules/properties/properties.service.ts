@@ -316,8 +316,29 @@ export class PropertiesService {
         { title: { contains: search, mode: 'insensitive' } },
         { description: { contains: search, mode: 'insensitive' } },
         { reference: { contains: search, mode: 'insensitive' } },
+        { address: { contains: search, mode: 'insensitive' } },
+        { types: {
+            some: {
+              type: {
+                OR: [
+                  { name: { in: [search], mode: 'insensitive' } },
+                  { slug: { in: [search] } },
+                ],
+              },
+            }, 
+          } 
+        },
       ];
     }
+
+    // some: {
+    //   type: {
+    //     OR: [
+    //       { name: { in: finalities, mode: 'insensitive' } },
+    //       { slug: { in: finalities } },
+    //     ],
+    //       },
+    // },
 
     if (city) {
       where.city = {
@@ -360,7 +381,12 @@ export class PropertiesService {
     if (types?.length) {
       where.types = {
         some: {
-          typeId: { in: types },
+          type: {
+            OR: [
+              { name: { in: types, mode: 'insensitive' } },
+              { slug: { in: types } },
+            ],
+          },
         },
       };
     }

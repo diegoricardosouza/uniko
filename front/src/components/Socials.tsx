@@ -1,24 +1,20 @@
-import { FaInstagram, FaYoutube } from "react-icons/fa6";
-import { IoLogoFacebook } from "react-icons/io";
+import { getSettingsAction } from "@/app/actions/settings/get-settings";
 
-export function Socials() {
+export async function Socials() {
+  const settings = await getSettingsAction();
+
   return (
     <ul className="flex items-center gap-4 justify-center">
-      <li>
-        <a href="#" target="_blank">
-          <IoLogoFacebook className="w-[34px] h-[34px] text-[#343434] lg:text-white transition-all hover:text-[#C5AF62]" />
-        </a>
-      </li>
-      <li>
-        <a href="#" target="_blank">
-          <FaInstagram className="w-[29px] h-[29px] text-[#343434] lg:text-white transition-all hover:text-[#C5AF62]" />
-        </a>
-      </li>
-      <li>
-        <a href="#" target="_blank">
-          <FaYoutube className="w-[29px] h-[29px] text-[#343434] lg:text-white transition-all hover:text-[#C5AF62]" />
-        </a>
-      </li>
+      {settings[0].socialMedia?.map((social) => (
+        <li key={social.name}>
+          <a href={social.url} target="_blank">
+            <div
+              className="icon-social"
+              dangerouslySetInnerHTML={{ __html: social.icon as string }} 
+            />
+          </a>
+        </li>
+      ))}
     </ul>
   )
 }

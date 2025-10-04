@@ -28,7 +28,7 @@ export function FormTab({ type }: FormTabProps) {
   })
 
   const handleSubmit = form.handleSubmit(async (data) => {
-    redirect(`/imoveis?search=${data.search}&type=${type}`);
+    redirect(`/imoveis?search=${data.search}&finalidade=${type}`);
   })
 
   return (

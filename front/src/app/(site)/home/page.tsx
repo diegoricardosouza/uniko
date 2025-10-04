@@ -1,3 +1,4 @@
+import { getSettingsAction } from "@/app/actions/settings/get-settings";
 import { CardProcess } from "@/components/CardProcess";
 import { CardTypeHome } from "@/components/CardTypeHome";
 import { DifferentiatedService } from "@/components/DifferentiatedService";
@@ -9,10 +10,43 @@ import Image from "next/image";
 import { SearchHome } from "./_components/SearchHome";
 import { VideosHome } from "./_components/VideosHome";
 
-export const metadata: Metadata = {
-  title: "Úniko Imóveis",
-  description: "Úniko Imóveis - Melhores imóveis no Brasil",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const settings = await getSettingsAction();
+
+    if (!settings) {
+      return {
+        title: "Item não encontrado - Úniko Imóveis",
+        description: "Úniko Imóveis - Melhores imóveis no Brasil",
+      };
+    }
+
+    return {
+      // title: `${settings[0].titleSeo} - Úniko Imóveis`,
+      title: `Úniko Imóveis`,
+      description: settings[0].descriptionSeo || "Úniko Imóveis - Melhores imóveis no Brasil",
+      openGraph: {
+        title: settings[0].titleSeo,
+        description: settings[0].descriptionSeo,
+        images: '/logo.png',
+        type: 'article',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: settings[0].titleSeo,
+        description: settings[0].descriptionSeo,
+        images: '/logo.png',
+      },
+    };
+  } catch (error) {
+    console.error('Erro ao gerar metadata:', error);
+
+    return {
+      title: "Erro - Úniko Imóveis",
+      description: "Úniko Imóveis - Melhores imóveis no Brasil",
+    };
+  }
+}
 
 export default async function Home() {
   return (
@@ -76,29 +110,29 @@ export default async function Home() {
               <CardTypeHome
                 title="Apartamentos"
                 imageUrl="/tipos/apartamento.png"
-                link="#"
+                link="/imoveis?type=apartamentos"
               />
               <CardTypeHome
                 title="Casas"
                 imageUrl="/tipos/casas.png"
-                link="#"
+                link="/imoveis?type=casas"
                 className="md:mt-[20px]"
               />
               <CardTypeHome
                 title="Comerciais"
                 imageUrl="/tipos/comerciais.png"
-                link="#"
+                link="/imoveis?type=comerciais"
               />
               <CardTypeHome
                 title="Terrenos"
                 imageUrl="/tipos/terrenos.png"
-                link="#"
+                link="/imoveis?type=terrenos"
                 className="md:mt-[20px]"
               />
               <CardTypeHome
                 title="Chácaras"
                 imageUrl="/tipos/chacaras.png"
-                link="#"
+                link="/imoveis?type=chacaras"
               />
             </div>
           </div>

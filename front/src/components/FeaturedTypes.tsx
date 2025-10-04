@@ -24,7 +24,7 @@ export function FeaturedTypes() {
           image="/img-lancamentos.png"
           width={380}
           height={310}
-          link="#"
+          link="/imoveis?finalidade=lancamentos"
           position="Cima Esquerda"
         />
 
@@ -34,7 +34,7 @@ export function FeaturedTypes() {
           image="/img-comprar.png"
           width={380}
           height={310}
-          link="#"
+          link="/imoveis?finalidade=comprar"
           position="Baixo Direita"
         />
 
@@ -44,7 +44,7 @@ export function FeaturedTypes() {
           image="/img-alugar.png"
           width={380}
           height={310}
-          link="#"
+          link="/imoveis?finalidade=alugar"
           position="Cima Direita"
         />
       </div>

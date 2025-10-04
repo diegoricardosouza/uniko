@@ -3,12 +3,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaWhatsapp } from "react-icons/fa6";
 import { LuArrowRight } from "react-icons/lu";
+import { WhatsApp } from "../WhatsApp";
 
 export async function Footer() {
   const settings = await getSettingsAction();
   
   return (
     <footer>
+      <WhatsApp settings={settings[0]} />
+      
       <div className="bg-gold py-8">
         <div className="container flex flex-col md:flex-row justify-center gap-[30px] lg:gap-[280px]">
           {settings[0].unitCompany?.map((unit) => {

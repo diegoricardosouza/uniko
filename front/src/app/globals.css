@@ -309,7 +309,9 @@
   @apply w-[20px] h-[20px]
 }
 
-
+.icon-social svg {
+  @apply w-[29px] h-[29px] text-[#343434] lg:text-white transition-all hover:text-[#C5AF62]
+}
 
 
 

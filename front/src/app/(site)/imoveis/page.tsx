@@ -16,6 +16,7 @@ interface PropertiesProps {
     limit?: string;
     city?: string;
     finalidade?: string;
+    type?: string;
     orderDirection?: string;
   }>;
 }
@@ -29,8 +30,13 @@ export default async function Imoveis({ searchParams }: PropertiesProps) {
     finalities: params.finalidade ? [params.finalidade] : undefined,
     page,
     limit,
-    orderDirection: params.orderDirection
+    orderDirection: params.orderDirection,
+    search: params.search,
+    types: [params.type!]
   });
+
+  console.log({ params, properties });
+  
   
   const recentPosts = await getPostsPaginateAction({
     limit: 3
@@ -41,7 +47,7 @@ export default async function Imoveis({ searchParams }: PropertiesProps) {
       <Header />
 
       <main>
-        <Breadcrumb title={params.finalidade?.toUpperCase() || ''} />
+        <Breadcrumb title={params.finalidade?.toUpperCase() || params.type?.toUpperCase() || 'IMÓVEIS'} />
 
         <FilterProperty total={properties.meta.total} />
 

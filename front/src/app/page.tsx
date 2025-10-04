@@ -1,55 +1,51 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
-
 import { MenuHome } from "@/components/Header/MenuHome";
 import { Socials } from "@/components/Socials";
+import { VideoHome } from "@/components/VideoHome";
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
 import { LuArrowRight } from "react-icons/lu";
+import { getSettingsAction } from "./actions/settings/get-settings";
 
-declare global {
-  interface Window {
-    YT: any;
-    onYouTubeIframeAPIReady: () => void;
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const settings = await getSettingsAction();
+
+    if (!settings) {
+      return {
+        title: "Item não encontrado - Úniko Imóveis",
+        description: "Úniko Imóveis - Melhores imóveis no Brasil",
+      };
+    }
+
+    return {
+      // title: `${settings[0].titleSeo} - Úniko Imóveis`,
+      title: `Úniko Imóveis`,
+      description: settings[0].descriptionSeo || "Úniko Imóveis - Melhores imóveis no Brasil",
+      openGraph: {
+        title: settings[0].titleSeo,
+        description: settings[0].descriptionSeo,
+        images: '/logo.png',
+        type: 'article',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: settings[0].titleSeo,
+        description: settings[0].descriptionSeo,
+        images: '/logo.png',
+      },
+    };
+  } catch (error) {
+    console.error('Erro ao gerar metadata:', error);
+
+    return {
+      title: "Erro - Úniko Imóveis",
+      description: "Úniko Imóveis - Melhores imóveis no Brasil",
+    };
   }
 }
 
 export default function Home() {
-  const playerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    // Cria script do YouTube API
-    const tag = document.createElement("script");
-    tag.src = "https://www.youtube.com/iframe_api";
-    document.body.appendChild(tag);
-
-    // Função chamada quando API estiver pronta
-    window.onYouTubeIframeAPIReady = () => {
-      if (playerRef.current) {
-        new window.YT.Player(playerRef.current, {
-          videoId: "6Q5Nv5h0qKw", // ID do vídeo
-          playerVars: {
-            autoplay: 1,
-            controls: 0,
-            rel: 0,
-            modestbranding: 1,
-            fs: 0,
-            disablekb: 1,
-            loop: 1,
-            playlist: "6Q5Nv5h0qKw",
-          },
-          events: {
-            onReady: (event: any) => {
-              event.target.mute(); // muta o áudio
-              event.target.playVideo(); // força autoplay
-            },
-          },
-        });
-      }
-    };
-  }, []);
-
   return (
     <div>
       <div className="relative h-screen">
@@ -105,10 +101,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div
-          ref={playerRef}
-          className="w-full h-full"
-        />
+        <VideoHome />
       </div>
     </div>
   );
