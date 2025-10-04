@@ -78,6 +78,12 @@ export class PropertiesController {
     return this.propertiesService.findOne(id);
   }
 
+  @IsPublic()
+  @Get('slug/:slug')
+  findBySlug(@Param('slug') slug: string) {
+    return this.propertiesService.findBySlug(slug);
+  }
+
   @Patch(':id')
   @FileUploadMulti([
     {

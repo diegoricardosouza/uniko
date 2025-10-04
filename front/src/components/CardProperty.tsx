@@ -17,7 +17,6 @@ interface CardPropertyProps {
 }
 
 export function CardProperty({ property, type }: CardPropertyProps) {
-  
   const [sliderState, setSliderState] = useState({
     isBeginning: true,
     isEnd: false

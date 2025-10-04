@@ -331,15 +331,6 @@ export class PropertiesService {
       ];
     }
 
-    // some: {
-    //   type: {
-    //     OR: [
-    //       { name: { in: finalities, mode: 'insensitive' } },
-    //       { slug: { in: finalities } },
-    //     ],
-    //       },
-    // },
-
     if (city) {
       where.city = {
         OR: [
@@ -578,6 +569,77 @@ export class PropertiesService {
     };
 
     const medias = await this.getPropertyMedias(id);
+    return { ...properties, medias };
+  }
+
+  async findBySlug(slug: string) {
+    const rawProperty = (await this.propertiesRepo.findUnique({
+      where: { slug },
+      include: {
+        city: {
+          include: {
+            state: true,
+          },
+          omit: {
+            stateId: true,
+          },
+        },
+        neighborhood: {
+          omit: {
+            cityId: true,
+          },
+        },
+        types: {
+          include: {
+            type: true,
+          },
+          omit: {
+            propertyId: true,
+            typeId: true,
+          },
+        },
+        finalities: {
+          include: {
+            finality: true,
+          },
+          omit: {
+            propertyId: true,
+            finalityId: true,
+          },
+        },
+        characteristics: {
+          omit: {
+            propertyId: true,
+            createdAt: true,
+            updatedAt: true,
+          },
+        },
+        infrastructures: {
+          omit: {
+            propertyId: true,
+            createdAt: true,
+            updatedAt: true,
+          },
+        },
+      },
+      omit: {
+        cityId: true,
+        neighborhoodId: true,
+      },
+    })) as PropertyWithTypesAndFinalities;
+
+    if (!rawProperty) {
+      throw new ConflictException('Property not found');
+    }
+
+    const properties = {
+      ...rawProperty,
+      id: rawProperty.id,
+      types: rawProperty.types.map((pt) => pt.type),
+      finalities: rawProperty.finalities.map((pf) => pf.finality),
+    };
+
+    const medias = await this.getPropertyMedias(rawProperty.id);
     return { ...properties, medias };
   }
 

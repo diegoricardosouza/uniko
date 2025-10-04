@@ -2,6 +2,7 @@ import { create } from "./create";
 import { getAll } from "./getAll";
 import { getAllPaginate } from "./getAllPaginate";
 import { getById } from "./getById";
+import { getBySlug } from "./getBySlug";
 import { remove } from "./remove";
 import { update } from "./update";
 
@@ -11,5 +12,6 @@ export const propertiesService = {
   remove,
   create,
   getById,
+  getBySlug,
   update
 }

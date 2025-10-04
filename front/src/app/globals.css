@@ -170,7 +170,23 @@
 
 .content ul {
   list-style: inherit;
-  @apply m-0 text-[17px] text-content leading-[20px] font-inter font-light pl-5 mb-[30px] -mt-5
+  @apply m-0 text-[17px] text-content leading-6 font-inter font-light pl-5 mb-[30px] -mt-5
+}
+
+.content.content-property ul {
+  @apply mt-0
+}
+
+.content h2 {
+  @apply font-normal
+}
+
+.content h2 strong {
+  @apply font-semibold
+}
+
+.content strong {
+  @apply !font-semibold
 }
 
 .content ::marker {

@@ -1,18 +1,26 @@
 import { Property } from "@/entities/Property";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
 interface CardPropertySingleProps {
   property: Property
+  type?: 'simple' | 'columns'
 }
 
-export function CardPropertySingle({ property }: CardPropertySingleProps) {
+export function CardPropertySingle({ property, type = 'simple' }: CardPropertySingleProps) {
   const featuredImageUrl = property.medias?.filter((media) => media.mediaType === 'featured_image')[0]?.url;
   const category = property.types?.[0]?.name;
 
   return (
     <article>
-      <Link href={`/imovel/${property.slug}`}>
+      <Link 
+        href={`/imovel/${property.slug}`}
+        className={cn(
+          'block transition-all',
+          type === 'columns' && 'p-[10px] hover:bg-white'
+        )}
+      >
         <div className="rounded-[0_20px_20px_20px] overflow-hidden relative mb-[10px]">
           <div 
             className="w-full h-[80px] bg-gradient-to-b from-[#000000] to-[#54545400] absolute top-0 left-0"
