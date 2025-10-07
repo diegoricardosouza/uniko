@@ -21,6 +21,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import { useSession } from "next-auth/react"
 
 // This is sample data.
 const data = {
@@ -133,14 +134,101 @@ const data = {
   ]
 }
 
+const dataEditor = {
+  navMain: [
+    {
+      title: "Dashboard",
+      url: "/dashboard",
+      icon: Home,
+    },
+    {
+      title: "Páginas",
+      url: "#",
+      icon: NotebookText,
+      isActive: true,
+      items: [
+        {
+          title: "Listar Todas",
+          url: "/dashboard/pages",
+        },
+        {
+          title: "Adicionar Nova",
+          url: "/dashboard/pages/new",
+        }
+      ],
+    },
+    {
+      title: "Imóveis",
+      url: "#",
+      icon: Building,
+      items: [
+        {
+          title: "Listar Todos",
+          url: "/dashboard/properties",
+        },
+        {
+          title: "Adicionar Novo",
+          url: "/dashboard/properties/new",
+        },
+        {
+          title: "Finalidade",
+          url: "/dashboard/properties/finalities",
+        },
+        {
+          title: "Tipo",
+          url: "/dashboard/properties/types",
+        },
+        {
+          title: "Estados",
+          url: "/dashboard/properties/states",
+        },
+        {
+          title: "Cidades",
+          url: "/dashboard/properties/cities",
+        },
+        {
+          title: "Bairros",
+          url: "/dashboard/properties/neighborhoods",
+        },
+      ],
+    },
+    {
+      title: "Blog",
+      url: "#",
+      icon: Newspaper,
+      items: [
+        {
+          title: "Listar Todos",
+          url: "/dashboard/blog",
+        },
+        {
+          title: "Adicionar Novo",
+          url: "/dashboard/blog/new",
+        },
+        {
+          title: "Categorias",
+          url: "/dashboard/blog/category",
+        }
+      ],
+    }
+  ]
+}
+
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const session = useSession();
+  
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader className="border-b">
         <TeamSwitcher />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        {session.data?.user.role === 'ADMIN' && (
+          <NavMain items={data.navMain} />
+        )}
+        {session.data?.user.role === 'EDITOR' && (
+          <NavMain items={dataEditor.navMain} />
+        )}
       </SidebarContent>
       <SidebarFooter className="border-t">
         <NavUser user={data.user} />

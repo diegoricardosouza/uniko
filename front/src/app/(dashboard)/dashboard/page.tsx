@@ -4,9 +4,10 @@ import { getPropertiesAction } from "@/app/actions/properties/get-properties";
 import { getUsersAction } from "@/app/actions/users/get-users";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Building, Newspaper, NotebookText, Users } from "lucide-react";
 import Link from "next/link";
 import { BreadcrumbDashboard } from "./_components/BreadcrumbDashboard";
+import { ButtonsDashboard } from "./_components/ButtonsDashboard";
+import { CardStats } from "./_components/CardStats";
 
 export default async function Dashboard() {
   const [posts, users, pages, properties] = await Promise.all([
@@ -20,42 +21,31 @@ export default async function Dashboard() {
     {
       title: "Total de Imóveis",
       value: properties.length || "0",
-      icon: Building,
+      icon: "Building",
       label: 'Imóveis'
     },
     {
       title: "Posts do Blog",
       value: posts?.length || "0",
-      icon: Newspaper,
+      icon: "Newspaper",
       label: 'Posts'
     },
     {
       title: "Usuários Ativos",
       value: users?.length || "0",
-      icon: Users,
+      icon: "Users",
       label: 'Usuários'
     },
     {
       title: "Páginas Criadas",
       value: pages?.length || "0",
-      icon: NotebookText,
+      icon: "NotebookText",
       label: 'Páginas'
     },
   ];
 
-  // const recentProperties = [
-  //   { id: 1, title: "Casa Moderna no Centro", type: "Casa", price: "R$ 450.000", status: "Disponível" },
-  //   { id: 2, title: "Apartamento Vista Mar", type: "Apartamento", price: "R$ 320.000", status: "Vendido" },
-  //   { id: 3, title: "Cobertura Duplex", type: "Cobertura", price: "R$ 850.000", status: "Disponível" },
-  // ];
   const recentProperties = properties.slice(0, 3)
   const recentPosts = posts.slice(0, 3)
-
-  // const recentPosts = [
-  //   { id: 1, title: "Como escolher o imóvel ideal", author: "Admin", date: "2024-01-15" },
-  //   { id: 2, title: "Tendências do mercado imobiliário", author: "Admin", date: "2024-01-12" },
-  //   { id: 3, title: "Dicas para primeira compra", author: "Admin", date: "2024-01-10" },
-  // ];
 
   return (
     <div>
@@ -69,24 +59,7 @@ export default async function Dashboard() {
           </div>
 
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {stats.map((stat) => (
-              <Card key={stat.title} className="bg-gradient-card shadow-md transition-smooth hover:shadow-dropdown">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0">
-                  <CardTitle className="text-sm font-medium text-muted-foreground">
-                    {stat.title}
-                  </CardTitle>
-                  <stat.icon className="h-5 w-5 text-primary" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">
-                    {stat.value} 
-                    <span className="font-light text-lg"> {stat.label}</span>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <CardStats stats={stats} />
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Recent Properties */}
@@ -160,40 +133,7 @@ export default async function Dashboard() {
           </div>
 
           {/* Quick Actions */}
-          <Card className="bg-gradient-card shadow-md">
-            <CardHeader>
-              <CardTitle className="text-lg">Ações Rápidas</CardTitle>
-              <CardDescription>Acesse rapidamente as principais funcionalidades</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <Link href="/dashboard/properties/new">
-                  <Button variant="outline" className="w-full h-20 flex flex-col gap-2 transition-smooth hover:bg-primary hover:text-primary-foreground">
-                    <Building className="h-6 w-6" />
-                    <span>Novo Imóvel</span>
-                  </Button>
-                </Link>
-                <Link href="/dashboard/blog/new">
-                  <Button variant="outline" className="w-full h-20 flex flex-col gap-2 transition-smooth hover:bg-primary hover:text-primary-foreground">
-                    <Newspaper className="h-6 w-6" />
-                    <span>Novo Post</span>
-                  </Button>
-                </Link>
-                <Link href="/dashboard/users/new">
-                  <Button variant="outline" className="w-full h-20 flex flex-col gap-2 transition-smooth hover:bg-primary hover:text-primary-foreground">
-                    <Users className="h-6 w-6" />
-                    <span>Novo Usuário</span>
-                  </Button>
-                </Link>
-                <Link href="/dashboard/pages/new">
-                  <Button variant="outline" className="w-full h-20 flex flex-col gap-2 transition-smooth hover:bg-primary hover:text-primary-foreground">
-                    <NotebookText className="h-6 w-6" />
-                    <span>Páginas</span>
-                  </Button>
-                </Link>
-              </div>
-            </CardContent>
-          </Card>
+          <ButtonsDashboard />
         </div>
       </div>
     </div>

@@ -33,10 +33,7 @@ export default async function Imoveis({ searchParams }: PropertiesProps) {
     orderDirection: params.orderDirection,
     search: params.search,
     types: [params.type!]
-  });
-
-  console.log({ params, properties });
-  
+  });  
   
   const recentPosts = await getPostsPaginateAction({
     limit: 3
