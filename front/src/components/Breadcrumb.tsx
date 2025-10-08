@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface BreadcrumbProps {
@@ -10,6 +11,9 @@ interface BreadcrumbProps {
 
 export function Breadcrumb({ title }: BreadcrumbProps) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const searchParams = useSearchParams();
+  const city = searchParams.get('city');
+  const nameCity = city && city === 'curitiba' ? 'CURITIBA' : 'BELO HORIZONTE'
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,6 +49,13 @@ export function Breadcrumb({ title }: BreadcrumbProps) {
             <li>
               <Link href="/">HOME</Link>
             </li>
+
+            {city && (
+              <>
+                <li>{">"}</li>
+                <li>{nameCity}</li>
+              </>
+            )}
 
             <li>{">"}</li>
 
