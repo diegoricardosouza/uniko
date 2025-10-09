@@ -8,12 +8,13 @@ export class SettingsService {
   constructor(private readonly settingsRepo: SettingsRepository) {}
 
   async create(createSettingDto: CreateSettingDto) {
-    const { titleSeo, descriptionSeo, socialMedia, unitCompany } = createSettingDto;
+    const { titleSeo, descriptionSeo, urlYoutube, socialMedia, unitCompany } = createSettingDto;
 
     const settings = await this.settingsRepo.create({
       data: {
         titleSeo,
         descriptionSeo,
+        urlYoutube,
         unitCompany: unitCompany?.length
           ? {
             create: unitCompany.map((uc) => ({
@@ -67,6 +68,7 @@ export class SettingsService {
         id: true,
         titleSeo: true,
         descriptionSeo: true,
+        urlYoutube: true,
         unitCompany: {
           omit: {
             updatedAt: true,
@@ -100,6 +102,7 @@ export class SettingsService {
         id: true,
         titleSeo: true,
         descriptionSeo: true,
+        urlYoutube: true,
         unitCompany: {
           omit: {
             updatedAt: true,
@@ -121,7 +124,7 @@ export class SettingsService {
   }
 
   async update(id: string, updateSettingDto: UpdateSettingDto) {
-    const { titleSeo, descriptionSeo, socialMedia, unitCompany } = updateSettingDto;
+    const { titleSeo, descriptionSeo, urlYoutube, socialMedia, unitCompany } = updateSettingDto;
     
     const currentUser = await this.settingsRepo.findUnique({
       where: { id },
@@ -136,6 +139,7 @@ export class SettingsService {
       data: {
         titleSeo,
         descriptionSeo,
+        urlYoutube,
         unitCompany: unitCompany?.length
           ? {
             deleteMany: {},

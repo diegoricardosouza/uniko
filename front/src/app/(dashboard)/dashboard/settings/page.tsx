@@ -44,7 +44,7 @@ export default async function Settings() {
                 className="data-[state=active]:bg-secondary !shadow-none transition-smooth w-full py-2 px-4 text-sm lg:justify-start"
               >
                 <Laptop className="h-6 w-6 mr-2" />
-                SEO
+                Geral
                 </TabsTrigger>
             </TabsList>
           </div>

@@ -18,9 +18,6 @@ export function CardStats({ stats }: CardStatsProps) {
   const role = session.data?.user.role
   const statsFiltered = role !== 'ADMIN' ? stats.filter((stat) => stat.label !== 'Usuários') : stats
 
-  console.log(statsFiltered);
-  
-
   return (
     <div className={cn(
       'grid gap-6',

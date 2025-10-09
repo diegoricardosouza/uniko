@@ -1,16 +1,25 @@
 'use client';
 
+import { getSettingsAction } from "@/app/actions/settings/get-settings";
 import { CardVideo } from "@/components/CardVideo";
 import { Spinner } from "@/components/Spinner";
 import { YouTubeData } from "@/components/YouTubeVideosList";
 import { useEffect, useState } from "react";
 
-const URL_YOUTUBE = process.env.NEXT_PUBLIC_YOUTUBE_CHANNEL || 'https://www.youtube.com/@unikoimoveis9155';
-
 export function VideosHome() {
   const [data, setData] = useState<YouTubeData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [url, setUrl] = useState('');
+
+  useEffect(() => {
+    const settings = async () => {
+      const response = await getSettingsAction();
+      setUrl(response[0].urlYoutube || '')
+    }
+
+    settings();
+  }, [])
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -18,14 +27,16 @@ export function VideosHome() {
       setError(null);
 
       try {
-        const response = await fetch(`/api/youtube?url=${encodeURIComponent(URL_YOUTUBE)}&maxResults=4`);
-        const result = await response.json();
+        if (url) {
+          const response = await fetch(`/api/youtube?url=${encodeURIComponent(url)}&maxResults=4`);
+          const result = await response.json();
 
-        if (!response.ok) {
-          throw new Error(result.error || 'Erro ao buscar vídeos');
+          if (!response.ok) {
+            throw new Error(result.error || 'Erro ao buscar vídeos');
+          }
+
+          setData(result);
         }
-
-        setData(result);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Erro desconhecido');
       } finally {
@@ -33,7 +44,7 @@ export function VideosHome() {
       }
     };
     fetchVideos()
-  }, [])
+  }, [url])
 
   return (
     <div>

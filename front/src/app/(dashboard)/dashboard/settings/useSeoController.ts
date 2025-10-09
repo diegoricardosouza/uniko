@@ -17,7 +17,8 @@ export function useSeoController(setting: Setting[]) {
     resolver: zodResolver(seoSchema),
     defaultValues: {
       title: "",
-      description: ""
+      description: "",
+      urlYoutube: ""
     },
   });
 
@@ -25,7 +26,8 @@ export function useSeoController(setting: Setting[]) {
     if (setting.length > 0) {
       form.reset({
         title: setting[0].titleSeo,
-        description: setting[0].descriptionSeo
+        description: setting[0].descriptionSeo,
+        urlYoutube: setting[0].urlYoutube
       })
     }
   }, [form, setting]);
@@ -37,10 +39,11 @@ export function useSeoController(setting: Setting[]) {
         const payload = {
           id: setting[0].id,
           titleSeo: data.title,
-          descriptionSeo: data.description
+          descriptionSeo: data.description,
+          urlYoutube: data.urlYoutube
         }
         await getUpdateSettingAction(payload);
-        toast.success("As informações de SEO foram atualizadas com sucesso.");
+        toast.success("As informações foram atualizadas com sucesso.");
       } catch (error) {
         console.log(error);
       } finally {
@@ -52,10 +55,11 @@ export function useSeoController(setting: Setting[]) {
     try {
       const payload = {
         titleSeo: data.title,
-        descriptionSeo: data.description
+        descriptionSeo: data.description,
+        urlYoutube: data.urlYoutube
       }
       await createSettingAction(payload);
-      toast.success("As informações de SEO foram atualizadas com sucesso.");
+      toast.success("As informações foram atualizadas com sucesso.");
     } catch (error) {
       console.log(error);
     } finally {

@@ -1,5 +1,6 @@
 'use client';
 
+import { getSettingsAction } from '@/app/actions/settings/get-settings';
 import { YouTubeChannel, YouTubeVideo } from '@/lib/youtube';
 import { Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -16,29 +17,38 @@ export interface YouTubeData {
   hasMore?: boolean;
 }
 
-const URL_YOUTUBE = process.env.NEXT_PUBLIC_YOUTUBE_CHANNEL || 'https://www.youtube.com/@unikoimoveis9155';
-
 export default function YouTubeVideosList() {
   const [data, setData] = useState<YouTubeData | null>(null);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [url, setUrl] = useState(URL_YOUTUBE);
+  const [url, setUrl] = useState('');
   
+  useEffect(() => {
+    const settings = async () => {
+      const response = await getSettingsAction();
+      setUrl(response[0].urlYoutube || '')
+    }
+
+    settings();
+  }, [])
+
   useEffect(() => {
     const fetchVideos = async () => {
       setLoading(true);
       setError(null);
 
       try {
-        const response = await fetch(`/api/youtube?url=${encodeURIComponent(url)}&maxResults=12`);
-        const result = await response.json();
+        if(url) {
+          const response = await fetch(`/api/youtube?url=${encodeURIComponent(url)}&maxResults=12`);
+          const result = await response.json();
 
-        if (!response.ok) {
-          throw new Error(result.error || 'Erro ao buscar vídeos');
+          if (!response.ok) {
+            throw new Error(result.error || 'Erro ao buscar vídeos');
+          }
+
+          setData(result);
         }
-
-        setData(result);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Erro desconhecido');
       } finally {
@@ -47,7 +57,7 @@ export default function YouTubeVideosList() {
     };
     fetchVideos()
   },[url])
-
+  
   const loadMoreVideos = async () => {
     if (!data?.nextPageToken || loadingMore) return;
 
@@ -89,7 +99,7 @@ export default function YouTubeVideosList() {
           <HeaderYoutube
             title={data?.channel.title}
             description={data?.channel.description}
-            linkYoutube={URL_YOUTUBE}
+            linkYoutube={url}
           />
 
           {error && (

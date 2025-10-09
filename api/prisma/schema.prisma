@@ -103,6 +103,7 @@ model Setting {
   id             String   @id @default(uuid()) @db.Uuid
   titleSeo       String?  @map("title_seo")
   descriptionSeo String?  @map("description_seo")
+  urlYoutube     String?  @map("url_youtube")
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 

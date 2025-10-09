@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Setting } from "@/entities/Setting";
 import { BookOpen, Loader2, Save, Type } from "lucide-react";
+import { FaYoutube } from "react-icons/fa";
 import { useSeoController } from "../useSeoController";
 
 interface SeoFormProps {
@@ -22,7 +23,7 @@ export function SeoForm({ setting }: SeoFormProps) {
         <Card className="bg-gradient-card shadow-card border-0 py-0">
           <CardHeader className="gap-0">
             <CardTitle className="flex items-center gap-2 text-lg">
-              Configurações de SEO
+              Configurações Gerais
             </CardTitle>
             <CardDescription>
               <p className="text-sm text-muted-foreground">
@@ -38,7 +39,7 @@ export function SeoForm({ setting }: SeoFormProps) {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Título do Site *</FormLabel>
+                  <FormLabel>Título SEO do Site *</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Type className="absolute left-3 top-[10px] h-4 w-4 text-gray-400" />
@@ -57,10 +58,32 @@ export function SeoForm({ setting }: SeoFormProps) {
 
             <FormField
               control={form.control}
+              name="urlYoutube"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Url canal do youtbe</FormLabel>
+                  <FormControl>
+                    <div className="relative">
+                      <FaYoutube className="absolute left-3 top-[10px] h-4 w-4 text-gray-400" />
+                      <Input
+                        type="text"
+                        className="transition-smooth focus:shadow-primary pl-10"
+                        {...field}
+                        value={field.value ?? ""}
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Descrição do Site *</FormLabel>
+                  <FormLabel>Descrição SEO do Site *</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <BookOpen className="absolute left-3 top-[10px] h-4 w-4 text-gray-400" />
@@ -86,7 +109,7 @@ export function SeoForm({ setting }: SeoFormProps) {
               ) : (
                 <>
                     <Save className="h-4 w-4 mr-2" />
-                    Salvar SEO
+                    Salvar Geral
                 </>
               )}
             </Button>

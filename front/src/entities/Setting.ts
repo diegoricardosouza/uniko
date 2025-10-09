@@ -21,6 +21,7 @@ export interface Setting {
   id: string;
   titleSeo?: string;
   descriptionSeo?: string;
+  urlYoutube?: string;
   unitCompany?: UnitCompanyProps[];
   socialMedia?: SocialMediaProps[];
 }

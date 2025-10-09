@@ -27,6 +27,10 @@ export class CreateSettingDto {
   @IsOptional()
   descriptionSeo?: string;
 
+  @IsString()
+  @IsOptional()
+  urlYoutube?: string;
+
   @IsArray()
   @IsOptional()
   unitCompany?: UnitCompanyProps[];
