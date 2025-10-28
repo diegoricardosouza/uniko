@@ -11,7 +11,10 @@ import { Digital } from "@/components/icons/Digital";
 import { FotografiaImobiliaria } from "@/components/icons/FotografiaImobiliaria";
 import { MultiplosCanais } from "@/components/icons/MultiplosCanais";
 import { Metadata } from "next";
+import { Suspense } from "react";
 import { FormAnunciar } from "./_components/FormAnunciar";
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: "Anuciar Imóvel - Úniko Imóveis",
@@ -99,7 +102,9 @@ export default async function AnunciarImovel() {
               </h4>
             </header>
 
-            <FormAnunciar />
+            <Suspense fallback={<div className="text-center">Carregando formulário...</div>}>
+              <FormAnunciar />
+            </Suspense>
           </div>
         </article>
 

@@ -4,6 +4,8 @@ import { Header } from "@/components/Header";
 import YouTubeVideosList from "@/components/YouTubeVideosList";
 import { Metadata } from "next";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Vídeos - Úniko Imóveis",
   description: "Úniko Imóveis - Melhores imóveis no Brasil",

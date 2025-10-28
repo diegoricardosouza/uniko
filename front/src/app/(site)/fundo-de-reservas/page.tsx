@@ -4,6 +4,8 @@ import { Header } from "@/components/Header";
 import { Metadata } from "next";
 import { FormFundoReservas } from "./_component/FormFundoReservas";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Fundo de Reservas - Úniko Imóveis",
   description: "Úniko Imóveis - Melhores imóveis no Brasil",

@@ -1,6 +1,7 @@
 import { menuLeft, menuRight } from "@/config/menu";
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 import { LuMenu } from "react-icons/lu";
 import { Socials } from "../Socials";
 import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from "../ui/sheet";
@@ -17,7 +18,11 @@ export function Header() {
           <nav className="desktop-nav">
             <ul className="menus">
               {menuLeft.map((menu, index) => {
-                return <MenuItems items={menu} key={index} depthLevel={depthLevel} />;
+                return (
+                  <Suspense key={index} fallback={<li className="menu-items">Carregando...</li>}>
+                    <MenuItems items={menu} depthLevel={depthLevel} />
+                  </Suspense>
+                )
               })}
             </ul>
           </nav>
@@ -34,15 +39,19 @@ export function Header() {
             />
           </Link>
         </div>
+
         <div className="hidden lg:flex justify-end items-center gap-3.5 flex-1">
           <nav className="desktop-nav">
             <ul className="menus">
               {menuRight.map((menu, index) => {
-                return <MenuItems items={menu} key={index} depthLevel={depthLevel} />;
+                return (
+                  <Suspense key={index} fallback={<li className="menu-items">Carregando...</li>}>
+                    <MenuItems items={menu} depthLevel={depthLevel} />
+                  </Suspense>
+                )
               })}
             </ul>
           </nav>
-
           <div className="hidden lg:block">
             <Socials />
           </div>
@@ -52,9 +61,7 @@ export function Header() {
       <div className="flex justify-end items-center h-full">
         <Sheet>
           <SheetTrigger asChild>
-            <button
-              className="shrink-0 lg:hidden mr-3"
-            >
+            <button className="shrink-0 lg:hidden mr-3">
               <LuMenu className="h-8 w-8 !text-white" />
               <span className="sr-only">Toggle navigation menu</span>
             </button>
@@ -66,7 +73,6 @@ export function Header() {
                 Ajuste suas preferências aqui.
               </SheetDescription>
             </div>
-
             <nav className="grid gap-6 text-base font-medium p-6">
               <Link href="/">
                 <Image
@@ -77,9 +83,9 @@ export function Header() {
                   title="Logo Úniko"
                 />
               </Link>
-
-              <MenuMobile />
-
+              <Suspense fallback={<div>Carregando menu...</div>}>
+                <MenuMobile />
+              </Suspense>
               <Socials />
             </nav>
           </SheetContent>

@@ -9,7 +9,10 @@ import { ContatoCorretor } from "@/components/icons/ContatoCorretor";
 import { ContratacaoImovel } from "@/components/icons/ContratacaoImovel";
 import { PreenchaFormulario } from "@/components/icons/PreenchaFormulario";
 import { Metadata } from "next";
+import { Suspense } from "react";
 import { FormProcurar } from "./_components/FormProcurar";
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: "Procurar Imóvel - Úniko Imóveis",
@@ -91,8 +94,10 @@ export default async function AnunciarImovel() {
                 Nos conte os detalhes do imóvel dos seus sonhos
               </h4>
             </header>
-
-            <FormProcurar />
+            
+            <Suspense fallback={<div className="text-center">Carregando formulário...</div>}>
+              <FormProcurar />
+            </Suspense>
           </div>
         </article>
 

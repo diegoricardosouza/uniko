@@ -2,7 +2,10 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Metadata } from "next";
+import { Suspense } from "react";
 import { FormAviso } from "./_component/FormAviso";
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: "Contestação de Vistorias - Úniko Imóveis",
@@ -47,7 +50,9 @@ export default async function Contestacao() {
 
         <article className="bg-bggray py-10 mt-10">
           <div className="container">
-            <FormAviso />
+            <Suspense fallback={<div className="text-center">Carregando formulário...</div>}>
+              <FormAviso />
+            </Suspense>
           </div>
         </article>
       </main>

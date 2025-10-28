@@ -6,6 +6,8 @@ import Image from "next/image";
 import { FaWhatsapp } from "react-icons/fa6";
 import { LuArrowRight } from "react-icons/lu";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Sobre - Úniko Imóveis",
   description: "Úniko Imóveis - Melhores imóveis no Brasil",
@@ -15,7 +17,6 @@ export default function Sobre() {
   return (
     <div>
       <Header />
-
       
       <main>
         <Breadcrumb title="SOBRE A ÚNIKO" />

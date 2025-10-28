@@ -4,6 +4,8 @@ import { Header } from "@/components/Header";
 import { Metadata } from "next";
 import { FormContestacao } from "./_component/FormContestacao";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Contestação de Vistorias - Úniko Imóveis",
   description: "Úniko Imóveis - Melhores imóveis no Brasil",

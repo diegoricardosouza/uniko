@@ -10,6 +10,8 @@ import Image from "next/image";
 import { SearchHome } from "./_components/SearchHome";
 import { VideosHome } from "./_components/VideosHome";
 
+export const dynamic = 'force-dynamic';
+
 export async function generateMetadata(): Promise<Metadata> {
   try {
     const settings = await getSettingsAction();
