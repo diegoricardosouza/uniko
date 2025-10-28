@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { getUpdateUserAction } from "@/app/actions/get-update-user";
-import { getUserAction } from "@/app/actions/get-user";
+import { updateUserAction } from "@/app/actions/users/get-update-user";
+import { getUserAction } from "@/app/actions/users/get-user";
 import { userUpdateSchema } from "@/schemas/userUpdateSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSession } from "next-auth/react";
@@ -59,7 +59,7 @@ export function useProfileController() {
         toast.error("ID do usuário não encontrado.");
         return;
       }
-      await getUpdateUserAction({ ...newData, id })
+      await updateUserAction({ ...newData, id })
 
       toast.success("Perfil atualizado com sucesso!")
     } catch (error) {
