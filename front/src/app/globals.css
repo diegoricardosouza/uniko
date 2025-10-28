@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import url('./menu.css');
+/* @import url('./menu.css'); */
+@import "./menu.css";
 
 @custom-variant dark (&:is(.dark *));
 
