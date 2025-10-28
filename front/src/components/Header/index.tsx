@@ -19,9 +19,7 @@ export function Header() {
             <ul className="menus">
               {menuLeft.map((menu, index) => {
                 return (
-                  <Suspense key={index} fallback={<li className="menu-items">Carregando...</li>}>
-                    <MenuItems items={menu} depthLevel={depthLevel} />
-                  </Suspense>
+                  <MenuItems key={index} items={menu} depthLevel={depthLevel} />
                 )
               })}
             </ul>
@@ -45,9 +43,7 @@ export function Header() {
             <ul className="menus">
               {menuRight.map((menu, index) => {
                 return (
-                  <Suspense key={index} fallback={<li className="menu-items">Carregando...</li>}>
-                    <MenuItems items={menu} depthLevel={depthLevel} />
-                  </Suspense>
+                  <MenuItems key={index} items={menu} depthLevel={depthLevel} />
                 )
               })}
             </ul>
