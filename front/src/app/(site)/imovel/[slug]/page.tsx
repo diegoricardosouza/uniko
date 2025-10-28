@@ -8,7 +8,7 @@ import { ContentProperty } from "./_components/ContentProperty";
 import { RelatedProperties } from "./_components/RelatedProperties";
 
 interface SinglePropertyProps {
-  params: { slug: string; };
+  params: Promise<{ slug: string; }>;
 }
 
 export async function generateMetadata({ params }: SinglePropertyProps): Promise<Metadata> {

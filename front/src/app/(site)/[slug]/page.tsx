@@ -12,7 +12,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 interface SingleBlogProps {
-  params: { slug: string; };
+  params: Promise<{ slug: string; }>;
 }
 
 export async function generateMetadata({ params }: SingleBlogProps): Promise<Metadata> {
