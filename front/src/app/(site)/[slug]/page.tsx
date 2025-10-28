@@ -10,6 +10,7 @@ import NotFound from "@/components/NotFound";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 
 interface SingleBlogProps {
   params: Promise<{ slug: string; }>;
@@ -68,7 +69,9 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
         <div>
           <Header />
           <main className="container py-20">
-            <NotFound />
+            <Suspense fallback={<div>Carregando...</div>}>
+              <NotFound />
+            </Suspense>
           </main>
           <Footer />
         </div>
@@ -190,7 +193,9 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
       <div>
         <Header />
         <main className="container py-20">
-          <NotFound />
+          <Suspense fallback={<div>Carregando...</div>}>
+            <NotFound />
+          </Suspense>
         </main>
         <Footer />
       </div>
