@@ -15,6 +15,10 @@ const nextConfig: NextConfig = {
         port: "3000", // porta configurada aqui
         pathname: "/uploads/**", // path configurado aqui
       },
+      {
+        protocol: "https",
+        hostname: "cdn.vistahost.com.br",
+      },
     ],
   },
 };
