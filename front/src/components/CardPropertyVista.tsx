@@ -100,10 +100,13 @@ export function CardPropertyVista({ property }: CardPropertyProps) {
               />
             </SwiperSlide>
           ))}
-          <SliderNavigation
-            isBeginning={sliderState.isBeginning}
-            isEnd={sliderState.isEnd}
-          />
+          
+          {fotos.length > 0 && (
+            <SliderNavigation
+              isBeginning={sliderState.isBeginning}
+              isEnd={sliderState.isEnd}
+            />
+          )}
         </Swiper>
       </div>
 

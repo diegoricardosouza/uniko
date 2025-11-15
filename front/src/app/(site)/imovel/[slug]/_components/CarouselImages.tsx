@@ -82,14 +82,16 @@ export function CarouselImages({ property }: CarouselImagesProps) {
           </SwiperSlide>
         ))}
 
-        <div className="absolute top-1/2 -translate-y-1/2 z-50 w-full">
-          <div className="container relative">
-            <SliderNavigation
-              isBeginning={sliderState.isBeginning}
-              isEnd={sliderState.isEnd}
-            />
+        {(property.Foto && property.Foto?.length > 0) && (
+          <div className="absolute top-1/2 -translate-y-1/2 z-50 w-full">
+            <div className="container relative">
+              <SliderNavigation
+                isBeginning={sliderState.isBeginning}
+                isEnd={sliderState.isEnd}
+              />
+            </div>
           </div>
-        </div>
+        )}
 
         <div 
           className="absolute left-0 bottom-[15px] z-50 w-full"
