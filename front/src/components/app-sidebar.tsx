@@ -1,7 +1,6 @@
 "use client"
 
 import {
-  Building,
   Home,
   Mails,
   Newspaper,
@@ -50,41 +49,6 @@ const data = {
           title: "Adicionar Nova",
           url: "/dashboard/pages/new",
         }
-      ],
-    },
-    {
-      title: "Imóveis",
-      url: "#",
-      icon: Building,
-      items: [
-        {
-          title: "Listar Todos",
-          url: "/dashboard/properties",
-        },
-        {
-          title: "Adicionar Novo",
-          url: "/dashboard/properties/new",
-        },
-        {
-          title: "Finalidade",
-          url: "/dashboard/properties/finalities",
-        },
-        {
-          title: "Tipo",
-          url: "/dashboard/properties/types",
-        },
-        {
-          title: "Estados",
-          url: "/dashboard/properties/states",
-        },
-        {
-          title: "Cidades",
-          url: "/dashboard/properties/cities",
-        },
-        {
-          title: "Bairros",
-          url: "/dashboard/properties/neighborhoods",
-        },
       ],
     },
     {
@@ -155,41 +119,6 @@ const dataEditor = {
           title: "Adicionar Nova",
           url: "/dashboard/pages/new",
         }
-      ],
-    },
-    {
-      title: "Imóveis",
-      url: "#",
-      icon: Building,
-      items: [
-        {
-          title: "Listar Todos",
-          url: "/dashboard/properties",
-        },
-        {
-          title: "Adicionar Novo",
-          url: "/dashboard/properties/new",
-        },
-        {
-          title: "Finalidade",
-          url: "/dashboard/properties/finalities",
-        },
-        {
-          title: "Tipo",
-          url: "/dashboard/properties/types",
-        },
-        {
-          title: "Estados",
-          url: "/dashboard/properties/states",
-        },
-        {
-          title: "Cidades",
-          url: "/dashboard/properties/cities",
-        },
-        {
-          title: "Bairros",
-          url: "/dashboard/properties/neighborhoods",
-        },
       ],
     },
     {

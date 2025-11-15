@@ -1,7 +1,7 @@
 'use client'
 
 import { Gallery } from "@/components/icons/Gallery";
-import { Property } from "@/entities/Property";
+import { PropertyVistaList } from "@/entities/PropertyVista";
 import Image from "next/image";
 import { useState } from "react";
 import 'swiper/css';
@@ -12,7 +12,7 @@ import 'yet-another-react-lightbox/styles.css';
 import { SliderNavigation } from "./SliderNavigation";
 
 interface CarouselImagesProps {
-  property: Property
+  property: PropertyVistaList
 }
 
 export function CarouselImages({ property }: CarouselImagesProps) {
@@ -23,8 +23,8 @@ export function CarouselImages({ property }: CarouselImagesProps) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
-  const featuredImageUrl = property.medias?.filter((media) => media.mediaType === 'featured_image')[0]?.url;
-  const imagesUrl = property.medias?.filter((media) => media.mediaType !== 'featured_image');  
+  const featuredImageUrl = property.FotoDestaque;
+  const imagesUrl = property.Foto
 
   return (
     <>
@@ -47,12 +47,12 @@ export function CarouselImages({ property }: CarouselImagesProps) {
             }}
           >
             <Image
-              src={`${process.env.NEXT_PUBLIC_API_URL}${featuredImageUrl!}`}
+              src={featuredImageUrl}
               width={1920}
               height={500}
-              alt={property.title}
+              alt={property.TituloSite}
               className="h-[300px] md:h-[500px] w-full object-cover object-center"
-              data-lightboxjs={`lightbox-${property.id}`}
+              data-lightboxjs={`lightbox-${property.Codigo}`}
             />
             <div
               className="w-full h-[80px] bg-gradient-to-t from-[#000000] to-[#54545400] absolute bottom-0 left-0 z-10"
@@ -60,7 +60,7 @@ export function CarouselImages({ property }: CarouselImagesProps) {
           </div>
         </SwiperSlide>
         {imagesUrl?.map((media, index) => (
-          <SwiperSlide key={media.id} className="mySwiperPropertySingleSlide">
+          <SwiperSlide key={index} className="mySwiperPropertySingleSlide">
             <div
               className="relative"
               onClick={() => {
@@ -69,10 +69,10 @@ export function CarouselImages({ property }: CarouselImagesProps) {
               }}
             >
               <Image
-                src={`${process.env.NEXT_PUBLIC_API_URL}${media.url!}`}
+                src={media.Foto}
                 width={1920}
                 height={500}
-                alt={property.title}
+                alt={property.TituloSite}
                 className="h-[300px] md:h-[500px] w-full object-cover object-center"
               />
               <div
@@ -99,19 +99,16 @@ export function CarouselImages({ property }: CarouselImagesProps) {
           }}
         >
           <div className="container flex gap-[10px]">
-            {property.types?.map(type => (
-              <span 
-                key={type.id} 
-                className="bg-white rounded-[5px_5px_5px_0px] p-2 md:p-[10px] text-[12px] md:text-sm font-inter leading-[17px] text-gold uppercase"
-              >
-                {type.name}
-              </span>
-            ))}
+            <span
+              className="bg-white rounded-[5px_5px_5px_0px] p-2 md:p-[10px] text-[12px] md:text-sm font-inter leading-[17px] text-gold uppercase"
+            >
+              {property.Categoria}
+            </span>
             <span 
               className="bg-gold rounded-[5px_5px_5px_0px] p-2 md:p-[10px] text-[12px] md:text-sm font-inter leading-[17px] text-white uppercase flex gap-[5px]"
             >
               <Gallery />
-              {property.medias?.length} FOTOS
+              {property.Foto?.length} FOTOS
             </span>
           </div>
         </div>
@@ -121,8 +118,8 @@ export function CarouselImages({ property }: CarouselImagesProps) {
         open={lightboxOpen}
         close={() => setLightboxOpen(false)}
         index={lightboxIndex}
-        slides={property.medias?.map(media => ({
-          src: `${process.env.NEXT_PUBLIC_API_URL}${media.url!}`
+        slides={property.Foto?.map(media => ({
+          src: media.Foto
         }))}
       />
     </>

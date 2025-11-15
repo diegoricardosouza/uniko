@@ -178,6 +178,10 @@
   @apply mt-0
 }
 
+.content-property {
+  white-space: pre-line;
+}
+
 .content h2 {
   @apply font-normal
 }

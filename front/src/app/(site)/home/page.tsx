@@ -112,29 +112,29 @@ export default async function Home() {
               <CardTypeHome
                 title="Apartamentos"
                 imageUrl="/tipos/apartamento.png"
-                link="/imoveis?type=apartamentos"
+                link="/imoveis?type=Apartamento&finalidade=comprar"
               />
               <CardTypeHome
                 title="Casas"
                 imageUrl="/tipos/casas.png"
-                link="/imoveis?type=casas"
+                link="/imoveis?type=Casa&finalidade=comprar"
                 className="md:mt-[20px]"
               />
               <CardTypeHome
                 title="Comerciais"
                 imageUrl="/tipos/comerciais.png"
-                link="/imoveis?type=comerciais"
+                link="/imoveis?type=Comercial&finalidade=comprar"
               />
               <CardTypeHome
                 title="Terrenos"
                 imageUrl="/tipos/terrenos.png"
-                link="/imoveis?type=terrenos"
+                link="/imoveis?type=Terreno&finalidade=comprar"
                 className="md:mt-[20px]"
               />
               <CardTypeHome
                 title="Chácaras"
                 imageUrl="/tipos/chacaras.png"
-                link="/imoveis?type=chacaras"
+                link="/imoveis?type=Chacara&finalidade=comprar"
               />
             </div>
           </div>

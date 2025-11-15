@@ -1,15 +1,47 @@
-import { getPropertiesPaginateAction } from "@/app/actions/properties/get-properties-paginate";
 import { CardPropertySingle } from "@/components/CardPropertySingle";
+import { PropertyVistaList } from "@/entities/PropertyVista";
 
 interface RelatedPropertiesProps {
   idCurrentProperty?: string
+  ufCurrentProperty?: string
+  finality?: string
 }
 
-export async function RelatedProperties({ idCurrentProperty }: RelatedPropertiesProps) {
-  const properties = await getPropertiesPaginateAction({ limit: 4, finalities: ["lancamentos"] });
-  const filteredProperties = properties.data
-    .filter((property) => property.id !== idCurrentProperty)
+export async function RelatedProperties({ idCurrentProperty, ufCurrentProperty, finality }: RelatedPropertiesProps) {  
+  const filters = {
+    fields: [
+      'TituloSite', 'Dormitorios', 'UF', 'Bairro', 'Cidade', 'ValorVenda',
+      'ValorLocacao', 'AreaPrivativa', 'FotoDestaque', 'Codigo',
+      'Status', 'Categoria', 'Endereco', 'Numero', 'Complemento'
+    ],
+    filter: {
+      "UF": ufCurrentProperty,
+      "Status": finality ? finality : undefined
+    },
+    paginacao: {
+      "pagina": "1",
+      "quantidade": "4"
+    },
+  };
+  
+  const searchParamsApi = JSON.stringify(filters);
+  const encodedParams = encodeURIComponent(searchParamsApi);
+  const url = `${process.env.NEXT_PUBLIC_VISTA_API_URL}/imoveis/listar?key=${process.env.VISTA_API_KEY}&v2=1&pesquisa=${encodedParams}&showtotal=1`;
+
+  const property = await fetch(url, {
+    headers: {
+      'Accept': 'application/json',
+    },
+    cache: 'no-store'
+  });
+
+  const data = await property.json();
+  
+  const filteredProperties: PropertyVistaList[] = data.result
+    .filter((property: PropertyVistaList) => property.Codigo !== idCurrentProperty)
     .slice(0, 3);
+
+  console.log(filteredProperties);
 
   return (
     <section className="bg-bggray py-[50px]">
@@ -23,8 +55,8 @@ export async function RelatedProperties({ idCurrentProperty }: RelatedProperties
         </header>
 
         <div className="flex flex-col md:grid grid-cols-3 gap-[6px]">
-          {filteredProperties.map((property) => (
-            <CardPropertySingle key={property.id} property={property} type="columns" />
+          {filteredProperties.map((property, index) => (
+            <CardPropertySingle key={index} property={property} type="columns" />
           ))}
         </div>
       </div>

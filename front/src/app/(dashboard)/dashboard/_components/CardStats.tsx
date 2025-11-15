@@ -21,8 +21,8 @@ export function CardStats({ stats }: CardStatsProps) {
   return (
     <div className={cn(
       'grid gap-6',
-      session.data?.user.role !== 'EDITOR' && 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4',
-      session.data?.user.role === 'EDITOR' && 'grid-cols-1 md:grid-cols-3'
+      session.data?.user.role !== 'EDITOR' && 'grid-cols-1 md:grid-cols-3 lg:grid-cols-3',
+      session.data?.user.role === 'EDITOR' && 'grid-cols-1 md:grid-cols-2'
     )}>
       {statsFiltered.map((stat) => {
         // Busca o ícone dinamicamente pelo nome

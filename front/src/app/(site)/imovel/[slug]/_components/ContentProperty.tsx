@@ -7,25 +7,20 @@ import { Mail } from "@/components/icons/Mail"
 import { ParkingSpace } from "@/components/icons/ParkingSpace"
 import { PrivateArea } from "@/components/icons/PrivateArea"
 import { TotalArea } from "@/components/icons/TotalArea"
-import { Property } from "@/entities/Property"
+import { PropertyVistaList } from "@/entities/PropertyVista"
 import { useEffect, useState } from "react"
 import { FaWhatsapp } from "react-icons/fa"
 import { LuArrowRight } from "react-icons/lu"
 
 interface ContentPropertyProps {
-  property: Property
+  property: PropertyVistaList
 }
 
 export function ContentProperty({ property }: ContentPropertyProps) {
   const [currentUrl, setCurrentUrl] = useState('')
 
-  const releases = property.finalities?.some((item) => item.name === 'Lançamentos')
-  const hasAluguel = property.finalities?.some(
-    finality => finality.name?.toLowerCase() === 'alugar' ||
-      finality.slug?.toLowerCase() === 'alugar'
-  );
-  const finalityText = hasAluguel ? 'Aluguel' : 'Venda';
-  const whats = property.city?.name === "Curitiba" ? 'https://wa.me/5541996615511' : 'https://wa.me/5531999868706'
+  const finalityText = property.Status;
+  const whats = property.Cidade === "Curitiba" ? 'https://wa.me/5541996615511' : 'https://wa.me/5531999868706'
 
   // Pega a URL completa apenas no cliente
   useEffect(() => {
@@ -33,12 +28,12 @@ export function ContentProperty({ property }: ContentPropertyProps) {
   }, [])
 
   // URLs de compartilhamento
-  const shareTitle = encodeURIComponent(property.title || '')
+  const shareTitle = encodeURIComponent(property.TituloSite || '')
   const shareDescription = encodeURIComponent(
-    `${property.title} - ${finalityText} por ${new Intl.NumberFormat('pt-BR', {
+    `${property.TituloSite} - ${finalityText} por ${new Intl.NumberFormat('pt-BR', {
       style: 'currency',
       currency: 'BRL'
-    }).format(Number(property.price))}`
+    }).format(Number(property.ValorVenda || property.ValorLocacao))}`
   )
 
   const shareUrls = {
@@ -46,7 +41,7 @@ export function ContentProperty({ property }: ContentPropertyProps) {
     facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`,
     email: `mailto:?subject=${shareTitle}&body=${shareDescription}%20-%20${encodeURIComponent(currentUrl)}`
   }
-
+  
   return (
     <div className="container flex flex-col md:flex-row gap-[30px] !mt-5 !mb-[50px]">
       <div className="flex-1 w-full">
@@ -54,7 +49,7 @@ export function ContentProperty({ property }: ContentPropertyProps) {
           <h1
             className="text-gold text-[30px] md:text-[38px] font-montserrat tracking-[-0.95px] font-normal leading-[35px] md:leading-[47px] mb-[20px]"
           >
-            {property.title}
+            {property.TituloSite}
           </h1>
         </header>
 
@@ -67,43 +62,43 @@ export function ContentProperty({ property }: ContentPropertyProps) {
             <div className="flex gap-[10px] items-center">
               <PrivateArea />
               <span className="font-inter text-[17px] leading-5 text-content">
-                <strong className="font-semibold">{property.privateArea} m²</strong> de Área Privativa
+                <strong className="font-semibold">{property.AreaPrivativa} m²</strong> de Área Privativa
               </span>
             </div>
 
             <div className="flex gap-[10px] items-center">
               <Bedroom />
               <span className="font-inter text-[17px] leading-5 text-content">
-                <strong className="font-semibold">{property.bedrooms}</strong> Dormitórios
+                <strong className="font-semibold">{property.Dormitorios}</strong> Dormitórios
               </span>
             </div>
 
             <div className="flex gap-[10px] items-center">
               <ParkingSpace />
               <span className="font-inter text-[17px] leading-5 text-content">
-                <strong className="font-semibold">{property.parkingSpaces}</strong> Vagas
+                <strong className="font-semibold">{property.Vagas}</strong> Vagas
               </span>
             </div>
 
             <div className="flex gap-[10px] items-center min-w-[238px]">
               <TotalArea />
               <span className="font-inter text-[17px] leading-5 text-content">
-                <strong className="font-semibold">{property.totalArea} m²</strong> de Área Total
+                <strong className="font-semibold">{property.AreaTotal} m²</strong> de Área Total
               </span>
             </div>
 
             <div className="flex gap-[10px] items-center">
               <Bathroom />
               <span className="font-inter text-[17px] leading-5 text-content">
-                <strong className="font-semibold">{property.bathrooms}</strong> Banheiros
+                <strong className="font-semibold">{property.TotalBanheiros}</strong> Banheiros
               </span>
             </div>
           </div>
         </div>
 
-        <div className="content content-property"
-          dangerouslySetInnerHTML={{ __html: property.description ?? '' }}
-        />
+        <div className="content content-property">
+          <p dangerouslySetInnerHTML={{ __html: property.DescricaoEmpreendimento || property.DescricaoWeb }} />
+        </div>
 
         <hr className="border-0 w-full m-0 h-[1px] bg-gold mt-[5px] mb-[30px]" />
 
@@ -113,14 +108,18 @@ export function ContentProperty({ property }: ContentPropertyProps) {
           </h3>
 
           <div className="flex flex-wrap gap-[15px]">
-            {property.characteristics?.map((charac) => (
-              <span
-                className="bg-bggray px-3 md:px-[15px] py-[11px] md:py-[14px] text-sm md:text-[15px] font-inter text-black"
-                key={charac.id}
-              >
-                {charac.name}
-              </span>
-            ))}
+            {Object.entries(property.Caracteristicas)
+              .filter(([_, value]) => value && value !== "Nao" && value !== "0")
+              .map(([key, value]) => (
+                value === "Sim" && (
+                  <span
+                    className="bg-bggray px-3 md:px-[15px] py-[11px] md:py-[14px] text-sm md:text-[15px] font-inter text-black"
+                    key={key}
+                  >
+                    {key}
+                  </span>
+                )
+              ))}
           </div>
         </div>
 
@@ -132,14 +131,18 @@ export function ContentProperty({ property }: ContentPropertyProps) {
           </h3>
 
           <div className="flex flex-wrap gap-[15px]">
-            {property.infrastructures?.map((charac) => (
-              <span
-                className="bg-bggray px-3 md:px-[15px] py-[11px] md:py-[14px] text-sm md:text-[15px] font-inter text-black"
-                key={charac.id}
-              >
-                {charac.name}
-              </span>
-            ))}
+            {Object.entries(property.InfraEstrutura)
+              .filter(([_, value]) => value && value !== "Nao" && value !== "0")
+              .map(([key, value]) => (
+                value === "Sim" && (
+                  <span
+                    className="bg-bggray px-3 md:px-[15px] py-[11px] md:py-[14px] text-sm md:text-[15px] font-inter text-black"
+                    key={key}
+                  >
+                    {key}
+                  </span>
+                )
+              ))}
           </div>
         </div>
       </div>
@@ -150,19 +153,19 @@ export function ContentProperty({ property }: ContentPropertyProps) {
             <span
               className="bg-title px-[15px] py-[10px] shadow-[0px_3px_6px_#00000029] text-gold font-inter font-normal text-sm leading-[17px]"
             >
-              {property.reference}
+              {property.Codigo}
             </span>
 
-            {releases && (
+            {/* {releases && (
               <p className="font-inter text-gold text-sm leading-5">
                 {property.delivery}
               </p>
-            )}
+            )} */}
           </div>
 
           <address className="font-inter text-[17px] leading-6 text-title">
-            <strong className="font-semibold">{property.address}</strong><br />
-            <strong className="font-semibold">{property.neighborhood?.name}</strong>, {property.city?.name}/{property.city?.state.acronym}
+            <strong className="font-semibold">{property.Endereco}, {property.Numero}</strong><br />
+            <strong className="font-semibold">{property.Bairro}</strong>, {property.Cidade}/{property.UF}
           </address>
 
           <hr className="border-0 w-full m-0 h-[1px] bg-gold mt-[15px] mb-[15px]" />
@@ -170,24 +173,24 @@ export function ContentProperty({ property }: ContentPropertyProps) {
           <div>
             <div className="font-montserrat text-[20px] md:text-[22px] text-title tracking-[-1.1px] mb-[5px] leading-7">
               <strong>
-                {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(property.price))}
+                {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(property.ValorVenda || property.ValorLocacao))}
               </strong>
               <span> - {finalityText}</span>
             </div>
 
-            {property.priceCondominium && (
+            {(Number(property.ValorCondominio) > 0) && (
               <div className="font-montserrat text-[18px] md:text-[20px] text-title tracking-[-1px] mb-[5px] leading-6">
                 <strong>
-                  {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(property.priceCondominium))}
+                  {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(property.ValorCondominio))}
                 </strong>
                 <span> - Condomínio*</span>
               </div>
             )}
 
-            {property.priceIptu && (
+            {(Number(property.ValorIptu) > 0) && (
               <div className="font-montserrat text-[18px] md:text-[20px] text-title tracking-[-1px] leading-6">
                 <strong>
-                  {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(property.priceIptu))}
+                  {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(property.ValorIptu))}
                 </strong>
                 <span> - IPTU**</span>
               </div>

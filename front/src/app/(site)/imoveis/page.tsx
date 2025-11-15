@@ -1,12 +1,12 @@
 import { getPostsPaginateAction } from "@/app/actions/posts/get-posts-paginate";
-import { getPropertiesPaginateAction } from "@/app/actions/properties/get-properties-paginate";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { CardPost } from "@/components/CardPost";
-import { CardProperty } from "@/components/CardProperty";
+import { CardPropertyVista } from "@/components/CardPropertyVista";
 import { DifferentiatedService } from "@/components/DifferentiatedService";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Pagination } from "@/components/Pagination";
+import { PropertyVistaList } from "@/entities/PropertyVista";
 import { FilterProperty } from "./_components/FilterProperty";
 
 interface PropertiesProps {
@@ -24,43 +24,138 @@ interface PropertiesProps {
 export default async function Imoveis({ searchParams }: PropertiesProps) {
   const params = await searchParams;
   const page = Number(params.page) || 1;
-  const limit = Number(params.limit) || 9; // 9 posts por página (3x3 grid)
-  const properties = await getPropertiesPaginateAction({
-    city: params.city,
-    finalities: params.finalidade ? [params.finalidade] : undefined,
-    page,
-    limit,
-    orderDirection: params.orderDirection,
-    search: params.search,
-    types: [params.type!]
-  });  
-  
+  const limit = Number(params.limit) || 9;
+
   const recentPosts = await getPostsPaginateAction({
     limit: 3
   });
-  
+
+  const ufFilter = params.city === 'curitiba' ? 'PR' : (params.city === 'belo-horizonte' ? 'MG' : undefined);
+  const finalidadeFilter = params.finalidade === 'comprar' ? 'Venda' : (params.finalidade === 'lancamentos' ? 'Venda e Aluguel' : 'Aluguel');
+
+  const filters = {
+    fields: [
+      'TituloSite', 'Dormitorios', 'UF', 'Bairro', 'Cidade', 'ValorVenda',
+      'ValorLocacao', 'AreaPrivativa', 'AreaTotal', 'FotoDestaque', 'Codigo',
+      'TotalBanheiros', 'Status', 'Categoria', 'Endereco', 'Numero', 'Complemento'
+    ],
+    filter: {
+      "UF": ufFilter,
+      "Categoria": params.type ? params.type : undefined,
+      "Status": params.finalidade ? finalidadeFilter : undefined,
+      // "Cidade": params.search ? params.search : undefined
+    },
+    order: {
+      DataCadastro: params.orderDirection === 'asc' ? 'asc' : 'desc'
+    },
+    paginacao: {
+      "pagina": page,
+      "quantidade": limit
+    },
+  };
+
+  const searchParamsApi = JSON.stringify(filters);
+  const encodedParams = encodeURIComponent(searchParamsApi);
+  const url = `${process.env.NEXT_PUBLIC_VISTA_API_URL}/imoveis/listar?key=${process.env.VISTA_API_KEY}&v2=1&pesquisa=${encodedParams}&showtotal=1`;
+
+  let properties: {
+    data: PropertyVistaList[];
+    meta: {
+      total: number;
+      totalPages: number;
+      page: number;
+      limit: number;
+    };
+  } = {
+    data: [],
+    meta: {
+      total: 0,
+      totalPages: 0,
+      page: page,
+      limit: limit
+    }
+  };
+
+  try {
+    const response = await fetch(url, {
+      headers: {
+        'Accept': 'application/json',
+      },
+      cache: 'no-store'
+    });
+
+    if (!response.ok) {
+      throw new Error(`Erro na API: ${response.status}`);
+    }
+
+    const data = await response.json();
+    properties = {
+      data: data.result,
+      meta: {
+        total: data.paginacao?.total ,
+        totalPages: data.paginacao?.paginas,
+        page: data.paginacao?.pagina,
+        limit: data.paginacao?.quantidade
+      }
+    };
+    
+    // Extrair a paginação primeiro
+    // const paginacao = {
+    //   total: data.total || 0,
+    //   paginas: data.paginas || 0,
+    //   pagina: data.pagina || page,
+    //   quantidade: data.quantidade || limit
+    // };
+
+    // Converter o objeto em array, filtrando apenas os imóveis (não a paginação)
+    // const imoveis: PropertyVistaList[] = Object.entries(data)
+    //   .filter(([key]) => !['total', 'paginas', 'pagina', 'quantidade'].includes(key))
+    //   .map(([_, value]) => value as PropertyVistaList);
+
+    // properties = {
+    //   data: imoveis,
+    //   meta: {
+    //     total: paginacao.total,
+    //     totalPages: paginacao.paginas,
+    //     page: paginacao.pagina,
+    //     limit: paginacao.quantidade
+    //   }
+    // };
+
+  } catch (error) {
+    console.error('Erro ao buscar imóveis:', error);
+  }
+
   return (
     <div>
       <Header />
-
       <main>
         <Breadcrumb title={params.finalidade?.toUpperCase() || params.type?.toUpperCase() || 'IMÓVEIS'} />
-
-        <FilterProperty total={properties.meta.total} />
+        {properties.meta.total > 0 && <FilterProperty total={properties.meta.total} />}
 
         <section className="container flex flex-col gap-[30px] !mt-[30px]">
-          {properties.data.map((property) => (
-            <CardProperty key={property.id} property={property} type={params.finalidade} />
-          ))}
+          {properties.data?.length > 0 ? (
+            properties.data.map((property: PropertyVistaList, index) => (
+              <CardPropertyVista
+                key={property.Codigo || index}
+                property={property}
+                type={params.finalidade}
+              />
+            ))
+          ) : (
+            <div className="text-center py-10">
+              <p className="text-gray-500 text-lg">Nenhum imóvel encontrado.</p>
+            </div>
+          )}
         </section>
-        
-        <div className="container !mt-[60px]">
+
+        <div className="container !mt-[60px] !mb-[50px]">
           {properties.meta.totalPages > 1 && (
             <Pagination
               page={properties.meta.page}
               limit={properties.meta.limit}
               total={properties.meta.total}
-              showInfo={false} // opcional, padrão é true
+              showInfo={false}
             />
           )}
         </div>
@@ -69,19 +164,13 @@ export default async function Imoveis({ searchParams }: PropertiesProps) {
 
         <section className="container !mt-10">
           <header className="text-center mb-[30px]">
-            <h2
-              className="text-gold text-[30px] md:text-[38px] font-montserrat tracking-[-0.95px] font-normal leading-[35px] md:leading-[47px] mb-[5px]"
-            >
+            <h2 className="text-gold text-[30px] md:text-[38px] font-montserrat tracking-[-0.95px] font-normal leading-[35px] md:leading-[47px] mb-[5px]">
               As novidades mais recentes <strong className="font-semibold">estão aqui!</strong>
             </h2>
-
-            <h4
-              className="text-[19px] md:text-[22px] font-semibold text-title leading-[22px] md:leading-[27px] font-montserrat"
-            >
+            <h4 className="text-[19px] md:text-[22px] font-semibold text-title leading-[22px] md:leading-[27px] font-montserrat">
               blog
             </h4>
           </header>
-
           <div className="flex flex-col md:grid grid-cols-3 gap-[26px] mb-[50px]">
             {recentPosts.data.map(post => (
               <CardPost key={post.id} post={post} className="border-0" type="simple" />
@@ -89,8 +178,7 @@ export default async function Imoveis({ searchParams }: PropertiesProps) {
           </div>
         </section>
       </main>
-
       <Footer />
     </div>
-  )
+  );
 }

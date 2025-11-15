@@ -1,7 +1,7 @@
-import { getPropertySlugAction } from "@/app/actions/properties/get-property-slug";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import NotFound from "@/components/NotFound";
+import { PropertyVistaFoto, PropertyVistaList } from "@/entities/PropertyVista";
 import { Metadata } from "next";
 import { CarouselImages } from "./_components/CarouselImages";
 import { ContentProperty } from "./_components/ContentProperty";
@@ -11,11 +11,34 @@ interface SinglePropertyProps {
   params: Promise<{ slug: string; }>;
 }
 
+export type PropertyVistaList2 = {
+  0: PropertyVistaList;
+  Foto: PropertyVistaFoto[];
+}
+
+const filters = {
+  fields: [
+    'TituloSite', 'Dormitorios', 'UF', 'Bairro', 'Cidade', 'ValorVenda', 'ValorIptu', 'ValorCondominio', 'DescricaoWeb',
+    'ValorLocacao', 'AreaPrivativa', 'AreaTotal', 'FotoDestaque', 'Codigo', 'Vagas', 'TotalBanheiros', 'DataEntrega', 'DescricaoEmpreendimento',
+    'TotalBanheiros', 'Status', 'Categoria', 'Endereco', 'Numero', 'Complemento', 'Caracteristicas', 'InfraEstrutura',
+    { Foto: ['Foto', 'Destaque', 'FotoOriginal'] }
+  ]
+};
+
 export async function generateMetadata({ params }: SinglePropertyProps): Promise<Metadata> {
   const { slug } = await params;
 
   try {
-    const property = await getPropertySlugAction(slug);
+    const searchParamsApi = JSON.stringify(filters);
+    const encodedParams = encodeURIComponent(searchParamsApi);
+    const url = `${process.env.NEXT_PUBLIC_VISTA_API_URL}/imoveis/detalhes?key=${process.env.VISTA_API_KEY}&v2=1&imovel=${slug}&pesquisa=${encodedParams}`;
+
+    const property = await fetch(url, {
+      headers: {
+        'Accept': 'application/json',
+      },
+      cache: 'no-store'
+    });
 
     if (!property) {
       return {
@@ -24,21 +47,23 @@ export async function generateMetadata({ params }: SinglePropertyProps): Promise
       };
     }
 
-    const featuredImage = property?.medias?.find(media => media.mediaType === 'featured_image')?.url;
+    const data: PropertyVistaList[] = await property.json();
+
+    const featuredImage = data[0].FotoDestaque;
 
     return {
-      title: `${property.title} - Úniko Imóveis`,
-      description: property.description || "Úniko Imóveis - Melhores imóveis no Brasil",
+      title: `${data[0].TituloSite} - Úniko Imóveis`,
+      description: data[0].DescricaoEmpreendimento || "Úniko Imóveis - Melhores imóveis no Brasil",
       openGraph: {
-        title: property.title,
-        description: property.description,
+        title: data[0].TituloSite,
+        description: data[0].DescricaoEmpreendimento,
         images: featuredImage ? [`${process.env.NEXT_PUBLIC_API_URL}${featuredImage}`] : [],
         type: 'article',
       },
       twitter: {
         card: 'summary_large_image',
-        title: property.title,
-        description: property.description,
+        title: data[0].TituloSite,
+        description: data[0].DescricaoEmpreendimento,
         images: featuredImage ? [`${process.env.NEXT_PUBLIC_API_URL}${featuredImage}`] : [],
       },
     };
@@ -56,7 +81,16 @@ export default async function SingleImovel({ params }: SinglePropertyProps) {
   const { slug } = await params;
   
   try {
-    const property = await getPropertySlugAction(slug);
+    const searchParamsApi = JSON.stringify(filters);
+    const encodedParams = encodeURIComponent(searchParamsApi);
+    const url = `${process.env.NEXT_PUBLIC_VISTA_API_URL}/imoveis/detalhes?key=${process.env.VISTA_API_KEY}&v2=1&imovel=${slug}&pesquisa=${encodedParams}`;
+
+    const property = await fetch(url, {
+      headers: {
+        'Accept': 'application/json',
+      },
+      cache: 'no-store'
+    });
 
     if (!property) {
       return (
@@ -70,14 +104,22 @@ export default async function SingleImovel({ params }: SinglePropertyProps) {
       );
     }
 
+    const data: PropertyVistaList2 = await property.json();
+    const dataProperty = {
+      ...data[0], Foto: Object.values(data.Foto)};
+
     return (
       <div>
         <Header />
 
         <main>
-          <CarouselImages property={property} />
-          <ContentProperty property={property} />
-          <RelatedProperties idCurrentProperty={property.id} />
+          <CarouselImages property={dataProperty} />
+          <ContentProperty property={dataProperty} />
+          <RelatedProperties 
+            idCurrentProperty={dataProperty.Codigo} 
+            ufCurrentProperty={dataProperty.UF} 
+            finality={dataProperty.Status}
+          />
         </main>
 
         <Footer />

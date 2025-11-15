@@ -46,6 +46,8 @@ export function VideosHome() {
     fetchVideos()
   }, [url])
 
+  const videosHome = data?.videos.slice(0, 4);
+
   return (
     <div>
       {loading ? (
@@ -60,7 +62,7 @@ export function VideosHome() {
             </div>
           )}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {data?.videos.map((video) => (
+            {videosHome?.map((video) => (
               <CardVideo 
                 key={video.id}
                 video={video}

@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { Building, Newspaper, NotebookText, Users } from "lucide-react";
+import { Newspaper, NotebookText, Users } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 
@@ -19,16 +19,10 @@ export function ButtonsDashboard() {
         <div 
           className={cn(
             'grid gap-4',
-            session.data?.user.role !== 'EDITOR' && 'grid-cols-2 md:grid-cols-4',
-            session.data?.user.role === 'EDITOR' && 'grid-cols-2 md:grid-cols-3'
+            session.data?.user.role !== 'EDITOR' && 'grid-cols-1 md:grid-cols-3',
+            session.data?.user.role === 'EDITOR' && 'grid-cols-1 md:grid-cols-2'
           )}
         >
-          <Link href="/dashboard/properties/new">
-            <Button variant="outline" className="w-full h-20 flex flex-col gap-2 transition-smooth hover:bg-primary hover:text-primary-foreground">
-              <Building className="h-6 w-6" />
-              <span>Novo Imóvel</span>
-            </Button>
-          </Link>
           <Link href="/dashboard/blog/new">
             <Button variant="outline" className="w-full h-20 flex flex-col gap-2 transition-smooth hover:bg-primary hover:text-primary-foreground">
               <Newspaper className="h-6 w-6" />

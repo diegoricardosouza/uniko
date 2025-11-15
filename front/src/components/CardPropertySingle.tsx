@@ -1,21 +1,22 @@
-import { Property } from "@/entities/Property";
+import { PropertyVistaList } from "@/entities/PropertyVista";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
 interface CardPropertySingleProps {
-  property: Property
+  property: PropertyVistaList
   type?: 'simple' | 'columns'
 }
 
 export function CardPropertySingle({ property, type = 'simple' }: CardPropertySingleProps) {
-  const featuredImageUrl = property.medias?.filter((media) => media.mediaType === 'featured_image')[0]?.url;
-  const category = property.types?.[0]?.name;
+  const featuredImageUrl = property.FotoDestaque;
+  const category = property.Categoria;
+  const city = !property.Cidade && property.UF === 'PR' ? 'Curitiba' : (!property.Cidade && property.UF === 'MG' ? 'Belo Horizonte' : property.Cidade);
 
   return (
     <article>
       <Link 
-        href={`/imovel/${property.slug}`}
+        href={`/imovel/${property.Codigo}`}
         className={cn(
           'block transition-all',
           type === 'columns' && 'p-[10px] hover:bg-white'
@@ -25,14 +26,14 @@ export function CardPropertySingle({ property, type = 'simple' }: CardPropertySi
           <div 
             className="w-full h-[80px] bg-gradient-to-b from-[#000000] to-[#54545400] absolute top-0 left-0"
           />
-          <p className="font-inter font-normal text-[14px] text-white leading-5 absolute top-[15px] left-[15px] uppercase w-full max-w-[140px]">
+          {/* <p className="font-inter font-normal text-[14px] text-white leading-5 absolute top-[15px] left-[15px] uppercase w-full max-w-[140px]">
             {property.delivery}
-          </p>
+          </p> */}
           <Image
-            src={`${process.env.NEXT_PUBLIC_API_URL}${featuredImageUrl!}`}
+            src={featuredImageUrl}
             width={1128}
             height={846}
-            alt={property.title}
+            alt={property.TituloSite}
             className="h-[282px] w-full object-cover object-center"
           />
         </div>
@@ -43,13 +44,14 @@ export function CardPropertySingle({ property, type = 'simple' }: CardPropertySi
 
         <header>
           <h2 className="text-gold font-montserrat text-[22px] leading-[26px] mb-[5px]">
-            {property.title}
+            {property.TituloSite}
           </h2>
         </header>
 
         <p className="font-inter text-content text-[17px] leading-[25px]">
-          <strong className="font-semibold">{property.neighborhood?.name}</strong>, {property.city?.name}<br />
-          <strong className="font-semibold">{property.privateArea} m²</strong> de Área Privativa | {property.bedrooms} Dormitórios
+          <strong className="font-semibold">{property.Bairro}</strong>, {city}/{property.UF}<br />
+          <strong className="font-semibold">{property.AreaPrivativa} m²</strong> de Área Privativa 
+          {Number(property.Dormitorios) > 0 && ` | ${property.Dormitorios} Dormitórios`}
         </p>
 
         <hr 
@@ -58,9 +60,9 @@ export function CardPropertySingle({ property, type = 'simple' }: CardPropertySi
 
         <p className="font-montserrat text-[20px] md:text-[22px] text-title tracking-[-1.1px]">
           <strong>
-            {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(property.price))}
+            {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(property.ValorVenda || property.ValorLocacao))}
           </strong>
-          <span> - Venda</span>
+          <span> - {property.Status}</span>
         </p>
       </Link>
     </article>
