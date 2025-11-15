@@ -77,7 +77,7 @@ export function CardPropertyVista({ property }: CardPropertyProps) {
             </div>
 
             <Image 
-              src={featuredImageUrl}
+              src={featuredImageUrl || '/noimage.jpg'}
               width={1128}
               height={846}
               alt={property.TituloSite}
@@ -120,8 +120,8 @@ export function CardPropertyVista({ property }: CardPropertyProps) {
         </header>
 
         <p className="font-inter text-[15px] md:text-[17px] text-content leading-6 font-light">
-          {property.Bairro}, {city}/{property.UF}<br />
-          {property.AreaPrivativa} m² de Área Privativa 
+          <strong className="font-semibold">{property.Bairro}</strong>, {city}/{property.UF}<br />
+          <strong className="font-semibold">{property.AreaPrivativa} m²</strong> de Área Privativa 
           {bedrooms}
         </p>
 

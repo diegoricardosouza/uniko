@@ -299,7 +299,7 @@
 }
 
 .property-types span {
-  @apply uppercase font-inter text-[14px] text-title leading-[19px] font-normal
+  @apply uppercase font-inter text-[14px] text-title leading-[19px] font-medium
 }
 
 .property-types span.delivery {

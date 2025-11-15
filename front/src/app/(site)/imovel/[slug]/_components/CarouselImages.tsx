@@ -47,7 +47,7 @@ export function CarouselImages({ property }: CarouselImagesProps) {
             }}
           >
             <Image
-              src={featuredImageUrl}
+              src={featuredImageUrl || '/noimage.jpg'}
               width={1920}
               height={500}
               alt={property.TituloSite}
@@ -114,14 +114,16 @@ export function CarouselImages({ property }: CarouselImagesProps) {
         </div>
       </Swiper>
 
-      <Lightbox
-        open={lightboxOpen}
-        close={() => setLightboxOpen(false)}
-        index={lightboxIndex}
-        slides={property.Foto?.map(media => ({
-          src: media.Foto
-        }))}
-      />
+      {imagesUrl?.length && (
+        <Lightbox
+          open={lightboxOpen}
+          close={() => setLightboxOpen(false)}
+          index={lightboxIndex}
+          slides={property.Foto?.map(media => ({
+            src: media.Foto
+          }))}
+        />
+      )}
     </>
   )
 }

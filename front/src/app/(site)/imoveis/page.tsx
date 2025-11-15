@@ -31,17 +31,18 @@ export default async function Imoveis({ searchParams }: PropertiesProps) {
   });
 
   const ufFilter = params.city === 'curitiba' ? 'PR' : (params.city === 'belo-horizonte' ? 'MG' : undefined);
-  const finalidadeFilter = params.finalidade === 'comprar' ? 'Venda' : (params.finalidade === 'lancamentos' ? 'Venda e Aluguel' : 'Aluguel');
+  const finalidadeFilter = params.finalidade === 'comprar' ? 'Venda' : (params.finalidade === 'alugar' ? 'Aluguel' : undefined);
 
   const filters = {
     fields: [
       'TituloSite', 'Dormitorios', 'UF', 'Bairro', 'Cidade', 'ValorVenda',
       'ValorLocacao', 'AreaPrivativa', 'AreaTotal', 'FotoDestaque', 'Codigo',
-      'TotalBanheiros', 'Status', 'Categoria', 'Endereco', 'Numero', 'Complemento'
+      'TotalBanheiros', 'Status', 'Categoria', 'Endereco', 'Numero', 'Complemento', 'Lancamento', 'DataEntrega'
     ],
     filter: {
       "UF": ufFilter,
       "Categoria": params.type ? params.type : undefined,
+      "Lancamento": params.finalidade === 'lancamentos' ? 'Sim' : undefined,
       "Status": params.finalidade ? finalidadeFilter : undefined,
       // "Cidade": params.search ? params.search : undefined
     },
@@ -98,29 +99,6 @@ export default async function Imoveis({ searchParams }: PropertiesProps) {
         limit: data.paginacao?.quantidade
       }
     };
-    
-    // Extrair a paginação primeiro
-    // const paginacao = {
-    //   total: data.total || 0,
-    //   paginas: data.paginas || 0,
-    //   pagina: data.pagina || page,
-    //   quantidade: data.quantidade || limit
-    // };
-
-    // Converter o objeto em array, filtrando apenas os imóveis (não a paginação)
-    // const imoveis: PropertyVistaList[] = Object.entries(data)
-    //   .filter(([key]) => !['total', 'paginas', 'pagina', 'quantidade'].includes(key))
-    //   .map(([_, value]) => value as PropertyVistaList);
-
-    // properties = {
-    //   data: imoveis,
-    //   meta: {
-    //     total: paginacao.total,
-    //     totalPages: paginacao.paginas,
-    //     page: paginacao.pagina,
-    //     limit: paginacao.quantidade
-    //   }
-    // };
 
   } catch (error) {
     console.error('Erro ao buscar imóveis:', error);
