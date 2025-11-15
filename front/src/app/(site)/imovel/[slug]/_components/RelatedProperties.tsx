@@ -41,8 +41,6 @@ export async function RelatedProperties({ idCurrentProperty, ufCurrentProperty, 
     .filter((property: PropertyVistaList) => property.Codigo !== idCurrentProperty)
     .slice(0, 3);
 
-  console.log(filteredProperties);
-
   return (
     <section className="bg-bggray py-[50px]">
       <div className="container">

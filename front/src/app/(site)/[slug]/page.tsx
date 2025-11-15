@@ -1,12 +1,12 @@
 import { getPostsRelatedAction } from "@/app/actions/posts/get-post-related";
 import { getPostSlugAction } from "@/app/actions/posts/get-post-slug";
-import { getPropertiesPaginateAction } from "@/app/actions/properties/get-properties-paginate";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { CardPost } from "@/components/CardPost";
 import { CardPropertySingle } from "@/components/CardPropertySingle";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import NotFound from "@/components/NotFound";
+import { PropertyVistaList } from "@/entities/PropertyVista";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -62,7 +62,33 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
 
   try {
     const post = await getPostSlugAction(slug);
-    const properties = await getPropertiesPaginateAction({ limit: 4, finalities: ["lancamentos"] });
+
+    const filters = {
+        fields: [
+          'TituloSite', 'Dormitorios', 'UF', 'Bairro', 'Cidade', 'ValorVenda',
+          'ValorLocacao', 'AreaPrivativa', 'FotoDestaque', 'Codigo',
+          'Status', 'Categoria', 'Endereco', 'Numero', 'Complemento'
+        ],
+        paginacao: {
+          "pagina": "1",
+          "quantidade": "4"
+        },
+      };
+      
+      const searchParamsApi = JSON.stringify(filters);
+      const encodedParams = encodeURIComponent(searchParamsApi);
+      const url = `${process.env.NEXT_PUBLIC_VISTA_API_URL}/imoveis/listar?key=${process.env.VISTA_API_KEY}&v2=1&pesquisa=${encodedParams}&showtotal=1`;
+    
+      const property = await fetch(url, {
+        headers: {
+          'Accept': 'application/json',
+        },
+        cache: 'no-store'
+      });
+    
+      const data = await property.json();
+      
+      const filteredProperties: PropertyVistaList[] = data.result.slice(0, 4);
 
     if (!post) {
       return (
@@ -174,8 +200,8 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
                 </header>
 
                 <div className="flex flex-col gap-[60px] mb-[60px] md:mb-0">
-                  {properties.data.map((property) => (
-                    <CardPropertySingle key={property.id} property={property} />
+                  {filteredProperties.map((property, index) => (
+                    <CardPropertySingle key={index} property={property} />
                   ))}
                 </div>
               </aside>
