@@ -14,16 +14,10 @@ export function VideoHome() {
   const playerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Cria script do YouTube API
-    const tag = document.createElement("script");
-    tag.src = "https://www.youtube.com/iframe_api";
-    document.body.appendChild(tag);
-
-    // Função chamada quando API estiver pronta
-    window.onYouTubeIframeAPIReady = () => {
-      if (playerRef.current) {
+    const initPlayer = () => {
+      if (playerRef.current && window.YT && window.YT.Player) {
         new window.YT.Player(playerRef.current, {
-          videoId: "6Q5Nv5h0qKw", // ID do vídeo
+          videoId: "6Q5Nv5h0qKw",
           playerVars: {
             autoplay: 1,
             controls: 0,
@@ -33,15 +27,40 @@ export function VideoHome() {
             disablekb: 1,
             loop: 1,
             playlist: "6Q5Nv5h0qKw",
+            mute: 1,
           },
           events: {
             onReady: (event: any) => {
-              event.target.mute(); // muta o áudio
-              event.target.playVideo(); // força autoplay
+              event.target.mute();
+              event.target.playVideo();
             },
           },
         });
       }
+    };
+
+    // Verifica se a API do YouTube já está carregada
+    if (window.YT && window.YT.Player) {
+      // API já está disponível, inicializa o player imediatamente
+      initPlayer();
+    } else {
+      // API não está carregada, verifica se o script já existe
+      const existingScript = document.querySelector('script[src="https://www.youtube.com/iframe_api"]');
+
+      if (!existingScript) {
+        // Cria o script apenas se não existir
+        const tag = document.createElement("script");
+        tag.src = "https://www.youtube.com/iframe_api";
+        document.body.appendChild(tag);
+      }
+
+      // Define a função de callback
+      window.onYouTubeIframeAPIReady = initPlayer;
+    }
+
+    // Cleanup (opcional)
+    return () => {
+      // Remove o player se necessário
     };
   }, []);
 

@@ -8,37 +8,56 @@ import { FormTab } from "./FormTab";
 export function SearchHome() {
   const playerRef = useRef<HTMLDivElement>(null);
   
-    useEffect(() => {
-      // Cria script do YouTube API
-      const tag = document.createElement("script");
-      tag.src = "https://www.youtube.com/iframe_api";
-      document.body.appendChild(tag);
-  
-      // Função chamada quando API estiver pronta
-      window.onYouTubeIframeAPIReady = () => {
-        if (playerRef.current) {
-          new window.YT.Player(playerRef.current, {
-            videoId: "mnQCKVjSYcc", // ID do vídeo
-            playerVars: {
-              autoplay: 1,
-              controls: 0,
-              rel: 0,
-              modestbranding: 1,
-              fs: 0,
-              disablekb: 1,
-              loop: 1,
-              playlist: "mnQCKVjSYcc",
+  useEffect(() => {
+    const initPlayer = () => {
+      if (playerRef.current && window.YT && window.YT.Player) {
+        new window.YT.Player(playerRef.current, {
+          videoId: "mnQCKVjSYcc",
+          playerVars: {
+            autoplay: 1,
+            controls: 0,
+            rel: 0,
+            modestbranding: 1,
+            fs: 0,
+            disablekb: 1,
+            loop: 1,
+            playlist: "mnQCKVjSYcc",
+            mute: 1,
+          },
+          events: {
+            onReady: (event: any) => {
+              event.target.mute();
+              event.target.playVideo();
             },
-            events: {
-              onReady: (event: any) => {
-                event.target.mute(); // muta o áudio
-                event.target.playVideo(); // força autoplay
-              },
-            },
-          });
-        }
-      };
-    }, []);
+          },
+        });
+      }
+    };
+
+    // Verifica se a API do YouTube já está carregada
+    if (window.YT && window.YT.Player) {
+      // API já está disponível, inicializa o player imediatamente
+      initPlayer();
+    } else {
+      // API não está carregada, verifica se o script já existe
+      const existingScript = document.querySelector('script[src="https://www.youtube.com/iframe_api"]');
+
+      if (!existingScript) {
+        // Cria o script apenas se não existir
+        const tag = document.createElement("script");
+        tag.src = "https://www.youtube.com/iframe_api";
+        document.body.appendChild(tag);
+      }
+
+      // Define a função de callback
+      window.onYouTubeIframeAPIReady = initPlayer;
+    }
+
+    // Cleanup (opcional)
+    return () => {
+      // Remove o player se necessário
+    };
+  }, []);
 
   return (
     <div className="relative h-[300px] md:h-[640px] overflow-hidden">
