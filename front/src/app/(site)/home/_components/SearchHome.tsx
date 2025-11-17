@@ -41,8 +41,8 @@ export function SearchHome() {
     }, []);
 
   return (
-    <div className="relative h-[300px] md:h-[640px]">
-      <div className="absolute top-0 left-0 w-full h-full bg-black/45 flex items-center">
+    <div className="relative h-[300px] md:h-[640px] overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-full bg-black/45 flex items-center z-10">
         <div className="container flex flex-col md:flex-row">
           <div className="bg-black/90 p-[20px] md:p-[50px] md:rounded-[20px_0px_0px_20px]">
             <Image 
@@ -75,10 +75,12 @@ export function SearchHome() {
         </div>
       </div>
       
-      <div
-        ref={playerRef}
-        className="w-full h-full"
-      />
+      <div className="relative w-screen h-screen overflow-hidden">
+        <div
+          ref={playerRef}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] h-[56.25vw] min-w-full min-h-full"
+        />
+      </div>
     </div>
   )
 }

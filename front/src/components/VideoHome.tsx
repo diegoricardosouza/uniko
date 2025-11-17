@@ -46,9 +46,11 @@ export function VideoHome() {
   }, []);
 
   return (
-    <div
-      ref={playerRef}
-      className="w-full h-full"
-    />
+    <div className="relative w-screen h-screen overflow-hidden">
+      <div
+        ref={playerRef}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] h-[56.25vw] min-w-full min-h-full"
+      />
+    </div>
   )
 }

@@ -53,7 +53,7 @@ export default function Home() {
     <div>
       <div className="relative h-screen">
         <div
-          className="absolute top-0 left-0 w-full h-full bg-black/45 flex flex-col"
+          className="absolute top-0 left-0 w-full h-full bg-black/45 flex flex-col z-10"
         >
           <header className="w-full bg-black">
             <div className="container grid grid-cols-2 lg:grid-cols-3">
