@@ -341,6 +341,10 @@
   @apply !border-0 !shadow-none bg-white rounded-none font-montserrat text-[14px] md:text-[18px] text-title font-normal leading-[22px] p-5 h-[50px] md:h-[62px]
 }
 
+.form-contato2 input {
+  @apply !border-0 !shadow-none bg-white rounded-none font-montserrat text-[14px] md:text-[16px] text-title font-normal leading-[20px] p-5 h-[45px] md:h-[50px]
+}
+
 .form-contato textarea {
   @apply h-[134px]
 }
@@ -349,8 +353,16 @@
   @apply bg-white rounded-none h-[50px] md:h-[62px] font-montserrat text-content text-[14px] md:text-[18px] px-5 border-0 shadow-none
 }
 
+.form-contato .form-select2 button {
+  @apply bg-white rounded-none h-[45px] md:h-[50px] font-montserrat text-content text-[14px] md:text-[16px] px-5 border-0 shadow-none
+}
+
 .form-contato .form-select button svg {
   @apply w-[25px] h-[25px]
+}
+
+.form-contato .form-select2 button svg {
+  @apply w-[25px] h-[25px] !text-gold
 }
 
 .form-label-accept {

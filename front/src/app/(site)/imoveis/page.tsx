@@ -17,6 +17,8 @@ interface PropertiesProps {
     city?: string;
     finalidade?: string;
     type?: string;
+    codigo?: string;
+    endereco?: string;
     orderDirection?: string;
   }>;
 }
@@ -32,6 +34,21 @@ export default async function Imoveis({ searchParams }: PropertiesProps) {
 
   const ufFilter = params.city === 'curitiba' ? 'PR' : (params.city === 'belo-horizonte' ? 'MG' : undefined);
   const finalidadeFilter = params.finalidade === 'comprar' ? 'Venda' : (params.finalidade === 'alugar' ? 'Aluguel' : undefined);
+  const cityFilter = params.city === 'curitiba' ? 'Curitiba' : (params.city === 'belo-horizonte' ? 'Belo Horizonte' : undefined);
+
+  console.log(ufFilter);
+  
+
+  // Construir filtro dinamicamente, apenas com valores válidos
+  const filterObject: Record<string, string> = {};
+
+  if (ufFilter) filterObject.UF = ufFilter;
+  if (params.type) filterObject.Categoria = params.type;
+  if (params.finalidade === 'lancamentos') filterObject.Lancamento = 'Sim';
+  if (finalidadeFilter) filterObject.Status = finalidadeFilter;
+  if (params.city) filterObject.Cidade = cityFilter || '';
+  if (params.codigo) filterObject.Codigo = params.codigo;
+  if (params.endereco) filterObject.Endereco = params.endereco;
 
   const filters = {
     fields: [
@@ -39,13 +56,7 @@ export default async function Imoveis({ searchParams }: PropertiesProps) {
       'ValorLocacao', 'AreaPrivativa', 'AreaTotal', 'FotoDestaque', 'Codigo',
       'TotalBanheiros', 'Status', 'Categoria', 'Endereco', 'Numero', 'Complemento', 'Lancamento', 'DataEntrega'
     ],
-    filter: {
-      "UF": ufFilter,
-      "Categoria": params.type ? params.type : undefined,
-      "Lancamento": params.finalidade === 'lancamentos' ? 'Sim' : undefined,
-      "Status": params.finalidade ? finalidadeFilter : undefined,
-      // "Cidade": params.search ? params.search : undefined
-    },
+    filter: filterObject,
     order: {
       DataCadastro: params.orderDirection === 'asc' ? 'asc' : 'desc'
     },

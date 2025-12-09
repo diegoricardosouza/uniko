@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
 import { Bathroom } from "@/components/icons/Bathroom"
@@ -21,6 +22,8 @@ export function ContentProperty({ property }: ContentPropertyProps) {
 
   const finalityText = property.Status;
   const whats = property.Cidade === "Curitiba" ? 'https://wa.me/5541996615511' : 'https://wa.me/5531999868706'
+
+  const cityTrated = property.Cidade ? property.Cidade : (property.UF === 'PR' ? 'Curitiba' : '')
 
   // Pega a URL completa apenas no cliente
   useEffect(() => {
@@ -165,7 +168,7 @@ export function ContentProperty({ property }: ContentPropertyProps) {
 
           <address className="font-inter text-[17px] leading-6 text-title">
             <strong className="font-semibold">{property.Endereco}, {property.Numero}</strong><br />
-            <strong className="font-semibold">{property.Bairro}</strong>, {property.Cidade}/{property.UF}
+            <strong className="font-semibold">{property.Bairro}</strong>, {cityTrated}/{property.UF}
           </address>
 
           <hr className="border-0 w-full m-0 h-[1px] bg-gold mt-[15px] mb-[15px]" />
