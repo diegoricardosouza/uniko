@@ -34,11 +34,8 @@ export default async function Imoveis({ searchParams }: PropertiesProps) {
 
   const ufFilter = params.city === 'curitiba' ? 'PR' : (params.city === 'belo-horizonte' ? 'MG' : undefined);
   const finalidadeFilter = params.finalidade === 'comprar' ? 'Venda' : (params.finalidade === 'alugar' ? 'Aluguel' : undefined);
-  const cityFilter = params.city === 'curitiba' ? 'Curitiba' : (params.city === 'belo-horizonte' ? 'Belo Horizonte' : undefined);
-
-  console.log(ufFilter);
+  const cityFilter = params.city === 'curitiba' ? 'Curitiba' : (params.city === 'belo-horizonte' ? 'Belo Horizonte' : params.city);
   
-
   // Construir filtro dinamicamente, apenas com valores válidos
   const filterObject: Record<string, string> = {};
 
