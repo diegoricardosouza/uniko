@@ -116,8 +116,9 @@
 }
 
 @theme {
-  --font-montserrat: 'Montserrat', sans-serif;
-  --font-inter: 'Inter', sans-serif;
+  --font-montserrat: 'DM Sans', sans-serif;
+  --font-inter: 'DM Sans', sans-serif;
+  --font-dmsans: 'DM Sans', sans-serif;
   --color-gold: #C5AF62;
   --color-title: #343434;
   --color-content: #848484;
@@ -150,7 +151,7 @@
 }
 
 .button-geral {
-  @apply py-[11px] px-[17px] md:py-[14px] md:px-[20px] bg-white text-[#343434] font-inter uppercase font-normal text-[13px] md:text-[14px] leading-[19px] inline-flex gap-[9px] transition-all items-center
+  @apply py-[11px] px-[17px] md:py-[14px] md:px-[20px] bg-white text-[#343434] font-inter uppercase font-medium text-[13px] md:text-[14px] leading-[19px] inline-flex gap-[9px] transition-all items-center
 }
 
 .button-geral:hover {
@@ -158,7 +159,7 @@
 }
 
 .content p {
-  @apply m-0 mb-[25px] text-[17px] text-content leading-[20px] font-inter font-light
+  @apply m-0 mb-[25px] text-[17px] text-content leading-[20px] font-inter font-normal
 }
 
 .content h2 {
@@ -199,7 +200,7 @@
 }
 
 .content h4 {
-  @apply text-[22px] font-montserrat text-gold font-semibold leading-[27px] m-0 mb-[5px]
+  @apply text-[22px] font-montserrat text-gold font-medium leading-[27px] m-0 mb-[5px]
 }
 
 .content hr {
@@ -231,15 +232,15 @@
 }
 
 .box-sobre-missao .title {
-  @apply bg-gold rounded-[0_20px_20px_20px] text-[22px] font-semibold font-montserrat leading-[27px] w-full max-w-[160px] py-[15px] text-white text-center mx-auto mt-[-28px] mb-5
+  @apply bg-gold rounded-[0_20px_20px_20px] text-[22px] font-medium font-montserrat leading-[27px] w-full max-w-[160px] py-[15px] text-white text-center mx-auto mt-[-28px] mb-5
 }
 
 .box-sobre-missao p {
-  @apply m-0 text-[17px] text-title leading-[22px] font-inter font-light text-center
+  @apply m-0 text-[17px] text-content leading-[20px] font-inter font-normal text-center
 }
 
 .title-card {
-  @apply text-white text-[25px] font-montserrat font-normal
+  @apply text-white text-[24px] font-montserrat font-semibold
 }
 
 .title-card strong {
@@ -251,15 +252,15 @@
 }
 
 .breadcrumb-list li {
-  @apply text-white font-inter font-light text-[14px] leading-[19px]
+  @apply text-white font-inter font-normal text-[14px] leading-[19px]
 }
 
 .title-card-contato {
-  @apply text-[25px] font-montserrat font-normal leading-[30px] text-gold mb-[5px] tracking-[-0.63px] text-center
+  @apply text-[25px] font-montserrat font-light leading-[30px] text-gold text-center
 }
 
 .title-card-contato strong {
-  @apply font-semibold
+  @apply font-medium
 }
 
 .fone-card-items {
@@ -291,7 +292,7 @@
 }
 
 .search-tab {
-  @apply font-montserrat text-[14px] md:text-[18px] font-medium  leading-[22px] rounded-none px-[15px] py-2 mr-[1px] bg-gold text-white hover:!bg-white hover:!text-title data-[state=active]:!bg-white data-[state=active]:!text-title
+  @apply font-montserrat text-[14px] md:text-[18px] font-normal leading-[22px] rounded-none px-[15px] py-2 mr-[1px] bg-gold text-white hover:!bg-white hover:!text-title data-[state=active]:!bg-white data-[state=active]:!text-title
 }
 
 .property-types {
@@ -323,7 +324,7 @@
 }
 
 .filterProperty button {
-  @apply bg-white rounded-[5px] h-[37px] md:h-[47px] font-inter text-content text-[12px] md:text-[15px] px-[15px] border-[2px] border-[#DDDDDD] shadow-none
+  @apply bg-white rounded-[5px] h-[37px] md:h-[46px] font-inter text-content text-[12px] md:text-[17px] font-normal px-[15px] border-[2px] border-[#DDDDDD] shadow-none
 }
 
 .filterProperty button svg {
@@ -354,7 +355,7 @@
 }
 
 .form-contato .form-select2 button {
-  @apply bg-white rounded-none h-[45px] md:h-[50px] font-montserrat text-content text-[14px] md:text-[16px] px-5 border-0 shadow-none
+  @apply bg-white rounded-none h-[45px] md:h-[50px] font-montserrat text-content text-[14px] md:text-[17px] px-5 border-0 shadow-none
 }
 
 .form-contato .form-select button svg {
@@ -383,7 +384,7 @@
 }
 
 .footer-links h4 {
-  @apply font-montserrat text-[20px] font-semibold leading-[24px] text-gold mb-[3px]
+  @apply font-montserrat text-[20px] font-semibold leading-[24px] text-gold mb-[5px]
 }
 
 .footer-links a {

@@ -19,7 +19,7 @@ export function FilterProperty({ total }: FilterPropertyProps) {
 
   return (
     <div className="container !mt-[20px] flex justify-between items-center">
-      <p className="font-inter text-[13px] md:text-[15px] leading-[19px] text-content">
+      <p className="font-inter text-[13px] md:text-[17px] leading-[19px] text-content">
         {total} resultados
       </p>
       <div className="filterProperty">

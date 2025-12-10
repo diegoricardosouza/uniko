@@ -5,13 +5,13 @@ export function FeaturedTypes() {
     <div>
       <header className="text-center mb-[30px]">
         <h2
-          className="text-gold text-[30px] md:text-[38px] font-montserrat tracking-[-0.95px] font-normal leading-[35px] md:leading-[47px] mb-[5px]"
+          className="text-gold text-[30px] md:text-[36px] font-montserrat font-light leading-[35px] md:leading-[47px]"
         >
-          Cada imóvel tem seu jeito <strong className="font-semibold">Úniko</strong> e você tem o seu!
+          Cada imóvel tem seu jeito <strong className="font-medium">Úniko</strong> e você tem o seu!
         </h2>
 
         <h4
-          className="text-[19px] md:text-[22px] font-semibold text-title leading-[22px] md:leading-[27px] font-montserrat"
+          className="text-[19px] md:text-[22px] font-medium text-title leading-[22px] md:leading-[27px] font-montserrat"
         >
           O imóvel dos seus sonhos a um clique de distância. O que você procura hoje?
         </h4>

@@ -82,23 +82,23 @@ export default function Home() {
 
           <div className="flex flex-col items-center justify-center h-full flex-1">
             <h1
-              className="text-white text-[40px] leading-[43px] lg:text-[48px] lg:leading-[58px] font-normal font-montserrat text-center mb-10"
+              className="text-white text-[40px] leading-[43px] lg:text-[48px] lg:leading-[58px] font-light font-montserrat text-center mb-10"
             >
               O IMÓVEL DOS SEUS SONHOS<br />
-              <strong>É ESPECIAL E ÚNIKO</strong>
+              <strong className="font-semibold">É ESPECIAL E ÚNIKO</strong>
             </h1>
 
             <div className="flex justify-center gap-4 lg:gap-8">
               <Link
                 href="/imoveis?city=curitiba"
-                className="flex items-center bg-white text-[#343434] px-[18px] py-[13px] lg:px-[20px] lg:py-[15px] font-montserrat text-[15px] leading-[19px] lg:text-[18px] lg:leading-[22px] font-semibold gap-[3px] shadow-[0px_3px_6px_#00000029] transition-all hover:bg-[#C5AF62] hover:text-white mb-2.5 lg:mb-0 justify-center"
+                className="flex items-center bg-white text-[#343434] px-[18px] py-[13px] lg:px-[20px] lg:py-[15px] font-montserrat text-[15px] leading-[19px] lg:text-[18px] lg:leading-[22px] font-medium gap-[3px] shadow-[0px_3px_6px_#00000029] transition-all hover:bg-[#C5AF62] hover:text-white mb-2.5 lg:mb-0 justify-center"
               >
                 Curitiba <LuArrowRight className="w-[15px] h-[15px] lg:w-[19px] lg:h-[19px]" />
               </Link>
 
               <Link
                 href="/imoveis?city=belo-horizonte"
-                className="flex items-center bg-white text-[#343434] px-[18px] py-[13px] lg:px-[20px] lg:py-[15px] font-montserrat text-[15px] leading-[19px] lg:text-[18px] lg:leading-[22px] font-semibold gap-[3px] shadow-[0px_3px_6px_#00000029] transition-all hover:bg-[#C5AF62] hover:text-white mb-2.5 lg:mb-0 justify-center"
+                className="flex items-center bg-white text-[#343434] px-[18px] py-[13px] lg:px-[20px] lg:py-[15px] font-montserrat text-[15px] leading-[19px] lg:text-[18px] lg:leading-[22px] font-medium gap-[3px] shadow-[0px_3px_6px_#00000029] transition-all hover:bg-[#C5AF62] hover:text-white mb-2.5 lg:mb-0 justify-center"
               >
                 Belo Horizonte <LuArrowRight className="w-[15px] h-[15px] lg:w-[19px] lg:h-[19px]" />
               </Link>

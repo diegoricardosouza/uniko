@@ -194,7 +194,7 @@ export async function Footer() {
         <p 
           className="text-center font-inter text-[15px] font-normal text-black leading-[20px]"
         >
-          ©2025 Úniko Imóveis LTDA | CNPJ 13.714.854/0001-81 | Uniko PR - CRECI J4652 | Uniko BH - CRECI J0006135 | Desenvolvido por Dev2 - Comunicação Integrada
+          ©2025 <strong className="font-semibold">Úniko Imóveis LTDA | CNPJ</strong> 13.714.854/0001-81 | <strong className="font-semibold">Uniko PR</strong> - CRECI J4652 | <strong className="font-semibold">Uniko BH</strong> - CRECI J0006135 | Desenvolvido por <a href="https://dev2.com.br/" className="font-semibold transition-all hover:text-gold" target="_blank">Dev2 - Comunicação Integrada</a>
         </p>
       </div>
     </footer>

@@ -23,13 +23,13 @@ export default async function Contato() {
         <div className="container !mt-[20px]">
           <header className="text-center mb-[30px]">
             <h2
-              className="text-gold text-[30px] md:text-[38px] font-montserrat tracking-[-0.95px] font-normal leading-[35px] md:leading-[47px] mb-[5px]"
+              className="text-gold text-[30px] md:text-[36px] font-montserrat font-light leading-[35px] md:leading-[47px]"
             >
-              Atendimento Diferenciado e <strong className="font-semibold">Personalizado</strong>
+              Atendimento Diferenciado e <strong className="font-medium">Personalizado</strong>
             </h2>
 
             <h4
-              className="text-[19px] md:text-[22px] font-semibold text-title leading-[22px] md:leading-[27px] font-montserrat"
+              className="text-[19px] md:text-[22px] font-medium text-title leading-[22px] md:leading-[27px] font-montserrat"
             >
               Estamos aqui para lhe ajudar! Venha visitar uma de nossas lojas!
             </h4>
@@ -54,13 +54,13 @@ export default async function Contato() {
           <div className="container">
             <header className="text-center mb-[30px]">
               <h2
-                className="text-gold text-[30px] md:text-[38px] font-montserrat tracking-[-0.95px] font-normal leading-[35px] md:leading-[47px] mb-[5px]"
+                className="text-gold text-[30px] md:text-[36px] font-montserrat font-light leading-[35px] md:leading-[47px]"
               >
-                O que podemos <strong className="font-semibold">fazer por você?</strong>
+                O que podemos <strong className="font-medium">fazer por você?</strong>
               </h2>
 
               <h4
-                className="text-[19px] md:text-[22px] font-semibold text-title leading-[22px] md:leading-[27px] font-montserrat"
+                className="text-[19px] md:text-[22px] font-medium text-title leading-[22px] md:leading-[27px] font-montserrat"
               >
                 Em breve um de nosso corretores especializados entrará em contato com você!
               </h4>

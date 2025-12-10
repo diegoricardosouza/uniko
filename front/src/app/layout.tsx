@@ -2,18 +2,25 @@ import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/contexts/AuthContext";
 import type { Metadata, Viewport } from "next";
 import { SessionProvider } from "next-auth/react";
-import { Inter, Montserrat } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import "./globals.css";
 
-const montserrat = Montserrat({
+const montserrat = DM_Sans({
   variable: "--font-montserrat",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   display: 'swap',
 });
 
-const inter = Inter({
+const inter = DM_Sans({
   variable: "--font-inter",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: 'swap',
+});
+
+const dmsans = DM_Sans({
+  variable: "--font-dmsans",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   display: 'swap',
@@ -39,7 +46,7 @@ export default function RootLayout({
     <html lang="pt-br">
       <link rel="icon" href="/favicon.png" sizes="any" />
       <body
-        className={`${montserrat.variable} ${inter.variable} antialiased`}
+        className={`${dmsans.variable} antialiased`}
       >
         <SessionProvider>
           <AuthProvider>

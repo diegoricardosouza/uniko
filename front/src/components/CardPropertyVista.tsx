@@ -117,7 +117,7 @@ export function CardPropertyVista({ property }: CardPropertyProps) {
         </div>
 
         <header>
-          <h2 className="text-gold text-[30px] md:text-[38px] font-montserrat tracking-[-0.95px] font-normal leading-[35px] md:leading-[42px] mb-[3px]">
+          <h2 className="text-gold text-[30px] md:text-[36px] font-montserrat font-light leading-[35px] md:leading-[40px] mb-[5px]">
             {property.TituloSite}
           </h2>
         </header>
@@ -133,7 +133,7 @@ export function CardPropertyVista({ property }: CardPropertyProps) {
         <div className="flex flex-col gap-3 md:flex-row md:gap-0 justify-between items-center">
           <div>
             {Number(property.ValorVenda) > 0 && (
-              <div className="font-montserrat text-[20px] md:text-[22px] text-title tracking-[-1.1px]">
+              <div className="font-montserrat text-[20px] md:text-[22px] text-title">
                 <strong>
                   {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(property.ValorVenda || 0))}
                 </strong>
@@ -141,7 +141,7 @@ export function CardPropertyVista({ property }: CardPropertyProps) {
               </div>
             )}
             {Number(property.ValorLocacao) > 0 && (
-              <div className="font-montserrat text-[20px] md:text-[22px] text-title tracking-[-1.1px]">
+              <div className="font-montserrat text-[20px] md:text-[22px] text-title">
                 <strong>
                   {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(property.ValorLocacao || 0))}
                 </strong>

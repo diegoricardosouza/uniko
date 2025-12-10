@@ -124,8 +124,8 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
               </Link>
             </div>
 
-            <div className="mt-[30px] mb-1">
-              <span className="uppercase font-inter text-[14px] leading-[19px] text-title">
+            <div className="mt-[30px]">
+              <span className="uppercase font-inter text-[14px] leading-[20px] text-title font-medium">
                 {post?.categories?.[0]?.name}
               </span>
             </div>
@@ -133,12 +133,12 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
             <div className="flex flex-col md:flex-row gap-[26px]">
               <div className="flex-1">
                 <h1
-                  className="text-gold text-[30px] md:text-[38px] font-montserrat tracking-[-0.95px] font-semibold leading-[35px] md:leading-[42px] mb-[10px]"
+                  className="text-gold text-[30px] md:text-[36px] font-montserrat font-medium leading-[35px] md:leading-[40px]"
                 >
                   {post.name}
                 </h1>
                 {post.subtitle && (
-                  <p className="font-inter text-[17px] leading-[20px] font-light text-content">
+                  <p className="font-inter text-[17px] leading-[20px] font-semibold text-content">
                     {post.subtitle}
                   </p>
                 )}
@@ -163,7 +163,7 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
                   {post.categories?.map(category => (
                     <span
                       key={category.id}
-                      className="inline-flex font-inter text-[15px] font-light leading-5 text-black p-[15px] bg-bggray"
+                      className="inline-flex font-inter text-[16px] font-normal leading-5 text-black px-[15px] py-[13px] bg-bggray"
                     >
                       {category.name}
                     </span>
@@ -180,8 +180,8 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
                 <hr className="border-0 w-full h-[1px] bg-gold m-0 mb-[30px]" />
 
                 <section className="mb-[60px]">
-                  <h2 className="text-gold text-[22px] leading-[26px] font-montserrat mb-[30px]">
-                    Publicações <strong className="font-semibold">Relacionadas</strong>
+                  <h2 className="text-gold text-[22px] leading-[26px] font-montserrat font-light mb-[30px]">
+                    Publicações <strong className="font-medium">Relacionadas</strong>
                   </h2>
 
                   <div className="flex flex-col md:grid grid-cols-2 gap-[26px]">

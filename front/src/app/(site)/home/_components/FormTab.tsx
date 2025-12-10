@@ -97,8 +97,8 @@ export function FormTab({ type }: FormTabProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit} className="form-contato form-contato2 relative">
-        <div className="flex bg-white py-[5px]">
+      <form onSubmit={handleSubmit} className="form-contato form-contato2 relative bg-white">
+        <div className="flex py-[5px]">
           <FormField
             control={form.control}
             name="city"

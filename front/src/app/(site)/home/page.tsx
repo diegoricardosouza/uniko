@@ -67,8 +67,8 @@ export default async function Home() {
         <DifferentiatedService />
 
         <div className="container !mt-10">
-          <h2 className="text-gold text-[30px] text-center md:text-[38px] font-montserrat tracking-[-0.95px] font-normal leading-[35px] md:leading-[42px] mb-[30px]">
-            Facilidade nos processos imobiliários é <strong className="font-semibold">Úniko!</strong>
+          <h2 className="text-gold text-[30px] text-center md:text-[38px] font-montserrat tracking-[-0.95px] font-light leading-[35px] md:leading-[42px] mb-[30px]">
+            Facilidade nos processos imobiliários é <strong className="font-medium">Úniko!</strong>
           </h2>
 
           <div className="flex flex-col md:grid grid-cols-2 gap-5 md:gap-[60px]">
@@ -96,13 +96,13 @@ export default async function Home() {
           <div className="container">
             <header className="text-center mb-[30px]">
               <h2
-                className="text-gold text-[30px] md:text-[38px] font-montserrat tracking-[-0.95px] font-normal leading-[35px] md:leading-[47px] mb-[5px]"
+                className="text-gold text-[30px] md:text-[36px] font-montserrat font-light leading-[35px] md:leading-[47px]"
               >
-                O imóvel dos seus sonhos <strong className="font-semibold">é especial e Úniko!</strong>
+                O imóvel dos seus sonhos <strong className="font-medium">é especial e Úniko!</strong>
               </h2>
 
               <h4
-                className="text-[19px] md:text-[22px] font-semibold text-white leading-[22px] md:leading-[27px] font-montserrat"
+                className="text-[19px] md:text-[22px] font-medium text-white leading-[22px] md:leading-[27px] font-montserrat"
               >
                 O imóvel que você precisa está aqui na Úniko
               </h4>
@@ -143,13 +143,13 @@ export default async function Home() {
         <article className="container !mt-10">
           <header className="text-center mb-[30px]">
             <h2
-              className="text-gold text-[30px] md:text-[38px] font-montserrat tracking-[-0.95px] font-normal leading-[35px] md:leading-[47px] mb-[5px]"
+              className="text-gold text-[30px] md:text-[36px] font-montserrat font-light leading-[35px] md:leading-[47px]"
             >
-              As novidades mais recentes <strong className="font-semibold">estão aqui!</strong>
+              As novidades mais recentes <strong className="font-medium">estão aqui!</strong>
             </h2>
 
             <h4
-              className="text-[19px] md:text-[22px] font-semibold leading-[22px] md:leading-[27px] font-montserrat"
+              className="text-[19px] md:text-[22px] font-medium leading-[22px] md:leading-[27px] font-montserrat"
             >
               @unikoimoveis
             </h4>

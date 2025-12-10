@@ -21,15 +21,15 @@ export function HeaderYoutube({ title, description, linkYoutube }: HeaderYoutube
       </div>
 
       <div className="flex-1">
-        <h1 className="text-gold text-[30px] md:text-[38px] font-montserrat tracking-[-0.95px] font-normal leading-[35px] md:leading-[47px] mb-[5px]">
+        <h1 className="text-gold text-[30px] md:text-[36px] font-montserrat font-light leading-[35px] md:leading-[47px]">
           {title}
         </h1>
-        <span className="text-[19px] md:text-[22px] font-semibold text-title leading-[22px] md:leading-[27px] font-montserrat">
+        <span className="text-[19px] md:text-[22px] font-medium text-title leading-[22px] md:leading-[29px] font-montserrat">
           @unikoimoveis
         </span>
 
         <div className="mt-6 md:flex gap-[100px]">
-          <p className="flex-1 font-montserrat text-[18px] font-medium text-title leading-[22px] mb-3 md:mb-0">
+          <p className="flex-1 font-montserrat text-[18px] font-normal text-title leading-[22px] mb-3 md:mb-0">
             {description}
           </p>
 

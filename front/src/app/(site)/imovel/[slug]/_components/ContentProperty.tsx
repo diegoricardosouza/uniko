@@ -50,15 +50,15 @@ export function ContentProperty({ property }: ContentPropertyProps) {
       <div className="flex-1 w-full">
         <header>
           <h1
-            className="text-gold text-[30px] md:text-[38px] font-montserrat tracking-[-0.95px] font-normal leading-[35px] md:leading-[47px] mb-[20px]"
+            className="text-gold text-[30px] md:text-[36px] font-montserrat font-light leading-[35px] md:leading-[42px] mb-[5px]"
           >
             {property.TituloSite}
           </h1>
         </header>
 
         <div className="mb-9">
-          <h3 className="font-montserrat text-[25px] text-gold leading-[30px]">
-            Ficha <strong className="font-semibold">Técnica</strong>
+          <h3 className="font-montserrat text-[25px] font-light text-gold leading-[30px]">
+            Ficha <strong className="font-medium">Técnica</strong>
           </h3>
 
           <div className="border border-gold mt-[10px] py-[15px] md:py-5 px-5 md:px-[30px] flex flex-wrap gap-x-[50px] gap-y-5">
@@ -107,7 +107,7 @@ export function ContentProperty({ property }: ContentPropertyProps) {
 
         <div>
           <h3 className="font-montserrat text-[25px] text-gold leading-[30px] mb-[10px]">
-            Outras <strong className="font-semibold">Características</strong>
+            Outras <strong className="font-medium">Características</strong>
           </h3>
 
           <div className="flex flex-wrap gap-[15px]">
@@ -116,7 +116,7 @@ export function ContentProperty({ property }: ContentPropertyProps) {
               .map(([key, value]) => (
                 value === "Sim" && (
                   <span
-                    className="bg-bggray px-3 md:px-[15px] py-[11px] md:py-[14px] text-sm md:text-[15px] font-inter text-black"
+                    className="bg-bggray px-3 md:px-[15px] py-[11px] md:py-[13px] text-sm md:text-[16px] font-inter text-title font-normal"
                     key={key}
                   >
                     {key}
@@ -130,7 +130,7 @@ export function ContentProperty({ property }: ContentPropertyProps) {
 
         <div>
           <h3 className="font-montserrat text-[25px] text-gold leading-[30px] mb-[10px]">
-            Infraestrutura do <strong className="font-semibold">Condomínio</strong>
+            Infraestrutura do <strong className="font-medium">Condomínio</strong>
           </h3>
 
           <div className="flex flex-wrap gap-[15px]">
@@ -139,7 +139,7 @@ export function ContentProperty({ property }: ContentPropertyProps) {
               .map(([key, value]) => (
                 value === "Sim" && (
                   <span
-                    className="bg-bggray px-3 md:px-[15px] py-[11px] md:py-[14px] text-sm md:text-[15px] font-inter text-black"
+                    className="bg-bggray px-3 md:px-[15px] py-[11px] md:py-[13px] text-sm md:text-[16px] font-inter text-title font-normal"
                     key={key}
                   >
                     {key}
@@ -154,7 +154,7 @@ export function ContentProperty({ property }: ContentPropertyProps) {
         <div className="bg-bggray sticky top-[140px] rounded-[0px_20px_20px_20px] px-[25px] pt-5 pb-[15px]">
           <div className="flex gap-9 items-center mb-5">
             <span
-              className="bg-title px-[15px] py-[10px] shadow-[0px_3px_6px_#00000029] text-gold font-inter font-normal text-sm leading-[17px]"
+              className="bg-title px-[15px] py-[10px] shadow-[0px_3px_6px_#00000029] text-gold font-inter font-medium text-sm leading-[17px]"
             >
               {property.Codigo}
             </span>
@@ -174,7 +174,7 @@ export function ContentProperty({ property }: ContentPropertyProps) {
           <hr className="border-0 w-full m-0 h-[1px] bg-gold mt-[15px] mb-[15px]" />
 
           <div>
-            <div className="font-montserrat text-[20px] md:text-[22px] text-title tracking-[-1.1px] mb-[5px] leading-7">
+            <div className="font-montserrat text-[20px] md:text-[22px] text-title mb-[5px] leading-7">
               <strong>
                 {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(property.ValorVenda || property.ValorLocacao))}
               </strong>
@@ -182,7 +182,7 @@ export function ContentProperty({ property }: ContentPropertyProps) {
             </div>
 
             {(Number(property.ValorCondominio) > 0) && (
-              <div className="font-montserrat text-[18px] md:text-[20px] text-title tracking-[-1px] mb-[5px] leading-6">
+              <div className="font-montserrat text-[16px] md:text-[18px] text-title mb-[5px] leading-6">
                 <strong>
                   {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(property.ValorCondominio))}
                 </strong>
@@ -191,7 +191,7 @@ export function ContentProperty({ property }: ContentPropertyProps) {
             )}
 
             {(Number(property.ValorIptu) > 0) && (
-              <div className="font-montserrat text-[18px] md:text-[20px] text-title tracking-[-1px] leading-6">
+              <div className="font-montserrat text-[16px] md:text-[18px] text-title mb-[5px] leading-6">
                 <strong>
                   {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(property.ValorIptu))}
                 </strong>
@@ -214,8 +214,8 @@ export function ContentProperty({ property }: ContentPropertyProps) {
 
           <hr className="border-0 w-full m-0 h-[1px] bg-gold mt-[27px] mb-[15px]" />
 
-          <div className="flex gap-1.5 items-center">
-            <span className="text-gold text-sm font-inter leading-[17px]">COMPARTILHAR:</span>
+          <div className="flex gap-3 items-center">
+            <span className="text-gold text-sm font-inter leading-[17px] font-medium">COMPARTILHAR:</span>
 
             <ul className="flex gap-5 items-center">
               <li>

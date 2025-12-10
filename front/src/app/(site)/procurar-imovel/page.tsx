@@ -30,13 +30,13 @@ export default async function AnunciarImovel() {
         <div className="container !mt-[20px]">
           <header className="text-center mb-[94px]">
             <h2
-              className="text-gold text-[30px] md:text-[38px] font-montserrat tracking-[-0.95px] font-normal leading-[35px] md:leading-[47px] mb-[5px]"
+              className="text-gold text-[30px] md:text-[36px] font-montserrat font-light leading-[35px] md:leading-[47px]"
             >
-              O imóvel dos seus sonhos <strong className="font-semibold">mais perto de você</strong>
+              O imóvel dos seus sonhos <strong className="font-medium">mais perto de você</strong>
             </h2>
 
             <h4
-              className="text-[19px] md:text-[22px] font-semibold text-title leading-[22px] md:leading-[27px] font-montserrat"
+              className="text-[19px] md:text-[22px] font-medium text-title leading-[22px] md:leading-[27px] font-montserrat"
             >
               Veja como é fácil buscar o seu futuro imóvel com a Úniko
             </h4>
@@ -83,13 +83,13 @@ export default async function AnunciarImovel() {
           <div className="container">
             <header className="text-center mb-[30px]">
               <h2
-                className="text-gold text-[30px] md:text-[38px] font-montserrat tracking-[-0.95px] font-normal leading-[35px] md:leading-[47px] mb-[5px]"
+                className="text-gold text-[30px] md:text-[38px] font-montserrat font-light leading-[35px] md:leading-[47px]"
               >
-                Quero encontrar um imóvel <strong className="font-semibold">Úniko</strong>
+                Quero encontrar um imóvel <strong className="font-medium">Úniko</strong>
               </h2>
 
               <h4
-                className="text-[19px] md:text-[22px] font-semibold text-title leading-[22px] md:leading-[27px] font-montserrat"
+                className="text-[19px] md:text-[22px] font-medium text-title leading-[22px] md:leading-[27px] font-montserrat"
               >
                 Nos conte os detalhes do imóvel dos seus sonhos
               </h4>

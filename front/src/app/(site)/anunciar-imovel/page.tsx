@@ -32,13 +32,13 @@ export default async function AnunciarImovel() {
         <div className="container !mt-[20px]">
           <header className="text-center mb-[94px]">
             <h2
-              className="text-gold text-[30px] md:text-[38px] font-montserrat tracking-[-0.95px] font-normal leading-[35px] md:leading-[47px] mb-[5px]"
+              className="text-gold text-[30px] md:text-[36px] font-montserrat font-light leading-[35px] md:leading-[47px]"
             >
-              Na <strong className="font-semibold">Úniko</strong> seu imóvel é diferenciado!
+              Na <strong className="font-medium">Úniko</strong> seu imóvel é diferenciado!
             </h2>
 
             <h4
-              className="text-[19px] md:text-[22px] font-semibold text-title leading-[22px] md:leading-[27px] font-montserrat"
+              className="text-[19px] md:text-[22px] font-medium text-title leading-[22px] md:leading-[27px] font-montserrat"
             >
               Conheças as vantagens de anunciar seu imóvel na Úniko
             </h4>
@@ -90,13 +90,13 @@ export default async function AnunciarImovel() {
           <div className="container">
             <header className="text-center mb-[30px]">
               <h2
-                className="text-gold text-[30px] md:text-[38px] font-montserrat tracking-[-0.95px] font-normal leading-[35px] md:leading-[47px] mb-[5px]"
+                className="text-gold text-[30px] md:text-[36px] font-montserrat font-light leading-[35px] md:leading-[47px]"
               >
-                Quero anunciar meu imóvel na <strong className="font-semibold">Úniko!</strong>
+                Quero anunciar meu imóvel na <strong className="font-medium">Úniko!</strong>
               </h2>
 
               <h4
-                className="text-[19px] md:text-[22px] font-semibold text-title leading-[22px] md:leading-[27px] font-montserrat"
+                className="text-[19px] md:text-[22px] font-medium text-title leading-[22px] md:leading-[27px] font-montserrat"
               >
                 Anuncie seu imóvel conosco e tenha maior destaque na região.
               </h4>

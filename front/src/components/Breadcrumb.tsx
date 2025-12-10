@@ -76,7 +76,7 @@ export function Breadcrumb({ title }: BreadcrumbProps) {
       >
         <div className="container py-[10px]">
           <h1
-            className="text-[30px] md:text-[38px] font-montserrat text-white font-normal tracking-[-0.95px] leading-[40px] md:leading-[47px] text-center"
+            className="text-[30px] md:text-[36px] font-montserrat text-white font-light leading-[40px] md:leading-[47px] text-center"
           >
             {title}
           </h1>

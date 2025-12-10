@@ -31,8 +31,8 @@ export function CardPost({ post, className, type }: CardPostProps) {
             className="rounded-[0_20px_20px_20px] h-[282px] w-full object-cover object-center"
           />
           <header className="mt-[9px]">
-            <span className="font-inter text-[14px] text-title font-normal uppercase">{category}</span>
-            <h2 className="font-montserrat text-gold text-[22px] leading-[26px] font-semibold mt-1 mb-[10px]">
+            <span className="font-inter text-[14px] text-title font-medium uppercase">{category}</span>
+            <h2 className="font-montserrat text-gold text-[22px] leading-[26px] font-medium mb-[10px]">
               {post.name}
             </h2>
           </header>

@@ -75,7 +75,7 @@ export function SearchHome() {
 
           <div className="bg-black/65 md:px-[50px] md:py-[30px] md:rounded-[0px_20px_20px_0px] flex-1">
             <Tabs defaultValue="comprar" className="gap-0">
-              <TabsList className="search-tablist">
+              <TabsList className="search-tablist mb-[2px]">
                 <TabsTrigger value="comprar" className="search-tab">Comprar</TabsTrigger>
                 <TabsTrigger value="alugar" className="search-tab">Alugar</TabsTrigger>
                 <TabsTrigger value="lancamentos" className="search-tab">Lançamentos</TabsTrigger>

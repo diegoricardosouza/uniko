@@ -15,7 +15,7 @@ export function CardProcess({ title, subtitle, description, imageUrl, linkButton
   return (
     <article className="pr-[10xp] flex flex-col md:flex-row gap-5 relative">
       <div className="w-full md:max-w-[320px] bg-black rounded-[20px_20px_0px_20px] absolute top-0 left-0 p-5 z-10">
-        <span className="text-white font-inter text-[14px] font-normal leading-[19px] mb-[5px]">
+        <span className="text-white font-inter text-[14px] font-medium leading-[19px] mb-[2px]">
           {subtitle}
         </span>
         <p className="text-gold font-montserrat font-semibold text-[22px] leading-[26px]">

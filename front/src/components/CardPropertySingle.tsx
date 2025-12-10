@@ -38,17 +38,17 @@ export function CardPropertySingle({ property, type = 'simple' }: CardPropertySi
           />
         </div>
 
-        <span className="font-inter text-sm font-normal leading-[17px] text-title block uppercase">
+        <span className="font-inter text-sm font-medium leading-[18px] text-title block uppercase">
           {category}
         </span>
 
         <header>
-          <h2 className="text-gold font-montserrat text-[22px] leading-[26px] mb-[5px]">
+          <h2 className="text-gold font-montserrat text-[22px] leading-[26px] font-light mb-[5px]">
             {property.TituloSite}
           </h2>
         </header>
 
-        <p className="font-inter text-content text-[17px] leading-[25px]">
+        <p className="font-inter text-content text-[17px] leading-[22px]">
           <strong className="font-semibold">{property.Bairro}</strong>, {city}/{property.UF}<br />
           <strong className="font-semibold">{property.AreaPrivativa} m²</strong> de Área Privativa 
           {Number(property.Dormitorios) > 0 && ` | ${property.Dormitorios} Dormitórios`}

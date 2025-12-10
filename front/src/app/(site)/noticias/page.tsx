@@ -39,9 +39,9 @@ export default async function Noticias({ searchParams }: NoticiasProps) {
         <section className="container !mt-5">
           <header className="text-center mb-[30px]">
             <h2
-              className="text-gold text-[30px] md:text-[38px] font-montserrat tracking-[-0.95px] font-normal leading-[35px] md:leading-[47px] mb-[5px]"
+              className="text-gold text-[30px] md:text-[36px] font-montserrat font-light leading-[35px] md:leading-[47px]"
             >
-              As novidades mais recentes <strong className="font-semibold">estão aqui!</strong>
+              As novidades mais recentes <strong className="font-medium">estão aqui!</strong>
             </h2>
           </header>
 

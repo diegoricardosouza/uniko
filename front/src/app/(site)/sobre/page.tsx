@@ -24,13 +24,13 @@ export default function Sobre() {
         <div className="container !mt-[20px]">
           <header className="text-center mb-[30px]">
             <h2
-              className="text-gold text-[30px] md:text-[38px] font-montserrat tracking-[-0.95px] font-normal leading-[35px] md:leading-[47px] mb-[5px]"
+              className="text-gold text-[30px] md:text-[36px] font-montserrat font-light leading-[35px] md:leading-[47px]"
             >
-              Na <strong className="font-semibold">Úniko</strong> seu imóvel é diferenciado!
+              Na <strong className="font-medium">Úniko</strong> seu imóvel é diferenciado!
             </h2>
 
             <h4
-              className="text-[19px] md:text-[22px] font-semibold text-title leading-[22px] md:leading-[27px] font-montserrat"
+              className="text-[19px] md:text-[22px] font-medium text-title leading-[22px] md:leading-[29px] font-montserrat"
             >
               Conheças as vantagens de anunciar seu imóvel na Úniko
             </h4>
@@ -64,13 +64,13 @@ export default function Sobre() {
           <div className="mt-10">
             <header className="text-center mb-[30px]">
               <h2
-                className="text-gold text-[30px] md:text-[38px] font-montserrat tracking-[-0.95px] font-normal leading-[35px] md:leading-[47px] mb-[5px]"
+                className="text-gold text-[30px] md:text-[36px] font-montserrat font-light leading-[35px] md:leading-[47px]"
               >
-                Nossa filial em <strong className="font-semibold">Belo Horizonte</strong>
+                Nossa filial em <strong className="font-medium">Belo Horizonte</strong>
               </h2>
 
               <h4
-                className="text-[19px] md:text-[22px] font-semibold text-title leading-[22px] md:leading-[27px] font-montserrat"
+                className="text-[19px] md:text-[22px] font-medium text-title leading-[22px] md:leading-[29px] font-montserrat"
               >
                 BH conta com o perfil inovador e diferenciado de nossos especialistas no mercado imobiliário
               </h4>

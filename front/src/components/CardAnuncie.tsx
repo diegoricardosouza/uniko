@@ -21,7 +21,7 @@ export function CardAnuncie({ icon, title, content, classname }: CardAnuncieProp
       </div>
 
       <header className="text-center mt-[15px] font-montserrat">
-        <h2 className="text-gold text-[22px] font-semibold leading-[27px]">
+        <h2 className="text-gold text-[22px] font-medium leading-[27px]">
           {title}
         </h2>
 

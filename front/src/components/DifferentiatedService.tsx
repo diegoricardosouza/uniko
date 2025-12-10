@@ -6,13 +6,13 @@ export function DifferentiatedService() {
     <article className="bg-black py-[50px]">
       <div className="container md:flex gap-[100px] items-center">
         <div className="w-full md:max-w-[300px] mb-3 md:mb-0">
-          <h2 className="text-gold text-[30px] md:text-[38px] font-montserrat tracking-[-0.95px] font-normal leading-[35px] md:leading-[42px] mb-[5px]">
-            Atendimento Diferenciado e <strong className="font-semibold">Personalizado</strong>
+          <h2 className="text-gold text-[30px] md:text-[38px] font-montserrat font-light leading-[35px] md:leading-[40px] mb-[5px] md:mb-0">
+            Atendimento Diferenciado e <strong className="font-medium">Personalizado</strong>
           </h2>
         </div>
 
         <div className="flex-1">
-          <p className="text-white font-montserrat leading-[22px] ">As unidades da Úniko <strong className="font-semibold">Negócios Imobiliários</strong> abrigam talentosas equipes de profissionais especialistas em interpretar de maneira clara e objetiva o que o cliente deseja, através de um atendimento diferenciado e personalizado.</p>
+          <p className="text-white font-montserrat text-[18px] leading-[22px] ">As unidades da Úniko <strong className="font-semibold">Negócios Imobiliários</strong> abrigam talentosas equipes de profissionais especialistas em interpretar de maneira clara e objetiva o que o cliente deseja, através de um atendimento diferenciado e personalizado.</p>
 
           <div className="flex gap-[30px] mt-5">
             <Link href="/contato" className="button-geral hover:!bg-gold">
