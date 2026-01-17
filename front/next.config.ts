@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "uniko-delta.vercel.app",
+        hostname: "uniko.dev2.lpt4.com.br",
         pathname: "/uploads/**", // path configurado aqui
       },
       {
