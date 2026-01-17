@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   experimental: {
     serverActions: {
-      bodySizeLimit: '100mb',
+      bodySizeLimit: "100mb",
     },
   },
   images: {
@@ -13,6 +13,11 @@ const nextConfig: NextConfig = {
         protocol: "http",
         hostname: "localhost",
         port: "3000", // porta configurada aqui
+        pathname: "/uploads/**", // path configurado aqui
+      },
+      {
+        protocol: "https",
+        hostname: "uniko-delta.vercel.app",
         pathname: "/uploads/**", // path configurado aqui
       },
       {
