@@ -1,47 +1,69 @@
+import { ComboBox } from "@/components/ComboBox";
 import { Search } from "@/components/icons/Search";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { prices } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 
 interface FormTabProps {
-  type: "comprar" | "alugar" | "lancamentos"
+  type: "comprar" | "alugar" | "lancamentos";
 }
 
 type CitiesResponse = {
   Cidade: string[];
-}
+};
+
+type NeighborhoodResponse = {
+  Bairro: string[];
+};
 
 type CategoriesResponse = {
   Categoria: string[];
-}
+};
 
 const searchSchema = z.object({
   city: z.string().optional(),
+  neighborhood: z.string().optional(),
   categoria: z.string().optional(),
   codigo: z.string().optional(),
-  endereco: z.string().optional()
-})
+  prices: z.string().optional(),
+});
 
-type FormData = z.infer<typeof searchSchema>
+type FormData = z.infer<typeof searchSchema>;
 
 export function FormTab({ type }: FormTabProps) {
   const [isLoadingCities, setIsLoadingCities] = useState(false);
+  const [isLoadingNeighborhood, setIsLoadingNeighborhood] = useState(false);
   const [isLoadingCategories, setIsLoadingCategories] = useState(false);
   const [cities, setCities] = useState<CitiesResponse | null>(null);
+  const [neighborhood, setNeighborhood] = useState<NeighborhoodResponse | null>(
+    null,
+  );
   const [categories, setCategories] = useState<CategoriesResponse | null>(null);
 
   useEffect(() => {
     const fetchCities = async () => {
       setIsLoadingCities(true);
       try {
-        const response = await fetch('/api/cities');
+        const response = await fetch("/api/cities");
 
         if (!response.ok) {
           throw new Error(`Erro na API: ${response.status}`);
@@ -50,20 +72,42 @@ export function FormTab({ type }: FormTabProps) {
         const data = await response.json();
         setCities(data);
       } catch (error) {
-        console.error('Erro ao buscar cidades:', error);
+        console.error("Erro ao buscar cidades:", error);
       } finally {
         setIsLoadingCities(false);
       }
-    }
+    };
 
     fetchCities();
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    const fetchNeighborhood = async () => {
+      setIsLoadingNeighborhood(true);
+      try {
+        const response = await fetch("/api/neighborhood");
+
+        if (!response.ok) {
+          throw new Error(`Erro na API: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setNeighborhood(data);
+      } catch (error) {
+        console.error("Erro ao buscar bairros:", error);
+      } finally {
+        setIsLoadingNeighborhood(false);
+      }
+    };
+
+    fetchNeighborhood();
+  }, []);
 
   useEffect(() => {
     const fetchCategories = async () => {
       setIsLoadingCategories(true);
       try {
-        const response = await fetch('/api/categories');
+        const response = await fetch("/api/categories");
 
         if (!response.ok) {
           throw new Error(`Erro na API: ${response.status}`);
@@ -72,72 +116,74 @@ export function FormTab({ type }: FormTabProps) {
         const data = await response.json();
         setCategories(data);
       } catch (error) {
-        console.error('Erro ao buscar categorias:', error);
+        console.error("Erro ao buscar categorias:", error);
       } finally {
         setIsLoadingCategories(false);
       }
-    }
+    };
 
     fetchCategories();
-  }, [])
-  
+  }, []);
+
   const form = useForm<FormData>({
     resolver: zodResolver(searchSchema),
     defaultValues: {
       city: "",
+      neighborhood: "",
       categoria: "",
       codigo: "",
-      endereco: "",
+      prices: "",
     },
-  })
+  });
 
   const handleSubmit = form.handleSubmit(async (data) => {
-    redirect(`/imoveis?city=${data.city}&type=${data.categoria}&codigo=${data.codigo}&endereco=${data.endereco}&finalidade=${type}`);
-  })
+    redirect(
+      `/imoveis?city=${data.city}&bairro=${data.neighborhood}&type=${data.categoria}&codigo=${data.codigo}&price=${data.prices}&finalidade=${type}`,
+    );
+  });
 
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit} className="form-contato form-contato2 relative bg-white">
-        <div className="flex py-[5px]">
+      <form
+        onSubmit={handleSubmit}
+        className="form-contato form-contato2 relative bg-white"
+      >
+        <div className="md:flex py-[5px]">
           <FormField
             control={form.control}
             name="city"
             render={({ field }) => (
-              <FormItem className="form-select2 border-r-[1px] w-full max-w-[200px] overflow-hidden">
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger className="w-full cursor-pointer">
-                      <div className="flex items-center gap-2">
-                        {isLoadingCities ? (
-                          <span className="flex text-[13px] items-center gap-2 text-content font-montserrat">
-                            <Loader2 className="!h-4 !w-4 animate-spin" />
-                            Cidades...
-                          </span>
-                        ) : (
-                          <>
-                            <SelectValue placeholder="Cidade" />
-                          </>
-                        )}
-                      </div>
-                    </SelectTrigger>
-                  </FormControl>
+              <FormItem className="form-select2 border-b-[1px] md:border-r-[1px] md:border-b-0 w-full md:max-w-[200px] overflow-hidden">
+                <ComboBox
+                  field={field}
+                  items={cities?.Cidade || []}
+                  isLoading={isLoadingCities}
+                  placeholder="Cidade"
+                  searchPlaceholder="Buscar cidade..."
+                  emptyMessage="Nenhuma cidade encontrado."
+                  loadingMessage="Cidades..."
+                  className="w-full"
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-                  {!isLoadingCities && (
-                    <SelectContent>
-                      {cities?.Cidade
-                        .filter(city => city.trim() !== "")
-                        .map((city, index) => (
-                          <SelectItem
-                            key={index}
-                            value={city}
-                            className="cursor-pointer font-montserrat"
-                          >
-                            {city}
-                          </SelectItem>
-                        ))}
-                    </SelectContent>
-                  )}
-                </Select>
+          <FormField
+            control={form.control}
+            name="neighborhood"
+            render={({ field }) => (
+              <FormItem className="form-select2 border-b-[1px] md:border-r-[1px] md:border-b-0 w-full md:max-w-[190px] overflow-hidden">
+                <ComboBox
+                  field={field}
+                  items={neighborhood?.Bairro || []}
+                  isLoading={isLoadingNeighborhood}
+                  placeholder="Bairro"
+                  searchPlaceholder="Buscar bairro..."
+                  emptyMessage="Nenhum bairro encontrado."
+                  loadingMessage="Bairros..."
+                  className="w-full"
+                />
                 <FormMessage />
               </FormItem>
             )}
@@ -147,41 +193,17 @@ export function FormTab({ type }: FormTabProps) {
             control={form.control}
             name="categoria"
             render={({ field }) => (
-              <FormItem className="form-select2 border-r-[1px] w-full max-w-[200px] overflow-hidden">
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger className="w-full cursor-pointer">
-                      <div className="flex items-center gap-2">
-                        {isLoadingCategories ? (
-                          <span className="flex text-[13px] items-center gap-2 text-content font-montserrat">
-                            <Loader2 className="!h-4 !w-4 animate-spin" />
-                            Categorias...
-                          </span>
-                        ) : (
-                          <>
-                            <SelectValue placeholder="Tipo do Imóvel" />
-                          </>
-                        )}
-                      </div>
-                    </SelectTrigger>
-                  </FormControl>
-
-                  {!isLoadingCategories && (
-                    <SelectContent>
-                      {categories?.Categoria
-                        .filter(city => city.trim() !== "")
-                        .map((city, index) => (
-                          <SelectItem
-                            key={index}
-                            value={city}
-                            className="cursor-pointer font-montserrat"
-                          >
-                            {city}
-                          </SelectItem>
-                        ))}
-                    </SelectContent>
-                  )}
-                </Select>
+              <FormItem className="form-select2 border-b-[1px] md:border-r-[1px] md:border-b-0 w-full md:max-w-[200px] overflow-hidden">
+                <ComboBox
+                  field={field}
+                  items={categories?.Categoria || []}
+                  isLoading={isLoadingCategories}
+                  placeholder="Categoria"
+                  searchPlaceholder="Buscar categoria..."
+                  emptyMessage="Nenhuma categoria encontrada."
+                  loadingMessage="Categorias..."
+                  className="w-full"
+                />
                 <FormMessage />
               </FormItem>
             )}
@@ -191,7 +213,7 @@ export function FormTab({ type }: FormTabProps) {
             control={form.control}
             name="codigo"
             render={({ field }) => (
-              <FormItem className="border-r-[1px] w-full max-w-[130px] overflow-hidden">
+              <FormItem className="border-b-[1px] md:border-r-[1px] md:border-b-0 w-full md:max-w-[100px] overflow-hidden">
                 <FormControl>
                   <Input placeholder="Código" {...field} />
                 </FormControl>
@@ -202,22 +224,44 @@ export function FormTab({ type }: FormTabProps) {
 
           <FormField
             control={form.control}
-            name="endereco"
+            name="prices"
             render={({ field }) => (
-              <FormItem className="border-r-[1px] w-full overflow-hidden pr-[40px]">
-                <FormControl>
-                  <Input placeholder="Endereço" {...field} className="focus-visible:ring-0" />
-                </FormControl>
+              <FormItem className="form-select2 md:border-r-[1px] w-full md:max-w-[200px] overflow-hidden">
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger className="w-full cursor-pointer">
+                      <SelectValue placeholder="Preço" />
+                    </SelectTrigger>
+                  </FormControl>
+
+                  <SelectContent>
+                    {prices.map((price, index) => (
+                      <SelectItem
+                        key={index}
+                        value={price.value}
+                        className="cursor-pointer font-montserrat"
+                      >
+                        {price.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
 
-        <Button type="submit" className="!p-0 bg-gold shadow-none hover:bg-black absolute top-1/2 -translate-y-1/2 right-3 !py-[10px] !px-[7px]">
-          <Search className="!w-[22px] !h-[22px] hidden md:block !text-white" />
+        <Button
+          type="submit"
+          className="!p-0 bg-gold shadow-none hover:bg-black md:absolute md:top-1/2 md:-translate-y-1/2 md:right-3 !py-[10px] !px-[7px] w-full md:w-auto"
+        >
+          <Search className="!w-[22px] !h-[22px] md:block !text-white" />
         </Button>
       </form>
     </Form>
-  )
+  );
 }

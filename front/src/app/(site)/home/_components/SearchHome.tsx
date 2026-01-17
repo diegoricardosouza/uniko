@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-'use client';
+"use client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
@@ -7,7 +7,7 @@ import { FormTab } from "./FormTab";
 
 export function SearchHome() {
   const playerRef = useRef<HTMLDivElement>(null);
-  
+
   useEffect(() => {
     const initPlayer = () => {
       if (playerRef.current && window.YT && window.YT.Player) {
@@ -40,7 +40,9 @@ export function SearchHome() {
       initPlayer();
     } else {
       // API não está carregada, verifica se o script já existe
-      const existingScript = document.querySelector('script[src="https://www.youtube.com/iframe_api"]');
+      const existingScript = document.querySelector(
+        'script[src="https://www.youtube.com/iframe_api"]',
+      );
 
       if (!existingScript) {
         // Cria o script apenas se não existir
@@ -60,25 +62,31 @@ export function SearchHome() {
   }, []);
 
   return (
-    <div className="relative h-[300px] md:h-[640px] overflow-hidden">
+    <div className="relative h-[500px] md:h-[640px] overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-full bg-black/45 flex items-center z-10">
         <div className="container flex flex-col md:flex-row">
-          <div className="bg-black/90 p-[20px] md:p-[50px] md:rounded-[20px_0px_0px_20px]">
-            <Image 
+          <div className="bg-black/90 p-[20px] md:py-[55px] md:px-[25px] md:rounded-[20px_0px_0px_20px]">
+            <Image
               src="/logo.png"
-              width={180}
-              height={60}
+              width={149}
+              height={50}
               alt="Logo Úniko Imóveis"
               className="mx-auto"
             />
           </div>
 
-          <div className="bg-black/65 md:px-[50px] md:py-[30px] md:rounded-[0px_20px_20px_0px] flex-1">
+          <div className="bg-black/65 md:px-[25px] md:py-[30px] md:rounded-[0px_20px_20px_0px] flex-1">
             <Tabs defaultValue="comprar" className="gap-0">
               <TabsList className="search-tablist mb-[2px]">
-                <TabsTrigger value="comprar" className="search-tab">Comprar</TabsTrigger>
-                <TabsTrigger value="alugar" className="search-tab">Alugar</TabsTrigger>
-                <TabsTrigger value="lancamentos" className="search-tab">Lançamentos</TabsTrigger>
+                <TabsTrigger value="comprar" className="search-tab">
+                  Comprar
+                </TabsTrigger>
+                <TabsTrigger value="alugar" className="search-tab">
+                  Alugar
+                </TabsTrigger>
+                <TabsTrigger value="lancamentos" className="search-tab">
+                  Lançamentos
+                </TabsTrigger>
               </TabsList>
               <TabsContent value="comprar">
                 <FormTab type="comprar" />
@@ -93,7 +101,7 @@ export function SearchHome() {
           </div>
         </div>
       </div>
-      
+
       <div className="relative w-screen h-screen overflow-hidden">
         <div
           ref={playerRef}
@@ -101,5 +109,5 @@ export function SearchHome() {
         />
       </div>
     </div>
-  )
+  );
 }

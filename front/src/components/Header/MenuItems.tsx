@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-'use client'
+"use client";
 
 import { MenuItem } from "@/config/menu";
 import { cn } from "@/lib/utils";
@@ -26,8 +26,8 @@ const MenuItems = ({ items, depthLevel }: MenuItemsProps) => {
 
     try {
       // Parse da URL do menu
-      if (href.startsWith('/')) {
-        const [menuPath, menuQuery] = href.split('?');
+      if (href.startsWith("/")) {
+        const [menuPath, menuQuery] = href.split("?");
 
         // Verifica se o pathname é igual
         if (menuPath !== pathname) return false;
@@ -48,6 +48,7 @@ const MenuItems = ({ items, depthLevel }: MenuItemsProps) => {
 
       // Fallback para URLs absolutas (caso existam)
       return href === pathname;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       // Fallback para comparação simples se a URL for inválida
       return href === pathname;
@@ -56,7 +57,7 @@ const MenuItems = ({ items, depthLevel }: MenuItemsProps) => {
 
   // Função para verificar se algum item do submenu está ativo
   const hasActiveSubmenu = (submenu: MenuItem[]): boolean => {
-    return submenu.some(item => {
+    return submenu.some((item) => {
       if (isUrlActive(item.href)) return true;
       if (item.submenu) return hasActiveSubmenu(item.submenu);
       return false;
@@ -65,26 +66,31 @@ const MenuItems = ({ items, depthLevel }: MenuItemsProps) => {
 
   // Função para verificar se este menu está relacionado à cidade atual
   const isCityMenuActive = (): boolean => {
-    const currentCity = searchParams.get('city');
+    const currentCity = searchParams.get("city")?.toLowerCase();
     if (!currentCity) return false;
 
     // Mapeamento de cidades para labels do menu
     const cityLabels: { [key: string]: string } = {
-      'curitiba': 'Curitiba',
-      'belo-horizonte': 'Belo Horizonte'
+      curitiba: "Curitiba",
+      "belo-horizonte": "Belo Horizonte",
     };
 
     return cityLabels[currentCity] === items.label;
   };
 
   // Verifica se este menu ou algum submenu está ativo
-  const isActive = isUrlActive(items.href) ||
+  const isActive =
+    isUrlActive(items.href) ||
     (items.submenu && hasActiveSubmenu(items.submenu)) ||
     isCityMenuActive();
 
   useEffect(() => {
     const handler = (event: MouseEvent | TouchEvent) => {
-      if (dropdown && ref.current && !ref.current.contains(event.target as Node)) {
+      if (
+        dropdown &&
+        ref.current &&
+        !ref.current.contains(event.target as Node)
+      ) {
         setDropdown(false);
       }
     };
@@ -114,39 +120,56 @@ const MenuItems = ({ items, depthLevel }: MenuItemsProps) => {
 
   return (
     <li
-      className={
-        cn(
-          'menu-items',
-          isActive && 'menuActive',
-          dropdown && "bg-[#C5AF62]"
-        )
-      }
+      className={cn(
+        "menu-items",
+        isActive && "menuActive",
+        dropdown && "bg-[#C5AF62]",
+      )}
       ref={ref}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      onClick={closeDropdown}>
+      onClick={closeDropdown}
+    >
       {items.href && items.submenu ? (
         <>
           <button
             type="button"
             aria-haspopup="menu"
             aria-expanded={dropdown ? "true" : "false"}
-            onClick={() => toggleDropdown()}>
+            onClick={() => toggleDropdown()}
+          >
             <Link href={items.href}>{items.label}</Link>
-            {depthLevel > 0 ? <MdKeyboardArrowDown size={21} /> : <MdKeyboardArrowDown size={23} />}
+            {depthLevel > 0 ? (
+              <MdKeyboardArrowDown size={21} />
+            ) : (
+              <MdKeyboardArrowDown size={23} />
+            )}
           </button>
-          <Dropdown depthLevel={depthLevel} submenus={items.submenu} dropdown={dropdown} />
+          <Dropdown
+            depthLevel={depthLevel}
+            submenus={items.submenu}
+            dropdown={dropdown}
+          />
         </>
       ) : !items.href && items.submenu ? (
         <>
           <button
             type="button"
             aria-haspopup="menu"
-            aria-expanded={dropdown ? "true" : "false"}>
+            aria-expanded={dropdown ? "true" : "false"}
+          >
             {items.label}
-            {depthLevel > 0 ? <MdKeyboardArrowDown size={21} /> : <MdKeyboardArrowDown size={23} />}
+            {depthLevel > 0 ? (
+              <MdKeyboardArrowDown size={21} />
+            ) : (
+              <MdKeyboardArrowDown size={23} />
+            )}
           </button>
-          <Dropdown depthLevel={depthLevel} submenus={items.submenu} dropdown={dropdown} />
+          <Dropdown
+            depthLevel={depthLevel}
+            submenus={items.submenu}
+            dropdown={dropdown}
+          />
         </>
       ) : (
         <Link href={items.href} className="!flex justify-between">
