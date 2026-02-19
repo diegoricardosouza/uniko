@@ -1,0 +1,34 @@
+export function mapperWords(word: string) {
+  const mapper: Record<string, string> = {
+    "Area Servico": "Área Serviço",
+    "Armario Embutido": "Armário Embutido",
+    "Dormitorio Com Armario": "Dormitório Com Armário",
+    "Sala Jantar": "Sala de Jantar",
+    "Bicicletario": "Bicicletário",
+    "Elevador Servico": "Elevador de Serviço",
+    "Espaco Gourmet": "Espaço Gourmet",
+    "Portaria24 Hrs": "Portaria 24Hrs",
+    "Salao Festas": "Salão de Festas",
+    "Tubulacao": "Tubulação",
+    "Escritorio": "Escritório",
+    "Sala Armarios": "Sala Armários",
+    "Churrasqueira Condominio": "Churrasqueira Condomínio",
+    "Condominio Fechado": "Condomínio Fechado",
+    "Deposito": "Depósito",
+    "Entrada Servico Independente": "Entrada de Serviço Independente",
+    "Gas Central": "Gás Central",
+    "Porteiro Eletronico": "Porteiro Eletrônico",
+    "Salao Jogos": "Salão de Jogos",
+    "Seguranca Patrimonial": "Segurança Patrimonial",
+    "Vigilancia24 Horas": "Vigilância 24 Horas",
+    "Suite Master": "Suíte Master",
+    "Terraco": "Terraço",
+    "Vista Panoramica": "Vista Panorâmica",
+    "Sala De Recepcao": "Sala de Recepção",
+    "Terraco Coletivo": "Terraço Coletivo",
+    "Sauna Condominio": "Sauna Condomínio",
+    "Agua Quente": "Água Quente",
+  };
+
+  return mapper[word] ?? word;
+}

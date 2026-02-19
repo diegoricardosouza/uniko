@@ -200,7 +200,7 @@ export function SearchProperty() {
   });
 
   // Remova o console.log(currentPrice) e adicione este para debugar:
-  console.log("currentPrice:", currentPrice, "tipo:", typeof currentPrice);
+  // console.log("currentPrice:", currentPrice, "tipo:", typeof currentPrice);
 
   return (
     <div className="container !mt-[20px] flex justify-between items-center">

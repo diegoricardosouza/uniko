@@ -9,6 +9,7 @@ import { ParkingSpace } from "@/components/icons/ParkingSpace"
 import { PrivateArea } from "@/components/icons/PrivateArea"
 import { TotalArea } from "@/components/icons/TotalArea"
 import { PropertyVistaList } from "@/entities/PropertyVista"
+import { mapperWords } from "@/lib/mapperWords"
 import { useEffect, useState } from "react"
 import { FaWhatsapp } from "react-icons/fa"
 import { LuArrowRight } from "react-icons/lu"
@@ -105,49 +106,57 @@ export function ContentProperty({ property }: ContentPropertyProps) {
 
         <hr className="border-0 w-full m-0 h-[1px] bg-gold mt-[5px] mb-[30px]" />
 
-        <div>
-          <h3 className="font-montserrat text-[25px] text-gold leading-[30px] mb-[10px]">
-            Outras <strong className="font-medium">Características</strong>
-          </h3>
+        {(() => {
+          const caracteristicas = Object.entries(property.Caracteristicas).filter(
+            ([_, value]) => value && value !== "Nao" && value !== "0"
+          );
 
-          <div className="flex flex-wrap gap-[15px]">
-            {Object.entries(property.Caracteristicas)
-              .filter(([_, value]) => value && value !== "Nao" && value !== "0")
-              .map(([key, value]) => (
-                value === "Sim" && (
-                  <span
-                    className="bg-bggray px-3 md:px-[15px] py-[11px] md:py-[13px] text-sm md:text-[16px] font-inter text-title font-normal"
-                    key={key}
-                  >
-                    {key}
-                  </span>
-                )
-              ))}
-          </div>
-        </div>
+          if (caracteristicas.length === 0) return null;
 
-        <hr className="border-0 w-full m-0 h-[1px] bg-gold mt-[30px] mb-[30px]" />
+          return (
+            <>
+              <div>
+                <h3 className="font-montserrat text-[25px] text-gold leading-[30px] mb-[10px]">
+                  Outras <strong className="font-medium">Características</strong>
+                </h3>
+                <div className="flex flex-wrap gap-[15px]">
+                  {caracteristicas.map(([key, value]) => (
+                    <span
+                      className="bg-bggray px-3 md:px-[15px] py-[11px] md:py-[13px] text-sm md:text-[16px] font-inter text-title font-normal"
+                      key={key}
+                    >
+                      {mapperWords(key)}{value !== "Sim" ? `: ${value}` : ""}
+                    </span>
+                  ))}
+                </div>
+              </div>
 
-        <div>
-          <h3 className="font-montserrat text-[25px] text-gold leading-[30px] mb-[10px]">
-            Infraestrutura do <strong className="font-medium">Condomínio</strong>
-          </h3>
+              <hr className="border-0 w-full m-0 h-[1px] bg-gold mt-[30px] mb-[30px]" />
+            </>
+          );
+        })()}
 
-          <div className="flex flex-wrap gap-[15px]">
-            {Object.entries(property.InfraEstrutura)
-              .filter(([_, value]) => value && value !== "Nao" && value !== "0")
-              .map(([key, value]) => (
-                value === "Sim" && (
-                  <span
-                    className="bg-bggray px-3 md:px-[15px] py-[11px] md:py-[13px] text-sm md:text-[16px] font-inter text-title font-normal"
-                    key={key}
-                  >
-                    {key}
-                  </span>
-                )
-              ))}
-          </div>
-        </div>
+        {property.InfraEstrutura && Object.entries(property.InfraEstrutura).some(
+          ([_, value]) => value && value !== "Nao" && value !== "0"
+        ) && (
+            <div>
+              <h3 className="font-montserrat text-[25px] text-gold leading-[30px] mb-[10px]">
+                Infraestrutura do <strong className="font-medium">Condomínio</strong>
+              </h3>
+              <div className="flex flex-wrap gap-[15px]">
+                {Object.entries(property.InfraEstrutura)
+                  .filter(([_, value]) => value && value !== "Nao" && value !== "0")
+                  .map(([key]) => (
+                    <span
+                      className="bg-bggray px-3 md:px-[15px] py-[11px] md:py-[13px] text-sm md:text-[16px] font-inter text-title font-normal"
+                      key={key}
+                    >
+                      {mapperWords(key)}
+                    </span>
+                  ))}
+              </div>
+            </div>
+          )}
       </div>
 
       <aside className="w-full max-w-[380px] md:mt-[-60px] relative z-10">
