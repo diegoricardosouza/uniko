@@ -28,6 +28,10 @@ export function mapperWords(word: string) {
     "Terraco Coletivo": "Terraço Coletivo",
     "Sauna Condominio": "Sauna Condomínio",
     "Agua Quente": "Água Quente",
+    "Estar Intimo": "Estar Íntimo",
+    "Sala T V": "Sala de TV",
+    "Canaletas No Rodape": "Canaletas no Rodapé",
+    "Circuito Fechado T V": "Circuito Fechado de TV",
   };
 
   return mapper[word] ?? word;
