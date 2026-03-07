@@ -34,7 +34,7 @@ export function ContentProperty({ property }: ContentPropertyProps) {
   // URLs de compartilhamento
   const shareTitle = encodeURIComponent(property.TituloSite || '')
   const shareDescription = encodeURIComponent(
-    `${property.TituloSite} - ${finalityText} por ${new Intl.NumberFormat('pt-BR', {
+    `${window.location.href}\n${property.TituloSite} - ${finalityText} por ${new Intl.NumberFormat('pt-BR', {
       style: 'currency',
       currency: 'BRL'
     }).format(Number(property.ValorVenda || property.ValorLocacao))}`
