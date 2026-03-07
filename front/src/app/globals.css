@@ -78,7 +78,7 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  --font-montserrat: 'Montserrat', sans-serif;
+  --font-montserrat: "Montserrat", sans-serif;
 }
 
 .dark {
@@ -116,13 +116,13 @@
 }
 
 @theme {
-  --font-montserrat: 'DM Sans', sans-serif;
-  --font-inter: 'DM Sans', sans-serif;
-  --font-dmsans: 'DM Sans', sans-serif;
-  --color-gold: #C5AF62;
+  --font-montserrat: "DM Sans", sans-serif;
+  --font-inter: "DM Sans", sans-serif;
+  --font-dmsans: "DM Sans", sans-serif;
+  --color-gold: #c5af62;
   --color-title: #343434;
   --color-content: #848484;
-  --color-bggray: #F1F0EB;
+  --color-bggray: #f1f0eb;
 }
 
 .font-montserrat {
@@ -138,45 +138,45 @@
 }
 
 .MenuItem::after {
-  content: '';
+  content: "";
   @apply w-full h-[5px] bg-transparent absolute left-0 bottom-0 transition-all;
 }
 
 .MenubarContent {
-  @apply bg-white w-[230px]
+  @apply bg-white w-[230px];
 }
 
 .MenubarItemSub {
-  @apply flex !justify-between w-full px-[15px] py-[10px] !text-[15px] font-medium !text-[#343434]
+  @apply flex !justify-between w-full px-[15px] py-[10px] !text-[15px] font-medium !text-[#343434];
 }
 
 .button-geral {
-  @apply py-[11px] px-[17px] md:py-[14px] md:px-[20px] bg-white text-[#343434] font-inter uppercase font-medium text-[13px] md:text-[14px] leading-[19px] inline-flex gap-[9px] transition-all items-center
+  @apply py-[11px] px-[17px] md:py-[14px] md:px-[20px] bg-white text-[#343434] font-inter uppercase font-medium text-[13px] md:text-[14px] leading-[19px] inline-flex gap-[9px] transition-all items-center;
 }
 
 .button-geral:hover {
-  @apply bg-black text-white
+  @apply bg-black text-white;
 }
 
 .content p {
-  @apply m-0 mb-[25px] text-[17px] text-content leading-[20px] font-inter font-normal
+  @apply m-0 mb-[25px] text-[17px] text-content leading-[20px] font-inter font-normal;
 }
 
 .content h2 {
-  @apply text-[25px] font-montserrat text-gold font-semibold leading-[30px] m-0 mb-[5px]
+  @apply text-[25px] font-montserrat text-gold font-semibold leading-[30px] m-0 mb-[5px];
 }
 
 .content h3 {
-  @apply text-gold text-[20px] font-montserrat leading-[24px] mb-[5px]
+  @apply text-gold text-[20px] font-montserrat leading-[24px] mb-[5px];
 }
 
 .content ul {
   list-style: inherit;
-  @apply m-0 text-[17px] text-content leading-6 font-inter font-light pl-5 mb-[30px] -mt-5
+  @apply m-0 text-[17px] text-content leading-6 font-inter font-light pl-5 mb-[30px] -mt-5;
 }
 
 .content.content-property ul {
-  @apply mt-0
+  @apply mt-0;
 }
 
 .content-property {
@@ -184,15 +184,15 @@
 }
 
 .content h2 {
-  @apply font-normal
+  @apply font-normal;
 }
 
 .content h2 strong {
-  @apply font-semibold
+  @apply font-semibold;
 }
 
 .content strong {
-  @apply !font-semibold
+  @apply !font-semibold;
 }
 
 .content ::marker {
@@ -200,202 +200,201 @@
 }
 
 .content h4 {
-  @apply text-[22px] font-montserrat text-gold font-medium leading-[27px] m-0 mb-[5px]
+  @apply text-[22px] font-montserrat text-gold font-medium leading-[27px] m-0 mb-[5px];
 }
 
 .content hr {
-  @apply border-0 mt-[30px] mb-[30px] w-full h-[1px] bg-gold
+  @apply border-0 mt-[30px] mb-[30px] w-full h-[1px] bg-gold;
 }
 
 .content table {
-  @apply !border-0
+  @apply !border-0;
 }
 
 .content table td {
-  @apply align-top
+  @apply align-top;
 }
 
 .content table tr td:nth-child(1) {
-  @apply !pr-[15px]
+  @apply !pr-[15px];
 }
 
 .content table tr td:nth-child(2) {
-  @apply !pl-[15px]
+  @apply !pl-[15px];
 }
 
 .content strong {
-  @apply font-bold
+  @apply font-bold;
 }
 
 .box-sobre-missao {
-  @apply bg-bggray rounded-[0_20px_20px_20px] p-[0_30px_30px_30px]
+  @apply bg-bggray rounded-[0_20px_20px_20px] p-[0_30px_30px_30px];
 }
 
 .box-sobre-missao .title {
-  @apply bg-gold rounded-[0_20px_20px_20px] text-[22px] font-medium font-montserrat leading-[27px] w-full max-w-[160px] py-[15px] text-white text-center mx-auto mt-[-28px] mb-5
+  @apply bg-gold rounded-[0_20px_20px_20px] text-[22px] font-medium font-montserrat leading-[27px] w-full max-w-[160px] py-[15px] text-white text-center mx-auto mt-[-28px] mb-5;
 }
 
 .box-sobre-missao p {
-  @apply m-0 text-[17px] text-content leading-[20px] font-inter font-normal text-center
+  @apply m-0 text-[17px] text-content leading-[20px] font-inter font-normal text-center;
 }
 
 .title-card {
-  @apply text-white text-[24px] font-montserrat font-semibold
+  @apply text-white text-[24px] font-montserrat font-semibold;
 }
 
 .title-card strong {
-  @apply font-semibold
+  @apply font-semibold;
 }
 
 .breadcrumb-list {
-  @apply flex justify-center gap-[3px]
+  @apply flex justify-center gap-[3px];
 }
 
 .breadcrumb-list li {
-  @apply text-white font-inter font-normal text-[14px] leading-[19px]
+  @apply text-white font-inter font-normal text-[14px] leading-[19px];
 }
 
 .title-card-contato {
-  @apply text-[25px] font-montserrat font-light leading-[30px] text-gold text-center
+  @apply text-[25px] font-montserrat font-light leading-[30px] text-gold text-center;
 }
 
 .title-card-contato strong {
-  @apply font-medium
+  @apply font-medium;
 }
 
 .fone-card-items {
-  @apply my-[10px]
+  @apply my-[10px];
 }
 
 .fone-card-items span {
-  @apply block font-montserrat font-semibold text-[22px] leading-[26px] text-gold text-center
+  @apply block font-montserrat font-semibold text-[22px] leading-[26px] text-gold text-center;
 }
 
 .gm-style-iw-d {
-  @apply mt-[-30px]
+  @apply mt-[-30px];
 }
 
 .card-type-button {
-  @apply flex flex-col items-end
+  @apply flex flex-col items-end;
 }
 
 .card-type-button .card-title {
-  @apply w-full max-w-[181px] mx-auto bg-white flex gap-[5px] rounded-[10px_10px_10px_0px] h-[52px] items-center justify-center text-[18px] font-montserrat font-semibold text-title mt-[-25px] transition-all
+  @apply w-full max-w-[181px] mx-auto bg-white flex gap-[5px] rounded-[10px_10px_10px_0px] h-[52px] items-center justify-center text-[18px] font-montserrat font-semibold text-title mt-[-25px] transition-all;
 }
 
 .card-type-button:hover .card-title {
-  @apply bg-gold text-white
+  @apply bg-gold text-white;
 }
 
 .search-tablist {
-  @apply p-0 bg-transparent border-0
+  @apply p-0 bg-transparent border-0;
 }
 
 .search-tab {
-  @apply font-montserrat text-[14px] md:text-[18px] font-normal leading-[22px] rounded-none px-[15px] py-2 mr-[1px] bg-gold text-white hover:!bg-white hover:!text-title data-[state=active]:!bg-white data-[state=active]:!text-title
+  @apply font-montserrat text-[14px] md:text-[18px] font-normal leading-[22px] rounded-none px-[15px] py-2 mr-[1px] bg-gold text-white hover:!bg-white hover:!text-title data-[state=active]:!bg-white data-[state=active]:!text-title;
 }
 
 .property-types {
-  @apply flex justify-between mb-1
+  @apply flex justify-between mb-1;
 }
 
 .property-types span {
-  @apply uppercase font-inter text-[14px] text-title leading-[19px] font-medium
+  @apply uppercase font-inter text-[14px] text-title leading-[19px] font-medium;
 }
 
 .property-types span.delivery {
-  @apply text-content
+  @apply text-content;
 }
 
 .mySwiperProperty {
-  @apply h-full min-h-[282px]
+  @apply h-full min-h-[282px];
 }
 
 .mySwiperPropertyOverlay {
-  @apply w-full h-full bg-black/60 absolute top-0 left-0 z-10 flex flex-col items-center justify-center opacity-0 pointer-events-none transition-all
+  @apply w-full h-full bg-black/60 absolute top-0 left-0 z-10 flex flex-col items-center justify-center opacity-0 pointer-events-none transition-all;
 }
 
 .mySwiperPropertySlide {
-  @apply relative
+  @apply relative;
 }
 
 .mySwiperPropertySlide:hover .mySwiperPropertyOverlay {
-  @apply opacity-100
+  @apply opacity-100;
 }
 
 .filterProperty button {
-  @apply bg-white rounded-[5px] h-[37px] md:h-[46px] font-inter text-content text-[12px] md:text-[17px] font-normal px-[15px] border-[2px] border-[#DDDDDD] shadow-none
+  @apply bg-white rounded-[5px] h-[37px] md:h-[46px] font-inter text-content text-[12px] md:text-[17px] font-normal px-[15px] border-[2px] border-[#DDDDDD] shadow-none;
 }
 
 .filterProperty button svg {
-  @apply w-[20px] h-[20px]
+  @apply w-[20px] h-[20px];
 }
 
 .icon-social svg {
-  @apply w-[29px] h-[29px] text-[#343434] lg:text-white transition-all hover:text-[#C5AF62]
+  @apply w-[29px] h-[29px] text-[#343434] lg:text-white transition-all hover:text-[#C5AF62];
 }
-
 
 /* CONTATO */
 .form-contato input,
 .form-contato textarea {
-  @apply !border-0 !shadow-none bg-white rounded-none font-montserrat text-[14px] md:text-[18px] text-title font-normal leading-[22px] p-5 h-[50px] md:h-[62px]
+  @apply !border-0 !shadow-none bg-white rounded-none font-montserrat text-[14px] md:text-[18px] text-title font-normal leading-[22px] p-5 h-[50px] md:h-[62px];
 }
 
 .form-contato2 input {
-  @apply !border-0 !shadow-none bg-white rounded-none font-montserrat text-[14px] md:text-[16px] text-title font-normal leading-[20px] p-5 h-[45px] md:h-[50px]
+  @apply !border-0 !shadow-none bg-white rounded-none font-montserrat text-[14px] md:text-[16px] text-title font-normal leading-[20px] p-5 h-[45px] md:h-[50px];
 }
 
 .form-contato textarea {
-  @apply h-[134px]
+  @apply h-[134px];
 }
 
 .form-contato .form-select button {
-  @apply bg-white rounded-none h-[50px] md:h-[62px] font-montserrat text-content text-[14px] md:text-[18px] px-5 border-0 shadow-none
+  @apply bg-white rounded-none h-[50px] md:h-[62px] font-montserrat text-content text-[14px] md:text-[18px] px-5 border-0 shadow-none;
 }
 
 .form-contato .form-select2 button {
-  @apply bg-white rounded-none h-[45px] md:h-[50px] font-montserrat text-content text-[14px] md:text-[17px] px-5 border-0 shadow-none
+  @apply bg-white rounded-none h-[45px] md:h-[50px] font-montserrat text-content text-[14px] md:text-[17px] px-5 border-0 shadow-none;
 }
 
 .form-contato .form-select button svg {
-  @apply w-[25px] h-[25px]
+  @apply w-[25px] h-[25px];
 }
 
 .form-contato .form-select2 button svg {
-  @apply w-[25px] h-[25px] !text-gold
+  @apply w-[25px] h-[25px] !text-gold;
 }
 
 .form-label-accept {
-  @apply font-inter text-[15px] text-black leading-[20px] font-normal
+  @apply font-inter text-[15px] text-black leading-[20px] font-normal;
 }
 
 .form-button-submit {
-  @apply border-0 shadow-none rounded-none uppercase font-inter font-medium text-[14px] leading-[19px] py-[14px] px-[15px] flex gap-[14px] h-[47px] hover:!bg-gold items-center
+  @apply border-0 shadow-none rounded-none uppercase font-inter font-medium text-[14px] leading-[19px] py-[14px] px-[15px] flex gap-[14px] h-[47px] hover:!bg-gold items-center;
 }
 
 /* FOOTER */
 .footer-title_units {
-  @apply text-white text-[20px] font-normal leading-[24px] font-montserrat
+  @apply text-white text-[20px] font-normal leading-[24px] font-montserrat;
 }
 
 .footer-title_units strong {
-  @apply font-semibold
+  @apply font-semibold;
 }
 
 .footer-links h4 {
-  @apply font-montserrat text-[20px] font-semibold leading-[24px] text-gold mb-[5px]
+  @apply font-montserrat text-[20px] font-semibold leading-[24px] text-gold mb-[5px];
 }
 
 .footer-links a {
-  @apply font-inter text-[17px] leading-[24px] text-white font-light transition-all
+  @apply font-inter text-[17px] leading-[24px] text-white font-light transition-all;
 }
 
 .footer-links a:hover {
-  @apply text-gold
+  @apply text-gold;
 }
 
-@media(max-width: 767px) {
+@media (max-width: 767px) {
   .MenuItem::after {
     display: none;
   }

@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 import { LuMenu } from "react-icons/lu";
-import { Socials } from "../Socials";
+import { SocialInstagram } from "../SocialInstagram";
 import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from "../ui/sheet";
 import MenuItems from "./MenuItems";
 import { MenuMobile } from "./MenuMobile";
@@ -49,7 +49,7 @@ export function Header() {
             </ul>
           </nav>
           <div className="hidden lg:block">
-            <Socials />
+            <SocialInstagram />
           </div>
         </div>
       </div>
@@ -82,7 +82,7 @@ export function Header() {
               <Suspense fallback={<div>Carregando menu...</div>}>
                 <MenuMobile />
               </Suspense>
-              <Socials />
+              <SocialInstagram />
             </nav>
           </SheetContent>
         </Sheet>
