@@ -57,14 +57,16 @@ export async function generateMetadata({ params }: SinglePropertyProps): Promise
       openGraph: {
         title: data[0].TituloSite,
         description: data[0].DescricaoEmpreendimento,
-        images: featuredImage ? [`${process.env.NEXT_PUBLIC_API_URL}${featuredImage}`] : [],
+        // images: featuredImage ? [`${process.env.NEXT_PUBLIC_API_URL}${featuredImage}`] : [],
+        images: featuredImage ? [`${featuredImage}`] : [],
         type: 'article',
       },
       twitter: {
         card: 'summary_large_image',
         title: data[0].TituloSite,
         description: data[0].DescricaoEmpreendimento,
-        images: featuredImage ? [`${process.env.NEXT_PUBLIC_API_URL}${featuredImage}`] : [],
+        // images: featuredImage ? [`${process.env.NEXT_PUBLIC_API_URL}${featuredImage}`] : [],
+        images: featuredImage ? [`${featuredImage}`] : [],
       },
     };
   } catch (error) {
