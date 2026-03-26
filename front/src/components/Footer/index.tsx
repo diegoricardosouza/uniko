@@ -176,6 +176,7 @@ export async function Footer() {
                 height={30}
                 alt="Paraná"
                 title="Paraná"
+                unoptimized
               />
 
               <Image
@@ -184,6 +185,7 @@ export async function Footer() {
                 height={30}
                 alt="Minas Gerais"
                 title="Minas Gerais"
+                unoptimized
               />
             </div>
           </div>

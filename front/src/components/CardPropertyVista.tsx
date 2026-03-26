@@ -82,6 +82,7 @@ export function CardPropertyVista({ property }: CardPropertyProps) {
               height={846}
               alt={property.TituloSite}
               className="h-[282px] w-full object-cover object-center"
+              unoptimized
             />
           </SwiperSlide>
           {fotos?.map((media: PropertyVistaFoto, index) => (
@@ -96,6 +97,7 @@ export function CardPropertyVista({ property }: CardPropertyProps) {
                 width={752}
                 height={564}
                 alt={property.TituloSite}
+                unoptimized
                 className="h-[282px] w-full object-cover object-center"
               />
             </SwiperSlide>
