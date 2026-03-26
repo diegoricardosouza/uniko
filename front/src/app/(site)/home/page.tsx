@@ -166,6 +166,7 @@ export default async function Home() {
             alt="Úniko Imóveis"
             width={780}
             height={195}
+            unoptimized
           />
         </div>
       </main>

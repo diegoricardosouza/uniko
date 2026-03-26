@@ -53,6 +53,7 @@ export function CarouselImages({ property }: CarouselImagesProps) {
               alt={property.TituloSite}
               className="h-[300px] md:h-[500px] w-full object-cover object-center"
               data-lightboxjs={`lightbox-${property.Codigo}`}
+              unoptimized
             />
             <div
               className="w-full h-[80px] bg-gradient-to-t from-[#000000] to-[#54545400] absolute bottom-0 left-0 z-10"
@@ -74,6 +75,7 @@ export function CarouselImages({ property }: CarouselImagesProps) {
                 height={500}
                 alt={property.TituloSite}
                 className="h-[300px] md:h-[500px] w-full object-cover object-center"
+                unoptimized
               />
               <div
                 className="w-full h-[80px] bg-gradient-to-t from-[#000000] to-[#54545400] absolute bottom-0 left-0 z-10"

@@ -39,6 +39,7 @@ export function CardType({ image, position, title, content, width, height, link 
         alt={title}
         width={width}
         height={height}
+        unoptimized
       />
     </Link>
   )

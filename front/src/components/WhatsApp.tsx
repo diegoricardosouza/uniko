@@ -24,6 +24,7 @@ export function WhatsApp({ settings }: WhatsAppProps) {
               width={61}
               height={60}
               alt="WhatsApp"
+              unoptimized
             />
           </a>
         )

@@ -40,6 +40,7 @@ export function CardProcess({ title, subtitle, description, imageUrl, linkButton
           alt={title}
           width={357}
           height={300}
+          unoptimized
         />
       </div>
     </article>

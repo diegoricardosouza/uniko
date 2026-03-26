@@ -24,6 +24,7 @@ export function CardTypeHome({ className, title, imageUrl, link }: CardTypeHomeP
           alt={title}
           width={220}
           height={205}
+          unoptimized
         />
 
         <div className="card-title">

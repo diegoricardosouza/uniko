@@ -72,6 +72,7 @@ export function SearchHome() {
               height={50}
               alt="Logo Úniko Imóveis"
               className="mx-auto"
+              unoptimized
             />
           </div>
 

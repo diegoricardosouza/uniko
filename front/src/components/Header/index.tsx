@@ -34,6 +34,7 @@ export function Header() {
               height={60}
               alt="Logo Úniko"
               title="Logo Úniko"
+              unoptimized
             />
           </Link>
         </div>

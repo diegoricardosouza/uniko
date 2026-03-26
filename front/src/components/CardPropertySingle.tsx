@@ -35,6 +35,7 @@ export function CardPropertySingle({ property, type = 'simple' }: CardPropertySi
             height={846}
             alt={property.TituloSite}
             className="h-[282px] w-full object-cover object-center"
+            unoptimized
           />
         </div>
 

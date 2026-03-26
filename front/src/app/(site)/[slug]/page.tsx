@@ -151,6 +151,7 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
                     className="w-full h-auto"
                     priority
                     alt={post.name}
+                    unoptimized
                   />
                 </div>
 

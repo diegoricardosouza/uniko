@@ -17,6 +17,7 @@ export function HeaderYoutube({ title, description, linkYoutube }: HeaderYoutube
           height={150}
           alt="Logo Úniko"
           className="mx-auto"
+          unoptimized
         />
       </div>
 
@@ -40,6 +41,7 @@ export function HeaderYoutube({ title, description, linkYoutube }: HeaderYoutube
               height={47}
               alt="Botão YouTube"
               className="mx-auto"
+              unoptimized
             />
           </a>
         </div>
