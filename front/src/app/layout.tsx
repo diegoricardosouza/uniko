@@ -28,7 +28,7 @@ const dmsans = DM_Sans({
 
 export const metadata: Metadata = {
   title: "Úniko Imóveis",
-  description: "Úniko Imóveis - Melhores imóveis no Brasil",
+  description: "Úniko Imóveis - Cada imóvel tem seu jeito ÚNIKO e você tem o seu!",
 };
 
 export const viewport: Viewport = {
