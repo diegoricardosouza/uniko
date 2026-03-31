@@ -152,7 +152,7 @@ export function CardPropertyVista({ property }: CardPropertyProps) {
             )}
           </div>
 
-          <Link href={`/imovel/${property.Codigo}`} className="button-geral !text-white shadow-[0px_3px_6px_#00000029] !bg-black hover:!bg-gold">
+          <Link href={`/imovel/${property.Codigo}`} target="_blank" className="button-geral !text-white shadow-[0px_3px_6px_#00000029] !bg-black hover:!bg-gold">
             DETALHES
             <LuArrowRight className="w-[15px] h-[15px] lg:w-[18px] lg:h-[18px] ml-[-3px]" />
           </Link>

@@ -7,6 +7,7 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Pagination } from "@/components/Pagination";
 import { PropertyVistaList } from "@/entities/PropertyVista";
+import { Metadata } from "next";
 import { SearchProperty } from "./_components/SearchProperty";
 
 interface PropertiesProps {
@@ -23,6 +24,11 @@ interface PropertiesProps {
     orderDirection?: string;
   }>;
 }
+
+export const metadata: Metadata = {
+  title: "Imóveis - Úniko Imóveis",
+  description: "Úniko Imóveis - Cada imóvel tem seu jeito ÚNIKO e você tem o seu!",
+};
 
 export default async function Imoveis({ searchParams }: PropertiesProps) {
   const params = await searchParams;

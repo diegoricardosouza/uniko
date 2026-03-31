@@ -18,7 +18,7 @@ export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: "Anuciar Imóvel - Úniko Imóveis",
-  description: "Úniko Imóveis - Melhores imóveis no Brasil",
+  description: "Úniko Imóveis - Cada imóvel tem seu jeito ÚNIKO e você tem o seu!",
 };
 
 export default async function AnunciarImovel() {

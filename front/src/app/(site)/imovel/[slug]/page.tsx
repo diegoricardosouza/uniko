@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: SinglePropertyProps): Promise
     if (!property) {
       return {
         title: "Imóvel não encontrado - Úniko Imóveis",
-        description: "Úniko Imóveis - Melhores imóveis no Brasil",
+        description: "Úniko Imóveis - Cada imóvel tem seu jeito ÚNIKO e você tem o seu!",
       };
     }
 
@@ -53,7 +53,7 @@ export async function generateMetadata({ params }: SinglePropertyProps): Promise
 
     return {
       title: `${data[0].TituloSite} - Úniko Imóveis`,
-      description: data[0].DescricaoEmpreendimento || "Úniko Imóveis - Melhores imóveis no Brasil",
+      description: data[0].DescricaoEmpreendimento || "Úniko Imóveis - Cada imóvel tem seu jeito ÚNIKO e você tem o seu!",
       openGraph: {
         title: data[0].TituloSite,
         description: data[0].DescricaoEmpreendimento,
@@ -74,7 +74,7 @@ export async function generateMetadata({ params }: SinglePropertyProps): Promise
 
     return {
       title: "Erro - Úniko Imóveis",
-      description: "Úniko Imóveis - Melhores imóveis no Brasil",
+      description: "Úniko Imóveis - Cada imóvel tem seu jeito ÚNIKO e você tem o seu!",
     };
   }
 }

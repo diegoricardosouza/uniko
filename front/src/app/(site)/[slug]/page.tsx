@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: SingleBlogProps): Promise<Met
     if (!post) {
       return {
         title: "Post não encontrado - Úniko Imóveis",
-        description: "Úniko Imóveis - Melhores imóveis no Brasil",
+        description: "Úniko Imóveis - Cada imóvel tem seu jeito ÚNIKO e você tem o seu!",
       };
     }
 
@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: SingleBlogProps): Promise<Met
 
     return {
       title: `${post.name} - Úniko Imóveis`,
-      description: post.subtitle || post.content || "Úniko Imóveis - Melhores imóveis no Brasil",
+      description: post.subtitle || post.content || "Úniko Imóveis - Cada imóvel tem seu jeito ÚNIKO e você tem o seu!",
       openGraph: {
         title: post.name,
         description: post.subtitle || post.content,
@@ -52,7 +52,7 @@ export async function generateMetadata({ params }: SingleBlogProps): Promise<Met
 
     return {
       title: "Erro - Úniko Imóveis",
-      description: "Úniko Imóveis - Melhores imóveis no Brasil",
+      description: "Úniko Imóveis - Cada imóvel tem seu jeito ÚNIKO e você tem o seu!",
     };
   }
 }

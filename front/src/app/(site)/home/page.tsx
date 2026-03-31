@@ -19,14 +19,14 @@ export async function generateMetadata(): Promise<Metadata> {
     if (!settings) {
       return {
         title: "Item não encontrado - Úniko Imóveis",
-        description: "Úniko Imóveis - Melhores imóveis no Brasil",
+        description: "Úniko Imóveis - Cada imóvel tem seu jeito ÚNIKO e você tem o seu!",
       };
     }
 
     return {
       // title: `${settings[0].titleSeo} - Úniko Imóveis`,
       title: `Úniko Imóveis`,
-      description: settings[0].descriptionSeo || "Úniko Imóveis - Melhores imóveis no Brasil",
+      description: settings[0].descriptionSeo || "Úniko Imóveis - Cada imóvel tem seu jeito ÚNIKO e você tem o seu!",
       openGraph: {
         title: settings[0].titleSeo,
         description: settings[0].descriptionSeo,
@@ -45,7 +45,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
     return {
       title: "Erro - Úniko Imóveis",
-      description: "Úniko Imóveis - Melhores imóveis no Brasil",
+      description: "Úniko Imóveis - Cada imóvel tem seu jeito ÚNIKO e você tem o seu!",
     };
   }
 }
