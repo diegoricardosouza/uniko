@@ -1,4 +1,5 @@
 import { ComboBox } from "@/components/ComboBox";
+import { ComboBoxMultiply } from "@/components/ComboBoxMultiply";
 import { Search } from "@/components/icons/Search";
 import { Button } from "@/components/ui/button";
 import {
@@ -41,7 +42,7 @@ type CategoriesResponse = {
 
 const searchSchema = z.object({
   city: z.string().optional(),
-  neighborhood: z.string().optional(),
+  neighborhood: z.array(z.string()).optional(),
   categoria: z.string().optional(),
   codigo: z.string().optional(),
   prices: z.string().optional(),
@@ -107,7 +108,7 @@ export function FormTab({ type }: FormTabProps) {
     resolver: zodResolver(searchSchema),
     defaultValues: {
       city: "",
-      neighborhood: "",
+      neighborhood: [],
       categoria: "",
       codigo: "",
       prices: "",
@@ -118,7 +119,7 @@ export function FormTab({ type }: FormTabProps) {
 
   useEffect(() => {
     // Limpa o bairro quando a cidade mudar
-    form.setValue("neighborhood", "");
+    form.setValue("neighborhood", []);
     setNeighborhood(null);
 
     if (!selectedCity) return;
@@ -145,9 +146,18 @@ export function FormTab({ type }: FormTabProps) {
   }, [form, selectedCity]);
 
   const handleSubmit = form.handleSubmit(async (data) => {
-    redirect(
-      `/imoveis?city=${data.city}&bairro=${data.neighborhood}&type=${data.categoria}&codigo=${data.codigo}&price=${data.prices}&finalidade=${type}`,
-    );
+    const params = new URLSearchParams();
+
+    if (data.city) params.set("city", data.city);
+    if (data.neighborhood?.length) {
+      data.neighborhood.forEach((b) => params.append("bairro", b));
+    }
+    if (data.categoria) params.set("type", data.categoria);
+    if (data.codigo) params.set("codigo", data.codigo);
+    if (data.prices) params.set("price", data.prices);
+    params.set("finalidade", type);
+
+    redirect(`/imoveis?${params.toString()}`);
   });
 
   return (
@@ -182,7 +192,7 @@ export function FormTab({ type }: FormTabProps) {
             name="neighborhood"
             render={({ field }) => (
               <FormItem className="form-select2 border-b-[1px] md:border-r-[1px] md:border-b-0 w-full md:max-w-[190px] overflow-hidden">
-                <ComboBox
+                <ComboBoxMultiply
                   field={field}
                   items={neighborhood?.Bairro || []}
                   isLoading={isLoadingNeighborhood}

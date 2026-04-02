@@ -203,7 +203,6 @@ export function SearchProperty() {
     const params = new URLSearchParams();
 
     if (data.city) params.set("city", data.city);
-    // if (data.neighborhood) params.set("bairro", data.neighborhood);
     if (data.neighborhood?.length) {
       data.neighborhood.forEach((b) => params.append("bairro", b));
     }
@@ -212,14 +211,8 @@ export function SearchProperty() {
     if (data.prices) params.set("price", data.prices);
     if (data.finalidade) params.set("finalidade", data.finalidade);
 
-    console.log(cities);
-    
-
     router.push(`/imoveis?${params.toString()}`);
   });
-
-  // Remova o console.log(currentPrice) e adicione este para debugar:
-  // console.log("currentPrice:", currentPrice, "tipo:", typeof currentPrice);
 
   return (
     <div className="container !mt-[20px] flex justify-between items-center">
