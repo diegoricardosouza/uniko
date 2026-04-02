@@ -1,6 +1,7 @@
 "use client";
 
 import { ComboBox } from "@/components/ComboBox";
+import { ComboBoxMultiply } from "@/components/ComboBoxMultiply";
 import { Search } from "@/components/icons/Search";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,7 +22,7 @@ import {
 import { prices } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 
@@ -39,7 +40,8 @@ type CategoriesResponse = {
 
 const searchSchema = z.object({
   city: z.string().optional(),
-  neighborhood: z.string().optional(),
+  // neighborhood: z.string().optional(),
+  neighborhood: z.array(z.string()).optional(),
   categoria: z.string().optional(),
   codigo: z.string().optional(),
   prices: z.string().optional(),
@@ -69,7 +71,10 @@ export function SearchProperty() {
         ? "Belo Horizonte"
         : searchParams.get("city");
   const currentCity = cityFilter || "";
-  const currentBairro = searchParams.get("bairro") || "";
+  const currentBairro = useMemo(
+    () => searchParams.getAll("bairro") || [],
+    [searchParams]
+  );
   const currentType = searchParams.get("type") || "";
   const currentCodigo = searchParams.get("codigo") || "";
   const currentPrice = searchParams.get("price") || undefined;
@@ -150,7 +155,7 @@ export function SearchProperty() {
 
   useEffect(() => {
     // Limpa o bairro quando a cidade mudar
-    form.setValue("neighborhood", "");
+    form.setValue("neighborhood", []);
     setNeighborhood(null);
 
     if (!selectedCity) return;
@@ -198,7 +203,10 @@ export function SearchProperty() {
     const params = new URLSearchParams();
 
     if (data.city) params.set("city", data.city);
-    if (data.neighborhood) params.set("bairro", data.neighborhood);
+    // if (data.neighborhood) params.set("bairro", data.neighborhood);
+    if (data.neighborhood?.length) {
+      data.neighborhood.forEach((b) => params.append("bairro", b));
+    }
     if (data.categoria) params.set("type", data.categoria);
     if (data.codigo) params.set("codigo", data.codigo);
     if (data.prices) params.set("price", data.prices);
@@ -279,7 +287,7 @@ export function SearchProperty() {
               name="neighborhood"
               render={({ field }) => (
                 <FormItem className="form-select2 border-b-[1px] md:border-r-[1px] md:border-b-0 w-full md:max-w-[190px] overflow-hidden">
-                  <ComboBox
+                  <ComboBoxMultiply
                     field={field}
                     items={neighborhood?.Bairro || []}
                     isLoading={isLoadingNeighborhood}
