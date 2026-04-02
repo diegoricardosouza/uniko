@@ -82,28 +82,6 @@ export function FormTab({ type }: FormTabProps) {
   }, []);
 
   useEffect(() => {
-    const fetchNeighborhood = async () => {
-      setIsLoadingNeighborhood(true);
-      try {
-        const response = await fetch("/api/neighborhood");
-
-        if (!response.ok) {
-          throw new Error(`Erro na API: ${response.status}`);
-        }
-
-        const data = await response.json();
-        setNeighborhood(data);
-      } catch (error) {
-        console.error("Erro ao buscar bairros:", error);
-      } finally {
-        setIsLoadingNeighborhood(false);
-      }
-    };
-
-    fetchNeighborhood();
-  }, []);
-
-  useEffect(() => {
     const fetchCategories = async () => {
       setIsLoadingCategories(true);
       try {
@@ -135,6 +113,36 @@ export function FormTab({ type }: FormTabProps) {
       prices: "",
     },
   });
+
+  const selectedCity = form.watch("city");
+
+  useEffect(() => {
+    // Limpa o bairro quando a cidade mudar
+    form.setValue("neighborhood", "");
+    setNeighborhood(null);
+
+    if (!selectedCity) return;
+
+    const fetchNeighborhood = async () => {
+      setIsLoadingNeighborhood(true);
+      try {
+        const response = await fetch(
+          `/api/neighborhood?cidade=${encodeURIComponent(selectedCity)}`
+        );
+        if (!response.ok) {
+          throw new Error(`Erro na API: ${response.status}`);
+        }
+        const data = await response.json();
+        setNeighborhood(data);
+      } catch (error) {
+        console.error("Erro ao buscar bairros:", error);
+      } finally {
+        setIsLoadingNeighborhood(false);
+      }
+    };
+
+    fetchNeighborhood();
+  }, [form, selectedCity]);
 
   const handleSubmit = form.handleSubmit(async (data) => {
     redirect(

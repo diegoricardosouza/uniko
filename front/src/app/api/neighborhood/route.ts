@@ -1,8 +1,18 @@
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const cidade = searchParams.get("cidade");
+
+  if (!cidade) {
+    return NextResponse.json({ Bairro: [] });
+  }
+
   const filters = {
     fields: ["Bairro"],
+    filter: {
+      Cidade: cidade,
+    },
   };
 
   const searchParamsApi = JSON.stringify(filters);
@@ -11,9 +21,7 @@ export async function GET() {
 
   try {
     const response = await fetch(url, {
-      headers: {
-        Accept: "application/json",
-      },
+      headers: { Accept: "application/json" },
       cache: "no-store",
     });
 
@@ -27,7 +35,7 @@ export async function GET() {
     console.error("Erro ao buscar bairros:", error);
     return NextResponse.json(
       { error: "Erro ao buscar bairros" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
