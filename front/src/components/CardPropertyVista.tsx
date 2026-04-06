@@ -8,8 +8,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { LuArrowRight } from "react-icons/lu";
-import 'swiper/css';
-import 'swiper/css/navigation';
+// import 'swiper/css';
+// import 'swiper/css/navigation';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Spinner } from "./Spinner";
 

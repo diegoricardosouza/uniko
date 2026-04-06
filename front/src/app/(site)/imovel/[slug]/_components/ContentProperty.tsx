@@ -189,6 +189,15 @@ export function ContentProperty({ property }: ContentPropertyProps) {
               </strong>
               <span> - {finalityText}</span>
             </div>
+            
+            {Number(property.ValorLocacao) > 0 && (
+              <div className="font-montserrat text-[20px] md:text-[22px] text-title mb-[5px] leading-7">
+                <strong>
+                  {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(property.ValorLocacao || 0))}
+                </strong>
+                <span> - Aluguel</span>
+              </div>
+            )}
 
             {(Number(property.ValorCondominio) > 0) && (
               <div className="font-montserrat text-[16px] md:text-[18px] text-title mb-[5px] leading-6">

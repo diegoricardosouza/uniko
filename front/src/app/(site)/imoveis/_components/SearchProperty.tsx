@@ -323,7 +323,7 @@ export function SearchProperty() {
               render={({ field }) => (
                 <FormItem className="border-b-[1px] md:border-r-[1px] md:border-b-0 w-full md:max-w-[100px] overflow-hidden">
                   <FormControl>
-                    <Input placeholder="Código" {...field} />
+                    <Input placeholder="Código" {...field} className="!pl-[10px] !pr-[10px]" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
