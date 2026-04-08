@@ -54,7 +54,7 @@ export function CardPropertyVista({ property }: CardPropertyProps) {
   
   return (
     <article className="md:flex border-2 border-gold rounded-[0px_20px_20px_20px] bg-bggray overflow-hidden">
-      <div className="w-full max-w-[376px] h-full rounded-[0px_20px_20px_20px] overflow-hidden relative">
+      <div className="w-full lg:max-w-[376px] h-full rounded-[0px_20px_20px_20px] overflow-hidden relative">
         {loading && (
           <div className="absolute w-full h-full z-50 flex items-center justify-center bg-gold/95">
             <Spinner className="fill-black text-white" />
