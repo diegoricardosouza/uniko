@@ -70,22 +70,7 @@ export function CardPropertyVista({ property }: CardPropertyProps) {
             })
           }}
         >
-          <SwiperSlide className="mySwiperPropertySlide">
-            <div className="mySwiperPropertyOverlay">
-              <Camera className="w-9 h-9 text-white" />
-              <span className="text-white font-inter text-[14px] font-normal">+ {fotos.length} FOTOS</span>
-            </div>
-
-            <Image 
-              src={featuredImageUrl || '/noimage.jpg'}
-              width={1128}
-              height={846}
-              alt={property.TituloSite}
-              className="h-[282px] w-full object-cover object-center"
-              unoptimized
-            />
-          </SwiperSlide>
-          {fotos?.map((media: PropertyVistaFoto, index) => (
+          {fotos.length > 0 ? fotos?.map((media: PropertyVistaFoto, index) => (
             <SwiperSlide key={index} className="mySwiperPropertySlide">
               <div className="mySwiperPropertyOverlay">
                 <Camera className="w-9 h-9 text-white" />
@@ -101,7 +86,23 @@ export function CardPropertyVista({ property }: CardPropertyProps) {
                 className="h-[282px] w-full object-cover object-center"
               />
             </SwiperSlide>
-          ))}
+          )) : (
+            <SwiperSlide className="mySwiperPropertySlide">
+              <div className="mySwiperPropertyOverlay">
+                <Camera className="w-9 h-9 text-white" />
+                <span className="text-white font-inter text-[14px] font-normal">+ {fotos.length} FOTOS</span>
+              </div>
+
+              <Image
+                src={featuredImageUrl || '/noimage.jpg'}
+                width={1128}
+                height={846}
+                alt={property.TituloSite}
+                className="h-[282px] w-full object-cover object-center"
+                unoptimized
+              />
+            </SwiperSlide>
+          )}
           
           {fotos.length > 0 && (
             <SliderNavigation

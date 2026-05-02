@@ -195,7 +195,7 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
 
               <aside className="w-full max-w-[376px] border-t border-gold">
                 <header>
-                  <h2 className="font-montserrat text-[25px] tracking-[-0.63px] leading-[30px] text-black font-normal my-5 text-center">
+                  <h2 className="font-montserrat text-[25px] tracking-[-0.63px] leading-[30px] text-gold font-normal my-5 text-center">
                     Encontre seu lar, <strong className="font-semibold">doce lar!</strong>
                   </h2>
                 </header>

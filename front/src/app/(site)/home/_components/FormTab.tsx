@@ -17,7 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { prices } from "@/lib/utils";
+import { bedrooms, prices } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -46,6 +46,7 @@ const searchSchema = z.object({
   categoria: z.string().optional(),
   codigo: z.string().optional(),
   prices: z.string().optional(),
+  bedrooms: z.string().optional(),
 });
 
 type FormData = z.infer<typeof searchSchema>;
@@ -112,6 +113,7 @@ export function FormTab({ type }: FormTabProps) {
       categoria: "",
       codigo: "",
       prices: "",
+      bedrooms: "",
     },
   });
 
@@ -154,7 +156,16 @@ export function FormTab({ type }: FormTabProps) {
     }
     if (data.categoria) params.set("type", data.categoria);
     if (data.codigo) params.set("codigo", data.codigo);
-    if (data.prices) params.set("price", data.prices);
+    if (data.prices && data.prices !== "all") {
+      params.set("price", data.prices);
+    } else {
+      params.set("price", ""); 
+    }
+    if (data.bedrooms && data.bedrooms !== "all") {
+      params.set("bedrooms", data.bedrooms);
+    } else {
+      params.set("bedrooms", ""); 
+    }
     params.set("finalidade", type);
 
     redirect(`/imoveis?${params.toString()}`);
@@ -171,7 +182,7 @@ export function FormTab({ type }: FormTabProps) {
             control={form.control}
             name="city"
             render={({ field }) => (
-              <FormItem className="form-select2 border-b-[1px] md:border-r-[1px] md:border-b-0 w-full md:max-w-[200px] overflow-hidden">
+              <FormItem className="form-select2 border-b-[1px] md:border-r-[1px] md:border-b-0 w-full md:max-w-[145px] overflow-hidden">
                 <ComboBox
                   field={field}
                   items={cities?.Cidade || []}
@@ -181,6 +192,7 @@ export function FormTab({ type }: FormTabProps) {
                   emptyMessage="Nenhuma cidade encontrado."
                   loadingMessage="Cidades..."
                   className="w-full"
+                  classNameWidthItemSelected="md:!max-w-[85px]"
                 />
                 <FormMessage />
               </FormItem>
@@ -191,7 +203,7 @@ export function FormTab({ type }: FormTabProps) {
             control={form.control}
             name="neighborhood"
             render={({ field }) => (
-              <FormItem className="form-select2 border-b-[1px] md:border-r-[1px] md:border-b-0 w-full md:max-w-[190px] overflow-hidden">
+              <FormItem className="form-select2 border-b-[1px] md:border-r-[1px] md:border-b-0 w-full md:max-w-[145px] overflow-hidden">
                 <ComboBoxMultiply
                   field={field}
                   items={neighborhood?.Bairro || []}
@@ -201,6 +213,7 @@ export function FormTab({ type }: FormTabProps) {
                   emptyMessage="Nenhum bairro encontrado."
                   loadingMessage="Bairros..."
                   className="w-full"
+                  classNameWidthItemSelected="md:!max-w-[85px]"
                 />
                 <FormMessage />
               </FormItem>
@@ -211,7 +224,7 @@ export function FormTab({ type }: FormTabProps) {
             control={form.control}
             name="categoria"
             render={({ field }) => (
-              <FormItem className="form-select2 border-b-[1px] md:border-r-[1px] md:border-b-0 w-full md:max-w-[200px] overflow-hidden">
+              <FormItem className="form-select2 border-b-[1px] md:border-r-[1px] md:border-b-0 w-full md:max-w-[165px] overflow-hidden">
                 <ComboBox
                   field={field}
                   items={categories?.Categoria || []}
@@ -221,7 +234,42 @@ export function FormTab({ type }: FormTabProps) {
                   emptyMessage="Nenhuma categoria encontrada."
                   loadingMessage="Categorias..."
                   className="w-full"
+                  classNameWidthItemSelected="md:!max-w-[90px]"
                 />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="bedrooms"
+            render={({ field }) => (
+              <FormItem className="form-select2 md:border-r-[1px] w-full md:max-w-[145px] overflow-hidden">
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger className="w-full cursor-pointer">
+                      <div className="truncate md:max-w-[85px]">
+                        <SelectValue placeholder="Quartos" />
+                      </div>
+                    </SelectTrigger>
+                  </FormControl>
+
+                  <SelectContent>
+                    {bedrooms.map((price, index) => (
+                      <SelectItem
+                        key={index}
+                        value={price.value}
+                        className="cursor-pointer font-montserrat"
+                      >
+                        {price.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}
@@ -231,7 +279,7 @@ export function FormTab({ type }: FormTabProps) {
             control={form.control}
             name="codigo"
             render={({ field }) => (
-              <FormItem className="border-b-[1px] md:border-r-[1px] md:border-b-0 w-full md:max-w-[100px] overflow-hidden">
+              <FormItem className="border-b-[1px] md:border-r-[1px] md:border-b-0 w-full md:max-w-[145px] overflow-hidden">
                 <FormControl>
                   <Input placeholder="Código" {...field} />
                 </FormControl>
@@ -244,14 +292,16 @@ export function FormTab({ type }: FormTabProps) {
             control={form.control}
             name="prices"
             render={({ field }) => (
-              <FormItem className="form-select2 md:border-r-[1px] w-full md:max-w-[200px] overflow-hidden">
+              <FormItem className="form-select2 md:border-r-[1px] w-full md:max-w-[145px] overflow-hidden">
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
                   <FormControl>
                     <SelectTrigger className="w-full cursor-pointer">
-                      <SelectValue placeholder="Preço" />
+                      <div className="truncate md:max-w-[85px]">
+                        <SelectValue placeholder="Preço" />
+                      </div>
                     </SelectTrigger>
                   </FormControl>
 

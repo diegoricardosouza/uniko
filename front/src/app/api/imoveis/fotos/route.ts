@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
@@ -13,7 +14,7 @@ export async function GET(request: NextRequest) {
 
   const filters = {
     fields: [
-      { Foto: ['Foto', 'Destaque'] }
+      { Foto: ['Foto', 'Destaque', 'Ordem'] }
     ]
   };
 
@@ -35,7 +36,13 @@ export async function GET(request: NextRequest) {
 
     const data = await response.json();
 
-    return NextResponse.json(data);
+    const fotosObj = data?.Foto || {};
+
+    const fotosOrdenadas = Object.values(fotosObj).sort(
+      (a: any, b: any) => Number(a.Ordem) - Number(b.Ordem)
+    );
+
+    return NextResponse.json({ Foto: fotosOrdenadas });
 
   } catch (error) {
     console.error('Erro ao buscar fotos do imóvel:', error);

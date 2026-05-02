@@ -14,7 +14,7 @@ interface CardTypeProps {
 
 export function CardType({ image, position, title, content, width, height, link }: CardTypeProps) {
   return (
-    <Link href={link} className="relative group">
+    <Link href={link} className="relative group max-w-[380px]">
       <div 
         className={cn(
           'w-full max-w-[271px] bg-gold rounded-[20px_20px_0_20px] px-[20px] py-[17px] absolute transition-all group-hover:bg-black',

@@ -21,6 +21,7 @@ interface PropertiesProps {
     type?: string;
     codigo?: string;
     price?: string;
+    bedrooms?: string;
     orderDirection?: string;
   }>;
 }
@@ -59,7 +60,7 @@ export default async function Imoveis({ searchParams }: PropertiesProps) {
         : params.city;
 
   // Construir filtro dinamicamente, apenas com valores válidos
-  const filterObject: Record<string, string | string[]> = {};
+  const filterObject: Record<string, string | string[] | number[]> = {};
 
   if (ufFilter) filterObject.UF = ufFilter;
   if (params.type) filterObject.Categoria = params.type;
@@ -87,6 +88,18 @@ export default async function Imoveis({ searchParams }: PropertiesProps) {
       } else {
         filterObject.ValorVenda = [min, max];
       }
+    }
+  }
+
+  if (params.bedrooms) {
+    const [min, max] = String(params.bedrooms).split("-");
+
+    if (min === "acima") {
+      filterObject.Dormitorios = [">=", max];
+    } else if (max) {
+      filterObject.Dormitorios = [min, max];
+    } else {
+      filterObject.Dormitorios = ["=", min];
     }
   }
 
