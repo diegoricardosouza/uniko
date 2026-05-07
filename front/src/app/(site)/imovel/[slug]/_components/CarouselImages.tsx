@@ -1,7 +1,9 @@
 'use client'
 
 import { Gallery } from "@/components/icons/Gallery";
+import { VideoModal } from "@/components/VideoModal";
 import { PropertyVistaList } from "@/entities/PropertyVista";
+import { Play } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import 'swiper/css';
@@ -23,8 +25,24 @@ export function CarouselImages({ property }: CarouselImagesProps) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const featuredImageUrl = property.FotoDestaque;
   const imagesUrl = property.Foto
+  const videoCode = property.Video && !Array.isArray(property.Video)
+    ? Object.values(property.Video)[0]?.Video
+    : null
+
+
+  const openVideoModal = (video: string) => {
+    setSelectedVideo(video);
+    setIsModalOpen(true);
+  };
+
+  const closeVideoModal = () => {
+    setSelectedVideo(null);
+    setIsModalOpen(false);
+  };
 
   return (
     <>
@@ -97,10 +115,6 @@ export function CarouselImages({ property }: CarouselImagesProps) {
 
         <div 
           className="absolute left-0 bottom-[15px] z-50 w-full"
-          onClick={() => {
-            setLightboxIndex(activeIndex);
-            setLightboxOpen(true);
-          }}
         >
           <div className="container flex gap-[10px]">
             <span
@@ -110,10 +124,24 @@ export function CarouselImages({ property }: CarouselImagesProps) {
             </span>
             <span 
               className="bg-gold rounded-[5px_5px_5px_0px] p-2 md:p-[10px] text-[12px] md:text-sm font-inter leading-[17px] text-white uppercase flex gap-[5px]"
+              onClick={() => {
+                setLightboxIndex(activeIndex);
+                setLightboxOpen(true);
+              }}
             >
               <Gallery />
               {property.Foto?.length} FOTOS
             </span>
+
+            {videoCode && (
+              <span 
+                className="bg-gold rounded-[5px_5px_5px_0px] p-2 md:p-[10px] text-[12px] md:text-sm font-inter leading-[17px] text-white uppercase flex gap-[5px]"
+                onClick={() => openVideoModal(videoCode)}
+              >
+                <Play className="w-4 h-4" />
+                VÍDEO
+              </span>
+            )}
           </div>
         </div>
       </Swiper>
@@ -126,6 +154,15 @@ export function CarouselImages({ property }: CarouselImagesProps) {
           slides={property.Foto?.map(media => ({
             src: media.Foto
           }))}
+        />
+      )}
+
+      {selectedVideo && (
+        <VideoModal
+          isOpen={isModalOpen}
+          onClose={closeVideoModal}
+          videoId={selectedVideo}
+          title={property.TituloSite}
         />
       )}
     </>

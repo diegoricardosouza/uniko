@@ -1,7 +1,7 @@
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import NotFound from "@/components/NotFound";
-import { PropertyVistaFoto, PropertyVistaList } from "@/entities/PropertyVista";
+import { PropertyVistaFoto, PropertyVistaList, PropertyVistaVideos } from "@/entities/PropertyVista";
 import { Metadata } from "next";
 import { CarouselImages } from "./_components/CarouselImages";
 import { ContentProperty } from "./_components/ContentProperty";
@@ -14,6 +14,7 @@ interface SinglePropertyProps {
 export type PropertyVistaList2 = {
   0: PropertyVistaList;
   Foto: PropertyVistaFoto[];
+  Video: PropertyVistaVideos;
 }
 
 const filters = {
@@ -21,7 +22,8 @@ const filters = {
     'TituloSite', 'Dormitorios', 'UF', 'Bairro', 'Cidade', 'ValorVenda', 'ValorIptu', 'ValorCondominio', 'DescricaoWeb',
     'ValorLocacao', 'AreaPrivativa', 'AreaTotal', 'FotoDestaque', 'Codigo', 'Vagas', 'TotalBanheiros', 'DataEntrega', 'DescricaoEmpreendimento',
     'TotalBanheiros', 'Status', 'Categoria', 'Endereco', 'Numero', 'Complemento', 'Caracteristicas', 'InfraEstrutura',
-    { Foto: ['Foto', 'Destaque', 'FotoOriginal'] }
+    { Foto: ['Foto', 'Destaque', 'FotoOriginal'] },
+    { Video: ['Video', 'Codigo', 'VideoCodigo'] }
   ]
 };
 
@@ -108,7 +110,10 @@ export default async function SingleImovel({ params }: SinglePropertyProps) {
 
     const data: PropertyVistaList2 = await property.json();
     const dataProperty = {
-      ...data[0], Foto: Object.values(data.Foto)};
+      ...data[0],
+      Foto: Object.values(data.Foto),
+      Video: data.Video ?? {}
+    }
 
     return (
       <div>

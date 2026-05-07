@@ -6,6 +6,18 @@ export type PropertyVistaFoto = {
   Destaque: string;
 }
 
+export type PropertyVistaVideo = {
+  Video: string;
+  Codigo: string;
+  VideoCodigo: string;
+  ExibirNoSite: string;
+  ExibirSite: string;
+}
+
+export type PropertyVistaVideos = {
+  [key: string]: PropertyVistaVideo;
+}
+
 export type PropertyVistaList = {
   Codigo: string;
   TituloSite: string;
@@ -34,5 +46,6 @@ export type PropertyVistaList = {
   Caracteristicas: CaracteristicasProps;
   InfraEstrutura: CaracteristicasProps;
   Foto?: PropertyVistaFoto[];
+  Video?: PropertyVistaVideos | PropertyVistaVideo[];
 }
 
