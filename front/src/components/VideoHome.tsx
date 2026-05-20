@@ -17,17 +17,23 @@ export function VideoHome() {
     const initPlayer = () => {
       if (playerRef.current && window.YT && window.YT.Player) {
         new window.YT.Player(playerRef.current, {
-          videoId: "6Q5Nv5h0qKw",
+          videoId: "pp8f4Kfw-9o",
           playerVars: {
             autoplay: 1,
-            controls: 0,
-            rel: 0,
-            modestbranding: 1,
-            fs: 0,
-            disablekb: 1,
-            loop: 1,
-            playlist: "6Q5Nv5h0qKw",
+            controls: 0,         // Remove controles
+            rel: 0,              // Sem vídeos relacionados
+            modestbranding: 1,   // Reduz branding do YouTube
+            fs: 0,               // Sem botão fullscreen
+            disablekb: 1,        // Desativa teclado
+            loop: 1,             // Loop infinito
+            playlist: "pp8f4Kfw-9o",
             mute: 1,
+            iv_load_policy: 3,   // Remove anotações
+            cc_load_policy: 0,   // Remove legendas automáticas
+            playsinline: 1,      // Evita fullscreen automático no mobile
+            showinfo: 0,         // Remove info do vídeo (título, uploader)
+            color: "white",      // Barra de progresso branca (menos visível)
+            origin: typeof window !== "undefined" ? window.location.origin : "",
           },
           events: {
             onReady: (event: any) => {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { Gallery } from "@/components/icons/Gallery";
@@ -27,13 +28,16 @@ export function CarouselImages({ property }: CarouselImagesProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
-  const featuredImageUrl = property.FotoDestaque;
+  // const featuredImageUrl = property.FotoDestaque;
   const imagesUrl = property.Foto
   const videoCode = property.Video && !Array.isArray(property.Video)
     ? Object.values(property.Video)[0]?.Video
     : null
 
-
+  const fotosOrdenadas = imagesUrl?.sort(
+    (a: any, b: any) => Number(a.Ordem) - Number(b.Ordem)
+  );
+    
   const openVideoModal = (video: string) => {
     setSelectedVideo(video);
     setIsModalOpen(true);
@@ -56,7 +60,7 @@ export function CarouselImages({ property }: CarouselImagesProps) {
           })
         }}
       >
-        <SwiperSlide className="mySwiperPropertySingleSlide">
+        {/* <SwiperSlide className="mySwiperPropertySingleSlide">
           <div
             className="relative"
             onClick={() => {
@@ -77,8 +81,8 @@ export function CarouselImages({ property }: CarouselImagesProps) {
               className="w-full h-[80px] bg-gradient-to-t from-[#000000] to-[#54545400] absolute bottom-0 left-0 z-10"
             />
           </div>
-        </SwiperSlide>
-        {imagesUrl?.map((media, index) => (
+        </SwiperSlide> */}
+        {fotosOrdenadas?.map((media, index) => (
           <SwiperSlide key={index} className="mySwiperPropertySingleSlide">
             <div
               className="relative"
@@ -146,7 +150,7 @@ export function CarouselImages({ property }: CarouselImagesProps) {
         </div>
       </Swiper>
 
-      {imagesUrl?.length && (
+      {fotosOrdenadas?.length && (
         <Lightbox
           open={lightboxOpen}
           close={() => setLightboxOpen(false)}

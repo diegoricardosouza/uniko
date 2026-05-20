@@ -4,6 +4,7 @@ export type PropertyVistaFoto = {
   Codigo: string;
   Foto: string;
   Destaque: string;
+  Ordem?: string;
 }
 
 export type PropertyVistaVideo = {
