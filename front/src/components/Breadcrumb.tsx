@@ -13,7 +13,7 @@ export function Breadcrumb({ title }: BreadcrumbProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const searchParams = useSearchParams();
   const city = searchParams.get('city');
-  const nameCity = city && city === 'Curitiba' ? 'CURITIBA' : 'BELO HORIZONTE'
+  const nameCity = city && city === 'Curitiba' || city === 'curitiba' ? 'CURITIBA' : 'BELO HORIZONTE'
 
   useEffect(() => {
     const handleScroll = () => {
