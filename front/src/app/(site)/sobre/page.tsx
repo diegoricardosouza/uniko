@@ -2,9 +2,13 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Metadata } from "next";
-import Image from "next/image";
 import { FaWhatsapp } from "react-icons/fa6";
 import { LuArrowRight } from "react-icons/lu";
+import { BHCarousel } from "./_components/BHCarousel";
+import { CuritibaCarousel } from "./_components/CuritibaCarousel";
+import { EspacoCarousel } from "./_components/EspacoCarousel";
+
+
 
 export const dynamic = 'force-dynamic';
 
@@ -14,6 +18,8 @@ export const metadata: Metadata = {
 };
 
 export default function Sobre() {
+  
+
   return (
     <div>
       <Header />
@@ -23,6 +29,32 @@ export default function Sobre() {
         
         <div className="container !mt-[20px]">
           <header className="text-center mb-[30px]">
+            <h2
+              className="text-gold text-[30px] md:text-[36px] font-montserrat font-light leading-[35px] md:leading-[47px]"
+            >
+              Espaço Úniko
+            </h2>
+
+            <h4
+              className="text-[19px] md:text-[22px] font-medium text-title leading-[22px] md:leading-[29px] font-montserrat"
+            >
+              Um espaço pensado para quem realmente importa: você cliente único e parceiros
+            </h4>
+          </header>
+
+          <div className="md:grid grid-cols-2">
+            <div className="md:pr-[30px] mb-[20px] md:mb-0">
+              <EspacoCarousel />
+            </div>
+
+            <div className="content">
+              <p>Na Úniko Imóveis, acreditamos que o cliente não é só parte do processo ele é o centro de tudo. Por isso, criamos um espaço exclusivo, acolhedor e sofisticado, onde cada encontro se transforma em uma experiência única.</p>
+              <p>Mais do que uma sala, nosso espaço cliente é um diferencial no mercado imobiliário: um ambiente preparado para conversas estratégicas, troca de conhecimento e fechamento de grandes negócios, sempre com conforto, privacidade e atenção aos detalhes.</p>
+              <p>Porque para nós, cada cliente é especial. Cada história importa. E acima de tudo… cada cliente é Úniko.</p>
+            </div>
+          </div>
+
+          <header className="text-center mb-[30px] mt-[60px]">
             <h2
               className="text-gold text-[30px] md:text-[36px] font-montserrat font-light leading-[35px] md:leading-[47px]"
             >
@@ -51,13 +83,7 @@ export default function Sobre() {
             </div>
 
             <div className="md:pl-[30px] mt-[20px] md:mt-0">
-              <Image 
-                src="/sobre/unidade-curitiba.png"
-                width={570}
-                height={285}
-                alt="Unidade curitiba"
-                title="Unidade curitiba"
-              />
+              <CuritibaCarousel />
             </div>
           </div>
 
@@ -78,13 +104,7 @@ export default function Sobre() {
 
             <div className="md:grid grid-cols-2">
               <div className="md:pr-[30px] mb-[20px] md:mb-0">
-                <Image
-                  src="/sobre/unidade-minas.png"
-                  width={570}
-                  height={285}
-                  alt="Unidade belo horizonte"
-                  title="Unidade belo horizonte"
-                />
+                <BHCarousel />
               </div>
 
               <div className="content">

@@ -1,23 +1,16 @@
+"use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
-'use client'
 
 import { useEffect, useRef } from "react";
 
-declare global {
-  interface Window {
-    YT: any;
-    onYouTubeIframeAPIReady: () => void;
-  }
-}
-
-export function VideoHome() {
+export function VideoCuritiba() {
   const playerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const initPlayer = () => {
       if (playerRef.current && window.YT && window.YT.Player) {
         new window.YT.Player(playerRef.current, {
-          videoId: "GDbII5f7nL8",
+          videoId: "pp8f4Kfw-9o",
           playerVars: {
             autoplay: 1,
             controls: 0,         // Remove controles
@@ -26,7 +19,7 @@ export function VideoHome() {
             fs: 0,               // Sem botão fullscreen
             disablekb: 1,        // Desativa teclado
             loop: 1,             // Loop infinito
-            playlist: "GDbII5f7nL8",
+            playlist: "pp8f4Kfw-9o",
             mute: 1,
             iv_load_policy: 3,   // Remove anotações
             cc_load_policy: 0,   // Remove legendas automáticas
@@ -51,7 +44,9 @@ export function VideoHome() {
       initPlayer();
     } else {
       // API não está carregada, verifica se o script já existe
-      const existingScript = document.querySelector('script[src="https://www.youtube.com/iframe_api"]');
+      const existingScript = document.querySelector(
+        'script[src="https://www.youtube.com/iframe_api"]',
+      );
 
       if (!existingScript) {
         // Cria o script apenas se não existir

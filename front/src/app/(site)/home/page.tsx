@@ -12,6 +12,12 @@ import { VideosHome } from "./_components/VideosHome";
 
 export const dynamic = 'force-dynamic';
 
+interface HomeProps {
+  searchParams: Promise<{
+    city?: string;
+  }>;
+}
+
 export async function generateMetadata(): Promise<Metadata> {
   try {
     const settings = await getSettingsAction();
@@ -50,13 +56,15 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export default async function Home() {
+export default async function Home({ searchParams }: HomeProps) {
+  const params = await searchParams;
+
   return (
     <div>
       <Header />
 
       <main>
-        <SearchHome />
+        <SearchHome city={params.city} />
         
         <div className="container">
           <div className="mt-[40px] mb-10">

@@ -90,7 +90,7 @@ export default function Home() {
 
             <div className="flex justify-center gap-4 lg:gap-8">
               <Link
-                href="/imoveis?city=curitiba"
+                href="/home?city=curitiba"
                 className="flex items-center bg-white text-[#343434] px-[18px] py-[13px] lg:px-[20px] lg:py-[15px] font-montserrat text-[15px] leading-[19px] lg:text-[18px] lg:leading-[22px] font-medium gap-[3px] shadow-[0px_3px_6px_#00000029] transition-all hover:bg-[#C5AF62] hover:text-white mb-2.5 lg:mb-0 justify-center"
               >
                 Curitiba{" "}
@@ -98,7 +98,7 @@ export default function Home() {
               </Link>
 
               <Link
-                href="/imoveis?city=belo-horizonte"
+                href="/home?city=belo-horizonte"
                 className="flex items-center bg-white text-[#343434] px-[18px] py-[13px] lg:px-[20px] lg:py-[15px] font-montserrat text-[15px] leading-[19px] lg:text-[18px] lg:leading-[22px] font-medium gap-[3px] shadow-[0px_3px_6px_#00000029] transition-all hover:bg-[#C5AF62] hover:text-white mb-2.5 lg:mb-0 justify-center"
               >
                 Belo Horizonte{" "}
