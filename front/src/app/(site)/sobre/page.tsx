@@ -70,8 +70,9 @@ export default function Sobre() {
 
           <div className="md:grid grid-cols-2">
             <div className="content">
-              <p>Criada para atender seus clientes e parceiros de forma diferenciada e personalizada em um ambiente profissional, a Úniko Negócios Imobiliários está situada no centro econômico de Curitiba, onde grandes empresas estão localizadas.</p> 
-              <p>A empresa possui uma equipe especializada em terrenos para incorporadoras, imóveis de médio e alto padrão e prédios corporativos.</p>
+              <p>Fundada em 2011, a Úniko Negócios Imobiliários nasceu com o propósito de transformar o mercado imobiliário por meio de um atendimento humanizado, estratégico e altamente personalizado. Ao longo dos anos, consolidou sua atuação com credibilidade, excelência e foco em resultados, construindo relações sólidas com clientes, investidores e parceiros.</p> 
+              <p>Criada para atender seus clientes e parceiros de forma diferenciada em um ambiente profissional e acolhedor, a Úniko está situada no centro econômico de Curitiba, cercada pelas principais empresas e polos de negócios da cidade, proporcionando praticidade, sofisticação e conexão com grandes oportunidades.</p>
+              <p>Com uma equipe altamente especializada e em constante atualização, a empresa atua com destaque nos segmentos de terrenos para incorporadoras, imóveis de médio e alto padrão, além de prédios corporativos, oferecendo assessoria completa, visão estratégica de mercado e negociações seguras em todas as etapas.</p>
 
               <div className="flex justify-center md:justify-end">
                 <a href={`https://wa.me/5541996615511`} target="_blank" className="button-geral !bg-black hover:!bg-gold !text-white">
@@ -108,9 +109,9 @@ export default function Sobre() {
               </div>
 
               <div className="content">
-                <p>Nosso objetivo é levar cada vez mais facilidade nos processos imobiliários, e com esse time de corretores que possuímos, você nosso cliente e amigo irá realizar o sonho do seu imóvel o quanto antes.</p>
-                <p>Nossa unidade abriga uma talentosa equipe de profissionais especialistas em interpretar de maneira clara e objetiva o que o cliente deseja, através de um atendimento diferenciado, baseado na exclusividade da linguagem e valores compartilhados com esse consumidor tão especial.</p>
-                <p>Essa equipe de excelência entrega soluções criativas e eficientes, tanto para a venda como para locação, garantindo a melhor experiência em negócios imobiliários. Como em todas as sedes da Úniko, você terá à sua disposição as melhores opções de financiamento para o seu imóvel, através de um consultor especialista sediado nesta unidade.</p>
+                <p>Fundada em 2017, a filial da Úniko Negócios Imobiliários em Belo Horizonte chegou à capital mineira com o propósito de oferecer um atendimento especializado, próximo e altamente personalizado, mantendo a excelência e a credibilidade que fazem parte da história da empresa.</p>
+                <p>Localizada na Savassi, um dos bairros mais valorizados e estratégicos da região Centro-Sul da cidade, a unidade foi cuidadosamente estruturada para proporcionar conforto, sofisticação e praticidade aos clientes e parceiros, em um ambiente moderno e profissional.</p>
+                <p>Com atuação focada em negócios imobiliários de alto padrão, a Úniko BH se destaca pelo atendimento humanizado, pela transparência nas negociações e pela busca constante das melhores oportunidades do mercado. Sua equipe qualificada alia conhecimento técnico, visão estratégica e relacionamento de confiança para oferecer soluções seguras e assertivas em cada negociação.</p>
 
                 <div className="flex justify-center md:justify-start">
                   <a href={`https://wa.me/5531999868706`} target="_blank" className="button-geral !bg-black hover:!bg-gold !text-white">
