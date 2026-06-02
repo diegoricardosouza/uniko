@@ -183,12 +183,14 @@ export function ContentProperty({ property }: ContentPropertyProps) {
           <hr className="border-0 w-full m-0 h-[1px] bg-gold mt-[15px] mb-[15px]" />
 
           <div>
-            <div className="font-montserrat text-[20px] md:text-[22px] text-title mb-[5px] leading-7">
-              <strong>
-                {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(property.ValorVenda || property.ValorLocacao))}
-              </strong>
-              <span> - {finalityText}</span>
-            </div>
+            {Number(property.ValorVenda) !== 0 && (
+              <div className="font-montserrat text-[20px] md:text-[22px] text-title mb-[5px] leading-7">
+                <strong>
+                  {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(property.ValorVenda || property.ValorLocacao))}
+                </strong>
+                <span> - {finalityText}</span>
+              </div>
+            )}
             
             {Number(property.ValorLocacao) > 0 && (
               <div className="font-montserrat text-[20px] md:text-[22px] text-title mb-[5px] leading-7">

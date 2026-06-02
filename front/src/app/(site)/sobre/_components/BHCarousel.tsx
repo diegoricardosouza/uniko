@@ -23,7 +23,7 @@ export function BHCarousel() {
         })
       }}
     >
-      <SwiperSlide className="mySwiperPropertySlide">
+      {/* <SwiperSlide className="mySwiperPropertySlide">
         <Image
           src="/sobre/bh.png"
           width={570}
@@ -32,7 +32,7 @@ export function BHCarousel() {
           className="h-[300px] md:h-[427px] w-full object-cover object-center rounded-tr-[20px] rounded-b-[20px]"
           unoptimized
         />
-      </SwiperSlide>
+      </SwiperSlide> */}
       <SwiperSlide className="mySwiperPropertySlide">
         <Image
           src="/sobre/imgbh1.jpg"

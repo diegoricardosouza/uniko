@@ -23,9 +23,19 @@ export function CuritibaCarousel() {
         })
       }}
     >
-      <SwiperSlide className="mySwiperPropertySlide">
+      {/* <SwiperSlide className="mySwiperPropertySlide">
         <Image
           src="/sobre/curitiba.png"
+          width={570}
+          height={427}
+          alt="Espaço Úniko"
+          className="h-[300px] md:h-[427px] w-full object-cover object-center rounded-tr-[20px] rounded-b-[20px]"
+          unoptimized
+        />
+      </SwiperSlide> */}
+      <SwiperSlide className="mySwiperPropertySlide">
+        <Image
+          src="/sobre/imgcwb4.jpeg"
           width={570}
           height={427}
           alt="Espaço Úniko"
@@ -56,16 +66,6 @@ export function CuritibaCarousel() {
       <SwiperSlide className="mySwiperPropertySlide">
         <Image
           src="/sobre/imgcwb3.jpeg"
-          width={570}
-          height={427}
-          alt="Espaço Úniko"
-          className="h-[300px] md:h-[427px] w-full object-cover object-center rounded-tr-[20px] rounded-b-[20px]"
-          unoptimized
-        />
-      </SwiperSlide>
-      <SwiperSlide className="mySwiperPropertySlide">
-        <Image
-          src="/sobre/imgcwb4.jpeg"
           width={570}
           height={427}
           alt="Espaço Úniko"
