@@ -121,14 +121,18 @@ export function CardPropertyVista({ property }: CardPropertyProps) {
 
         <header>
           <h2 className="text-gold text-[30px] md:text-[36px] font-montserrat font-light leading-[35px] md:leading-[40px] mb-[5px]">
-            {property.TituloSite}
+            {property.TituloSite || property.Empreendimento}
           </h2>
         </header>
 
         <p className="font-inter text-[15px] md:text-[17px] text-content leading-6 font-light">
           <strong className="font-semibold">{property.Bairro}</strong>, {city}/{property.UF}<br />
-          <strong className="font-semibold">{property.AreaPrivativa} m²</strong> de Área Privativa 
-          {bedrooms}
+          {property.Categoria !== 'Empreendimento' && (
+            <>
+              <strong className="font-semibold">{property.AreaPrivativa} m²</strong> de Área Privativa
+              {bedrooms}
+            </>
+          )}
         </p>
 
         <hr className="w-full border-0 m-0 h-[2px] bg-gold mt-[19px] mb-[15px]" />

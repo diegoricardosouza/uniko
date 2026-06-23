@@ -119,6 +119,7 @@ export default async function Imoveis({ searchParams }: PropertiesProps) {
   const filters = {
     fields: [
       "TituloSite",
+      "Empreendimento",
       "Dormitorios",
       "UF",
       "Bairro",

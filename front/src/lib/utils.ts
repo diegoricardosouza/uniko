@@ -66,6 +66,10 @@ export const bedrooms = [
     label: "Selecione",
   },
   {
+    value: "1",
+    label: "1 Quarto",
+  },
+  {
     value: "2",
     label: "2 Quartos",
   },

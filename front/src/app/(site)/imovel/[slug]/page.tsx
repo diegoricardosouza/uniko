@@ -19,7 +19,7 @@ export type PropertyVistaList2 = {
 
 const filters = {
   fields: [
-    'TituloSite', 'Dormitorios', 'UF', 'Bairro', 'Cidade', 'ValorVenda', 'ValorIptu', 'ValorCondominio', 'DescricaoWeb',
+    'TituloSite', 'Empreendimento', 'Dormitorios', 'UF', 'Bairro', 'Cidade', 'ValorVenda', 'ValorIptu', 'ValorCondominio', 'DescricaoWeb',
     'ValorLocacao', 'AreaPrivativa', 'AreaTotal', 'FotoDestaque', 'Codigo', 'Vagas', 'TotalBanheiros', 'DataEntrega', 'DescricaoEmpreendimento',
     'TotalBanheiros', 'Status', 'Categoria', 'Endereco', 'Numero', 'Complemento', 'Caracteristicas', 'InfraEstrutura',
     { Foto: ['Foto', 'Destaque', 'FotoOriginal', 'Ordem'] },
@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: SinglePropertyProps): Promise
     const featuredImage = data[0].FotoDestaque;
 
     return {
-      title: `${data[0].TituloSite} - Úniko Imóveis`,
+      title: `${data[0].TituloSite || data[0].Empreendimento} - Úniko Imóveis`,
       description: data[0].DescricaoEmpreendimento || "Úniko Imóveis - Cada imóvel tem seu jeito ÚNIKO e você tem o seu!",
       openGraph: {
         title: data[0].TituloSite,

@@ -22,6 +22,7 @@ export type PropertyVistaVideos = {
 export type PropertyVistaList = {
   Codigo: string;
   TituloSite: string;
+  Empreendimento: string;
   Dormitorios: string;
   UF: string;
   ValorVenda?: string;

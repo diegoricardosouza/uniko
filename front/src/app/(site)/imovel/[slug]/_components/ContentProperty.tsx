@@ -53,53 +53,58 @@ export function ContentProperty({ property }: ContentPropertyProps) {
           <h1
             className="text-gold text-[30px] md:text-[36px] font-montserrat font-light leading-[35px] md:leading-[42px] mb-[5px]"
           >
-            {property.TituloSite}
+            {property.TituloSite || property.Empreendimento}
           </h1>
         </header>
 
-        <div className="mb-9">
-          <h3 className="font-montserrat text-[25px] font-light text-gold leading-[30px]">
-            Ficha <strong className="font-medium">Técnica</strong>
-          </h3>
+        {property.Categoria !== 'Empreendimento' && (
+          <div className="mb-9">
+            <h3 className="font-montserrat text-[25px] font-light text-gold leading-[30px]">
+              Ficha <strong className="font-medium">Técnica</strong>
+            </h3>
 
-          <div className="border border-gold mt-[10px] py-[15px] md:py-5 px-5 md:px-[30px] flex flex-wrap gap-x-[50px] gap-y-5">
-            <div className="flex gap-[10px] items-center">
-              <PrivateArea />
-              <span className="font-inter text-[17px] leading-5 text-content">
-                <strong className="font-semibold">{property.AreaPrivativa} m²</strong> de Área Privativa
-              </span>
-            </div>
+            <div className="border border-gold mt-[10px] py-[15px] md:py-5 px-5 md:px-[30px] flex flex-wrap gap-x-[50px] gap-y-5">
+              <div className="flex gap-[10px] items-center">
+                <PrivateArea />
+                <span className="font-inter text-[17px] leading-5 text-content">
+                  <strong className="font-semibold">{property.AreaPrivativa} m²</strong> de Área Privativa
+                </span>
+              </div>
 
-            <div className="flex gap-[10px] items-center">
-              <Bedroom />
-              <span className="font-inter text-[17px] leading-5 text-content">
-                <strong className="font-semibold">{property.Dormitorios}</strong> Dormitórios
-              </span>
-            </div>
+              <div className="flex gap-[10px] items-center">
+                <Bedroom />
+                <span className="font-inter text-[17px] leading-5 text-content">
+                  <strong className="font-semibold">{property.Dormitorios} </strong> 
+                  {property.Dormitorios === "1" ? 'Dormitório' : 'Dormitórios'}
+                </span>
+              </div>
 
-            <div className="flex gap-[10px] items-center">
-              <ParkingSpace />
-              <span className="font-inter text-[17px] leading-5 text-content">
-                <strong className="font-semibold">{property.Vagas}</strong> Vagas
-              </span>
-            </div>
+              <div className="flex gap-[10px] items-center">
+                <ParkingSpace />
+                <span className="font-inter text-[17px] leading-5 text-content">
+                  <strong className="font-semibold">{property.Vagas} </strong> 
+                  {property.Vagas === "1" ? 'Vaga' : 'Vagas'}
+                </span>
+              </div>
 
-            <div className="flex gap-[10px] items-center min-w-[238px]">
-              <TotalArea />
-              <span className="font-inter text-[17px] leading-5 text-content">
-                <strong className="font-semibold">{property.AreaTotal} m²</strong> de Área Total
-              </span>
-            </div>
+              <div className="flex gap-[10px] items-center min-w-[238px]">
+                <TotalArea />
+                <span className="font-inter text-[17px] leading-5 text-content">
+                  <strong className="font-semibold">{property.AreaTotal} m²</strong> de Área Total
+                </span>
+              </div>
 
-            <div className="flex gap-[10px] items-center">
-              <Bathroom />
-              <span className="font-inter text-[17px] leading-5 text-content">
-                <strong className="font-semibold">{property.TotalBanheiros}</strong> Banheiros
-              </span>
+              <div className="flex gap-[10px] items-center">
+                <Bathroom />
+                <span className="font-inter text-[17px] leading-5 text-content">
+                  <strong className="font-semibold">{property.TotalBanheiros} </strong> 
+                  {property.TotalBanheiros === "1" ? 'Banheiro' : 'Banheiros'}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-
+        )}
+        
         <div className="content content-property">
           <p dangerouslySetInnerHTML={{ __html: property.DescricaoEmpreendimento || property.DescricaoWeb }} />
         </div>
