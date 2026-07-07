@@ -64,14 +64,14 @@ export function ContentProperty({ property }: ContentPropertyProps) {
             </h3>
 
             <div className="border border-gold mt-[10px] py-[15px] md:py-5 px-5 md:px-[30px] flex flex-wrap gap-x-[50px] gap-y-5">
-              <div className="flex gap-[10px] items-center">
+              <div className="flex gap-[10px] items-center min-w-[252px]">
                 <PrivateArea />
                 <span className="font-inter text-[17px] leading-5 text-content">
                   <strong className="font-semibold">{property.AreaPrivativa} m²</strong> de Área Privativa
                 </span>
               </div>
 
-              <div className="flex gap-[10px] items-center">
+              <div className="flex gap-[10px] items-center min-w-[148px]">
                 <Bedroom />
                 <span className="font-inter text-[17px] leading-5 text-content">
                   <strong className="font-semibold">{property.Dormitorios} </strong> 
@@ -87,26 +87,40 @@ export function ContentProperty({ property }: ContentPropertyProps) {
                 </span>
               </div>
 
-              <div className="flex gap-[10px] items-center min-w-[238px]">
+              <div className="flex gap-[10px] items-center min-w-[252px]">
                 <TotalArea />
                 <span className="font-inter text-[17px] leading-5 text-content">
                   <strong className="font-semibold">{property.AreaTotal} m²</strong> de Área Total
                 </span>
               </div>
 
-              <div className="flex gap-[10px] items-center">
-                <Bathroom />
-                <span className="font-inter text-[17px] leading-5 text-content">
-                  <strong className="font-semibold">{property.TotalBanheiros} </strong> 
-                  {property.TotalBanheiros === "1" ? 'Banheiro' : 'Banheiros'}
-                </span>
-              </div>
+              {Number(property.BanheiroSocialQtd) > 0 && (
+                <div className="flex gap-[10px] items-center min-w-[148px]">
+                  <Bathroom />
+                  <span className="font-inter text-[17px] leading-5 text-content">
+                    <strong className="font-semibold">{property.BanheiroSocialQtd} </strong> 
+                    {property.BanheiroSocialQtd === "1" ? 'Banheiro' : 'Banheiros'}
+                  </span>
+                </div>
+              )}
+
+              {Number(property.Suites) > 0 && (
+                <div className="flex gap-[10px] items-center">
+                  <Bathroom />
+                  <span className="font-inter text-[17px] leading-5 text-content">
+                    <strong className="font-semibold">{property.Suites} </strong> 
+                    {property.Suites === "1" ? 'Suite' : 'Suites'}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         )}
         
         <div className="content content-property">
-          <p dangerouslySetInnerHTML={{ __html: property.DescricaoEmpreendimento || property.DescricaoWeb }} />
+          <p dangerouslySetInnerHTML={{ __html: property.DescricaoWeb || "" }} />
+
+          <p dangerouslySetInnerHTML={{ __html: property.DescricaoEmpreendimento || "" }} />
         </div>
 
         <hr className="border-0 w-full m-0 h-[1px] bg-gold mt-[5px] mb-[30px]" />

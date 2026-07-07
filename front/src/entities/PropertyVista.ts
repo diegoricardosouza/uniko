@@ -40,6 +40,8 @@ export type PropertyVistaList = {
   Categoria: string;
   Vagas: string;
   TotalBanheiros: string;
+  BanheiroSocialQtd: string;
+  Suites: string;
   DataEntrega: string;
   DescricaoEmpreendimento: string;
   DescricaoWeb: string;

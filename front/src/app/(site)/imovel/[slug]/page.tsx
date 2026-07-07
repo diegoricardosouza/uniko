@@ -20,7 +20,7 @@ export type PropertyVistaList2 = {
 const filters = {
   fields: [
     'TituloSite', 'Empreendimento', 'Dormitorios', 'UF', 'Bairro', 'Cidade', 'ValorVenda', 'ValorIptu', 'ValorCondominio', 'DescricaoWeb',
-    'ValorLocacao', 'AreaPrivativa', 'AreaTotal', 'FotoDestaque', 'Codigo', 'Vagas', 'TotalBanheiros', 'DataEntrega', 'DescricaoEmpreendimento',
+    'ValorLocacao', 'AreaPrivativa', 'AreaTotal', 'FotoDestaque', 'Codigo', 'Vagas', 'BanheiroSocialQtd', 'Suites', 'DataEntrega', 'DescricaoEmpreendimento',
     'TotalBanheiros', 'Status', 'Categoria', 'Endereco', 'Numero', 'Complemento', 'Caracteristicas', 'InfraEstrutura',
     { Foto: ['Foto', 'Destaque', 'FotoOriginal', 'Ordem'] },
     { Video: ['Video', 'Codigo', 'VideoCodigo'] }
