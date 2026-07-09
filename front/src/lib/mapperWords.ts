@@ -32,6 +32,12 @@ export function mapperWords(word: string) {
     "Sala T V": "Sala de TV",
     "Canaletas No Rodape": "Canaletas no Rodapé",
     "Circuito Fechado T V": "Circuito Fechado de TV",
+    "Agua": "Água",
+    "Energia Eletrica": "Energia Elétrica",
+    "Pavimentacao": "Pavimentação",
+    "Poco Artesiano": "Poço Artesiano",
+    "Dependenciade Empregada": "Dependência de Empregada",
+    "W C Empregada": "WC Empregada",
   };
 
   return mapper[word] ?? word;

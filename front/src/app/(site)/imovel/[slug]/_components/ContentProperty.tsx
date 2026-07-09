@@ -7,6 +7,7 @@ import { Facebook } from "@/components/icons/Facebook"
 import { Mail } from "@/components/icons/Mail"
 import { ParkingSpace } from "@/components/icons/ParkingSpace"
 import { PrivateArea } from "@/components/icons/PrivateArea"
+import { Suite } from "@/components/icons/Suite"
 import { TotalArea } from "@/components/icons/TotalArea"
 import { PropertyVistaList } from "@/entities/PropertyVista"
 import { mapperWords } from "@/lib/mapperWords"
@@ -106,7 +107,7 @@ export function ContentProperty({ property }: ContentPropertyProps) {
 
               {Number(property.Suites) > 0 && (
                 <div className="flex gap-[10px] items-center">
-                  <Bathroom />
+                  <Suite />
                   <span className="font-inter text-[17px] leading-5 text-content">
                     <strong className="font-semibold">{property.Suites} </strong> 
                     {property.Suites === "1" ? 'Suite' : 'Suites'}
