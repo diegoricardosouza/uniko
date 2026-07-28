@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/select";
 import { bedrooms, prices } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { redirect } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
@@ -52,6 +52,9 @@ const searchSchema = z.object({
 type FormData = z.infer<typeof searchSchema>;
 
 export function FormTab({ type }: FormTabProps) {
+  const searchParams = useSearchParams();
+  const cityParam = searchParams.get("city");
+  const cityParamTrated = cityParam === 'belo-horizonte' ? "Belo Horizonte" : "Curitiba";
   const [isLoadingCities, setIsLoadingCities] = useState(false);
   const [isLoadingNeighborhood, setIsLoadingNeighborhood] = useState(false);
   const [isLoadingCategories, setIsLoadingCategories] = useState(false);
@@ -60,6 +63,9 @@ export function FormTab({ type }: FormTabProps) {
     null,
   );
   const [categories, setCategories] = useState<CategoriesResponse | null>(null);
+
+  console.log(cityParam);
+  
 
   useEffect(() => {
     const fetchCities = async () => {
@@ -71,8 +77,18 @@ export function FormTab({ type }: FormTabProps) {
           throw new Error(`Erro na API: ${response.status}`);
         }
 
-        const data = await response.json();
+        const data: CitiesResponse = await response.json();
         setCities(data);
+
+        // Se veio "city" na URL, tenta achar a cidade correspondente na lista
+        if (cityParamTrated) {
+          const match = data.Cidade.find(
+            (c) => c.toLowerCase() === cityParamTrated.toLowerCase()
+          );
+          if (match) {
+            form.setValue("city", match);
+          }
+        }
       } catch (error) {
         console.error("Erro ao buscar cidades:", error);
       } finally {
@@ -81,6 +97,7 @@ export function FormTab({ type }: FormTabProps) {
     };
 
     fetchCities();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

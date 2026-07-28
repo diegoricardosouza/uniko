@@ -12,7 +12,7 @@ export function Header() {
   const depthLevel = 0;
 
   return (
-    <header className="sticky top-0 flex items-center lg:block w-full bg-black z-[999]">
+    <header className="md:sticky top-0 flex items-center lg:block w-full bg-black z-[999]">
       <div className="container flex">
         <div className="hidden lg:flex items-center gap-3.5 flex-1">
           <nav className="desktop-nav">
