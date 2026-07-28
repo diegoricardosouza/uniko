@@ -99,7 +99,7 @@ export default async function Imoveis({ searchParams }: PropertiesProps) {
     } else if (max) {
       filterObject.Dormitorios = [min, max];
     } else {
-      filterObject.Dormitorios = ["=", min];
+      filterObject.Dormitorios = [min, min];
     }
   }
 
