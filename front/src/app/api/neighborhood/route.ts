@@ -13,6 +13,9 @@ export async function GET(request: Request) {
     filter: {
       Cidade: cidade,
     },
+    order: {
+      Bairro: "asc",
+    },
   };
 
   const searchParamsApi = JSON.stringify(filters);
@@ -30,6 +33,13 @@ export async function GET(request: Request) {
     }
 
     const data = await response.json();
+
+    if (Array.isArray(data?.Bairro)) {
+      data.Bairro = [...data.Bairro].sort((a: string, b: string) =>
+        a.localeCompare(b, "pt-BR", { sensitivity: "base" })
+      );
+    }
+
     return NextResponse.json(data);
   } catch (error) {
     console.error("Erro ao buscar bairros:", error);
